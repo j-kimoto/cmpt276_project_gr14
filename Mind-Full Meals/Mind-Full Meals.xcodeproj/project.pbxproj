@@ -16,6 +16,7 @@
 		2B2432C420E547610021CF53 /* MealEntry.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B2432C320E547610021CF53 /* MealEntry.storyboard */; };
 		2B2432C620E548C50021CF53 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B2432C520E548C50021CF53 /* Settings.storyboard */; };
 		2B2432CA20E54B280021CF53 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B2432C920E54B280021CF53 /* Calendar.storyboard */; };
+		700D00B220E57F880047B0D5 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D00B120E57F880047B0D5 /* RatingControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		2B2432C320E547610021CF53 /* MealEntry.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MealEntry.storyboard; sourceTree = "<group>"; };
 		2B2432C520E548C50021CF53 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		2B2432C920E54B280021CF53 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		700D00B120E57F880047B0D5 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				2B24329320E53B2E0021CF53 /* AppDelegate.swift */,
 				2B24329520E53B2E0021CF53 /* ViewController.swift */,
+				700D00B120E57F880047B0D5 /* RatingControl.swift */,
 				2B24329A20E53B2E0021CF53 /* Assets.xcassets */,
 				2B24329C20E53B2E0021CF53 /* LaunchScreen.storyboard */,
 				2B2432C920E54B280021CF53 /* Calendar.storyboard */,
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B24329620E53B2E0021CF53 /* ViewController.swift in Sources */,
+				700D00B220E57F880047B0D5 /* RatingControl.swift in Sources */,
 				2B24329420E53B2E0021CF53 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
