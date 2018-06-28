@@ -2,8 +2,8 @@
 //  Mind_Full_MealsUITests.swift
 //  Mind-Full MealsUITests
 //
-//  Created by Jason Kimoto on 6/28/18.
-//  Copyright © 2018 CMPT 276. All rights reserved.
+//  Created by Jason Kimoto on 2018-06-28.
+//  Copyright © 2018 CMPT 267. All rights reserved.
 //
 
 import XCTest
