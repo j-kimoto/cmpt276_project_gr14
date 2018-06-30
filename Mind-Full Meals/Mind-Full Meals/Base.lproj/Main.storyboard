@@ -59,22 +59,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="535-iO-ApM">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="535-iO-ApM">
                                 <rect key="frame" x="164" y="318" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <segue destination="uzZ-pg-oZW" kind="modal" id="V6I-86-aSt"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
+                                <rect key="frame" x="61" y="233" width="252" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="cHV-eC-yeA"/>
+                                    <constraint firstAttribute="width" constant="252" id="wR3-eT-QW9"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="7eQ-cI-kkg"/>
+                            <constraint firstItem="hFt-qx-cyW" firstAttribute="top" secondItem="UAe-wd-J8a" secondAttribute="top" constant="213" id="Zfi-c0-YRn"/>
+                            <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="535-iO-ApM" secondAttribute="centerX" id="cad-R1-ZWo"/>
+                            <constraint firstItem="535-iO-ApM" firstAttribute="top" secondItem="hFt-qx-cyW" secondAttribute="bottom" constant="41" id="rVt-gt-wEB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UAe-wd-J8a"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4807" y="-795"/>
+            <point key="canvasLocation" x="4805.6000000000004" y="-795.6521739130435"/>
         </scene>
         <!--Month Controller-->
         <scene sceneID="Kwm-Ab-kRj">
@@ -234,9 +251,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RYb-rQ-XwL"/>
-        <segue reference="Ogp-SD-ElP"/>
-        <segue reference="v7J-Tq-BAp"/>
-        <segue reference="a4j-NH-wAr"/>
+        <segue reference="qj7-FM-sAM"/>
+        <segue reference="2u4-Kq-Rvt"/>
+        <segue reference="V6I-86-aSt"/>
+        <segue reference="81k-Tu-gyx"/>
     </inferredMetricsTieBreakers>
 </document>
