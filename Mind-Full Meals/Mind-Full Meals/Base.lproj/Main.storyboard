@@ -59,18 +59,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="535-iO-ApM">
-                                <rect key="frame" x="164" y="318" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="uzZ-pg-oZW" kind="modal" id="V6I-86-aSt"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                <rect key="frame" x="61" y="233" width="252" height="44"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pzQ-Fx-RE6">
+                                <rect key="frame" x="165" y="318" width="46" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="535-iO-ApM">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <segue destination="uzZ-pg-oZW" kind="modal" id="V6I-86-aSt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="cHV-eC-yeA"/>
-                                    <constraint firstAttribute="width" constant="252" id="wR3-eT-QW9"/>
+                                    <constraint firstItem="535-iO-ApM" firstAttribute="centerY" secondItem="pzQ-Fx-RE6" secondAttribute="centerY" id="nv4-g7-Yah"/>
+                                    <constraint firstItem="535-iO-ApM" firstAttribute="centerX" secondItem="pzQ-Fx-RE6" secondAttribute="centerX" id="yiN-BI-XIh"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
+                                <rect key="frame" x="57" y="201" width="260" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="ILu-Gn-VTE"/>
+                                    <constraint firstAttribute="width" constant="260" id="iqH-qA-WbK"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="starCount">
@@ -81,13 +90,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="7eQ-cI-kkg"/>
-                            <constraint firstItem="hFt-qx-cyW" firstAttribute="top" secondItem="UAe-wd-J8a" secondAttribute="top" constant="213" id="Zfi-c0-YRn"/>
-                            <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="535-iO-ApM" secondAttribute="centerX" id="cad-R1-ZWo"/>
-                            <constraint firstItem="535-iO-ApM" firstAttribute="top" secondItem="hFt-qx-cyW" secondAttribute="bottom" constant="41" id="rVt-gt-wEB"/>
+                            <constraint firstItem="pzQ-Fx-RE6" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="F8F-tF-8dD"/>
+                            <constraint firstItem="hFt-qx-cyW" firstAttribute="top" secondItem="UAe-wd-J8a" secondAttribute="top" constant="181" id="Hdl-gs-llT"/>
+                            <constraint firstItem="pzQ-Fx-RE6" firstAttribute="centerY" secondItem="DI3-I0-saJ" secondAttribute="centerY" id="kfz-k6-hZV"/>
+                            <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="xCm-kB-IDA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UAe-wd-J8a"/>
                     </view>
+                    <connections>
+                        <outlet property="ratingControl" destination="hFt-qx-cyW" id="Ajn-Fc-BTv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

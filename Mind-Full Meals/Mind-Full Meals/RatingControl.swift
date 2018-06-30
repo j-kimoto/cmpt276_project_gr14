@@ -12,15 +12,17 @@ import UIKit
     
     //MARK: Properties
     private var ratingButtons = [UIButton]()
-    var rating = 0
+    var rating = 0 {
+        didSet { // Called after the rating changes from the ratingButtonTapped() function
+            updateButtonSelectionStates()
+        }
+    }
     
-    // You can change the star count in interface builder
     @IBInspectable var starCount: Int = 5 {
-        didSet {
+        didSet { // Called after you change the star count in interface builder
             setupButtons()
         }
     }
-    @IBInspectable var starColour: UIColor = UIColor.red
     
     //MARK: Initialization
     required override init(frame: CGRect) {
@@ -35,12 +37,26 @@ import UIKit
     
     //MARK: Button Action
     @objc func ratingButtonTapped(button: UIButton) {
-        print("Button pressed 👍")
+        guard let index = ratingButtons.index(of: button) else {
+            fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
+        }
+        
+        // Calculate the rating of the selected button
+        let selectedRating = index + 1
+        
+        if selectedRating == rating {
+            // If the selected star represents the current rating, reset the rating to 0.
+            rating = 0
+        } else {
+            // Otherwise set the rating to the selected star
+            rating = selectedRating
+        }
     }
     
     //MARK: Private Methods
+    
+    // Adds the buttons to the view and assigns them an action
     private func setupButtons() {
-        
         // Clear any existing buttons (when the star count is changed in interface builder)
         for button in ratingButtons {
             removeArrangedSubview(button)
@@ -48,12 +64,24 @@ import UIKit
         }
         ratingButtons.removeAll()
         
+        // Load star images
+        let bundle = Bundle(for: type(of: self))
+        let filledStar = UIImage(named: "filledStar", in: bundle, compatibleWith: self.traitCollection)
+        let emptyStar = UIImage(named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
+        let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
+        
         // Goes from 0 to starCount-1 to make starCount buttons
-        for _ in 0..<starCount {
+        for index in 0..<starCount {
             // Create the button
             let button = UIButton()
-            button.backgroundColor = starColour
+            button.setImage(emptyStar, for: .normal)
+            button.setImage(filledStar, for: .selected)
+            button.setImage(highlightedStar, for: .highlighted)
+            button.setImage(highlightedStar, for: [.highlighted, .selected])
         
+            // Set the accessibility label
+            button.accessibilityLabel = "Set \(index + 1) star rating"
+            
             // Setup the button action
             button.addTarget(self, action:
                 #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
@@ -63,6 +91,15 @@ import UIKit
             
             // Add the new button to the rating button array
             ratingButtons.append(button)
+        }
+        
+        updateButtonSelectionStates() // Initializes the stars with the current rating
+    }
+    
+    private func updateButtonSelectionStates() {
+        for (index, button) in ratingButtons.enumerated() {
+            // If the button's index is less than the rating, that button should be selected
+            button.isSelected = index < rating
         }
     }
 }

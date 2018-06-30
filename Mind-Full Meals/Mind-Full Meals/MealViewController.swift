@@ -10,6 +10,9 @@ import UIKit
 
 class MealViewController: UIViewController {
 
+    // MARK: Properties
+    @IBOutlet weak var ratingControl: RatingControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
