@@ -12,10 +12,21 @@ class MealViewController: UIViewController {
 
     // MARK: Properties
     @IBOutlet weak var mealNameLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var mealRating: RatingControl!
     
     // MARK: Actions
     @IBAction func addMeal(_ sender: UIButton) {
         mealNameLabel.text = "Test add meal button"
+        
+        // Want to create a MealClass object, then save the object to the database
+        let newMeal = Meal()
+        newMeal.SetMealName(arg1: nameTextField.text!)
+        newMeal.SetRating(arg1: mealRating.rating)
+        newMeal.SetIngredients(arg1: ["apple", "orange", "banana"])
+        newMeal.SetDate(arg1: [1, 2, 3])
+        
+        print("Meal name is \(newMeal.GetMealName()), rating is \(newMeal.GetRating()), ingredients are \(newMeal.GetIngredients()), date is \(newMeal.GetDate()).")
     }
     
     override func viewDidLoad() {

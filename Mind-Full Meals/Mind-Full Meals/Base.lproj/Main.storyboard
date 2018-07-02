@@ -155,7 +155,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-IZ-NQz">
-                                <rect key="frame" x="132" y="91" width="70" height="30"/>
+                                <rect key="frame" x="152" y="617" width="70" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save Meal"/>
                                 <connections>
@@ -172,6 +172,8 @@
                     </view>
                     <connections>
                         <outlet property="mealNameLabel" destination="O3T-dP-Hlw" id="PCU-fd-36o"/>
+                        <outlet property="mealRating" destination="hFt-qx-cyW" id="ohf-V4-PDk"/>
+                        <outlet property="nameTextField" destination="8AF-lG-P1m" id="rei-PQ-a0I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -345,7 +347,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="RYb-rQ-XwL"/>
         <segue reference="Ogp-SD-ElP"/>
-        <segue reference="lsw-zf-5x8"/>
+        <segue reference="V6I-86-aSt"/>
         <segue reference="a4j-NH-wAr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Rating is 0 if not set. Rating can also be integers from 1 to 5
 @IBDesignable class RatingControl: UIStackView {
     
     //MARK: Properties
