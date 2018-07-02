@@ -22,38 +22,24 @@ class MealViewController: UIViewController {
         mealNameLabel.text = "Test add meal button"
         
         // Want to create a MealClass object, then save the object to the database
-        let newMeal = Meal()
-        newMeal.SetMealName(arg1: nameTextField.text!)
+        let newMeal = Meal(Meal_Name: nameTextField.text!, Date: datePicker.date)
         newMeal.SetRating(arg1: mealRating.rating)
         newMeal.SetIngredients(arg1: ["apple", "orange", "banana"])
-        newMeal.SetDate(arg1: [1, 2, 3])
         
         print("Meal name is \(newMeal.GetMealName()), rating is \(newMeal.GetRating()), ingredients are \(newMeal.GetIngredients()), date is \(newMeal.GetDate()).")
     }
-    
-    @IBAction func datePickerChanged(_ sender: Any) {
+    private func setDateLabel() {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
         
         let strDate = dateFormatter.string(from: datePicker.date)
-        // Change the date label
-        dateLabel.text = strDate
-        
+        dateLabel.text = strDate // Change the date label
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBAction func datePickerChanged(_ sender: Any) {
+        setDateLabel()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func AddMeal(_ sender: Any)
     {
         //only go back if valid data is entered
@@ -63,6 +49,18 @@ class MealViewController: UIViewController {
             print("button should work!!!")
             performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        setDateLabel() // Shows today's date when starting
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     /*
