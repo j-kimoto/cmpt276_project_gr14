@@ -11,7 +11,12 @@ import UIKit
 class MealViewController: UIViewController {
 
     // MARK: Properties
-    @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var mealNameLabel: UILabel!
+    
+    // MARK: Actions
+    @IBAction func addMeal(_ sender: UIButton) {
+        mealNameLabel.text = "Test add meal button"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

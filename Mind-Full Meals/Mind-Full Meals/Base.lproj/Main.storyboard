@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,9 +59,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pzQ-Fx-RE6">
-                                <rect key="frame" x="165" y="318" width="46" height="30"/>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
                                 <rect key="frame" x="57" y="201" width="260" height="48"/>
                                 <constraints>
@@ -157,18 +154,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-IZ-NQz">
+                                <rect key="frame" x="132" y="91" width="70" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save Meal"/>
+                                <connections>
+                                    <action selector="addMeal:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="cmn-yg-cac"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pzQ-Fx-RE6" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="F8F-tF-8dD"/>
                             <constraint firstItem="hFt-qx-cyW" firstAttribute="top" secondItem="UAe-wd-J8a" secondAttribute="top" constant="181" id="Hdl-gs-llT"/>
-                            <constraint firstItem="pzQ-Fx-RE6" firstAttribute="centerY" secondItem="DI3-I0-saJ" secondAttribute="centerY" id="kfz-k6-hZV"/>
                             <constraint firstItem="hFt-qx-cyW" firstAttribute="centerX" secondItem="DI3-I0-saJ" secondAttribute="centerX" id="xCm-kB-IDA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UAe-wd-J8a"/>
                     </view>
                     <connections>
-                        <outlet property="ratingControl" destination="hFt-qx-cyW" id="Ajn-Fc-BTv"/>
+                        <outlet property="mealNameLabel" destination="O3T-dP-Hlw" id="PCU-fd-36o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,9 +343,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JW2-33-APR"/>
-        <segue reference="2u4-Kq-Rvt"/>
-        <segue reference="V6I-86-aSt"/>
-        <segue reference="NNf-kl-cah"/>
+        <segue reference="RYb-rQ-XwL"/>
+        <segue reference="Ogp-SD-ElP"/>
+        <segue reference="lsw-zf-5x8"/>
+        <segue reference="a4j-NH-wAr"/>
     </inferredMetricsTieBreakers>
 </document>
