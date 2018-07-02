@@ -51,6 +51,21 @@
             </objects>
             <point key="canvasLocation" x="117.59999999999999" y="118.29085457271366"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="j0p-oi-kV1">
+            <objects>
+                <viewController id="y5V-c0-0o0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="caA-Oe-CUo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="2Vw-Ok-eGp"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JTJ-mJ-4mc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3697" y="-933"/>
+        </scene>
         <!--Meal Controller-->
         <scene sceneID="iCP-Li-EE3">
             <objects>
@@ -162,6 +177,23 @@
                                     <action selector="addMeal:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="cmn-yg-cac"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5VZ-cK-zZ2">
+                                <rect key="frame" x="0.0" y="322" width="375" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="552193533.13417006">
+                                    <!--2018-07-02 03:05:33 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="datePickerChanged:" destination="0Sl-iJ-S00" eventType="valueChanged" id="H4e-kB-nWh"/>
+                                </connections>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MM/DD/YY HH:MM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5t-mU-JoE">
+                                <rect key="frame" x="114" y="102" width="147" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -171,6 +203,8 @@
                         <viewLayoutGuide key="safeArea" id="UAe-wd-J8a"/>
                     </view>
                     <connections>
+                        <outlet property="dateLabel" destination="z5t-mU-JoE" id="D9g-OH-Ei2"/>
+                        <outlet property="datePicker" destination="5VZ-cK-zZ2" id="Ath-oi-Elq"/>
                         <outlet property="mealNameLabel" destination="O3T-dP-Hlw" id="PCU-fd-36o"/>
                         <outlet property="mealRating" destination="hFt-qx-cyW" id="ohf-V4-PDk"/>
                         <outlet property="nameTextField" destination="8AF-lG-P1m" id="rei-PQ-a0I"/>
@@ -348,7 +382,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="RYb-rQ-XwL"/>
         <segue reference="DWt-o7-UCB"/>
-        <segue reference="4MQ-uI-ioz"/>
+        <segue reference="v7J-Tq-BAp"/>
         <segue reference="a4j-NH-wAr"/>
     </inferredMetricsTieBreakers>
 </document>

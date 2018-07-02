@@ -14,6 +14,8 @@ class MealViewController: UIViewController {
     @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var dateLabel: UILabel!
     
     // MARK: Actions
     @IBAction func SaveMeal(_ sender: UIButton) {
@@ -27,6 +29,18 @@ class MealViewController: UIViewController {
         newMeal.SetDate(arg1: [1, 2, 3])
         
         print("Meal name is \(newMeal.GetMealName()), rating is \(newMeal.GetRating()), ingredients are \(newMeal.GetIngredients()), date is \(newMeal.GetDate()).")
+    }
+    
+    @IBAction func datePickerChanged(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
+        
+        let strDate = dateFormatter.string(from: datePicker.date)
+        // Change the date label
+        dateLabel.text = strDate
+        
     }
     
     override func viewDidLoad() {
