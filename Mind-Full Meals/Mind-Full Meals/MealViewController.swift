@@ -16,7 +16,7 @@ class MealViewController: UIViewController {
     @IBOutlet weak var mealRating: RatingControl!
     
     // MARK: Actions
-    @IBAction func addMeal(_ sender: UIButton) {
+    @IBAction func SaveMeal(_ sender: UIButton) {
         mealNameLabel.text = "Test add meal button"
         
         // Want to create a MealClass object, then save the object to the database
@@ -40,7 +40,17 @@ class MealViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func AddMeal(_ sender: Any)
+    {
+        //only go back if valid data is entered
+        if !(nameTextField.text?.isEmpty ?? true)
+        {
+            // add conditin for the date
+            print("button should work!!!")
+            performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
