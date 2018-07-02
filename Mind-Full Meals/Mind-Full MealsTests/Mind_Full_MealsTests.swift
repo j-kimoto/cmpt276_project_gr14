@@ -32,5 +32,11 @@ class Mind_Full_MealsTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    //MARK: Meal Class Tests
     
+    // Confirm that the Meal initializer returns a Meal object when passed valid parameters.
+    func testMealInitializationSucceeds() {
+        let emptyMeal = Meal.init()
+        XCTAssertNotNil(emptyMeal)
+    }
 }
