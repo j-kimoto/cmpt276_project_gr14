@@ -14,11 +14,20 @@ class FoodTableViewController: UITableViewController {
     var foods = [Food]()
     
     //MARK: Actions
-
-    @IBAction func editFood(_ sender: UIBarButtonItem) {
-        tableView.setEditing(!tableView.isEditing, animated: true)
-    }
-    @IBAction func addFood(_ sender: UIBarButtonItem) {
+    @IBAction func addFoodButton(_ sender: UIBarButtonItem) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        foods.append(Food(name: "test", amount: 2))
+        print(foods)
+        let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
+        
+        tableView.beginUpdates()
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        /*let alertController = UIAlertController(title: "Hint", message: "You have selected row \(IndexPath.row).", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true, completion: nil)*/
     }
     
     override func viewDidLoad() {
@@ -31,7 +40,7 @@ class FoodTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +92,7 @@ class FoodTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
             self.foods.append(Food(name: "test", amount: 2))
+            print(foods)
             let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
             
             tableView.beginUpdates()
@@ -113,9 +123,10 @@ class FoodTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
     }
     */
-    
+
     // MARK: Private Methods
     private func loadSampleFood() {
         let food1 = Food(name: "Apple", amount: 2)
