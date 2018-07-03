@@ -100,15 +100,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ge0-IZ-NQz">
-                                <rect key="frame" x="152" y="617" width="70" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save Meal"/>
-                                <connections>
-                                    <action selector="AddMeal:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="Eaf-pt-Yc7"/>
-                                    <action selector="SaveMeal:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="WFG-pX-m0K"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MM/DD/YY HH:MM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5t-mU-JoE">
                                 <rect key="frame" x="114" y="102" width="147" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -143,9 +134,9 @@
                         <viewLayoutGuide key="safeArea" id="UAe-wd-J8a"/>
                     </view>
                     <connections>
+                        <outlet property="addMealButton" destination="535-iO-ApM" id="PPG-m4-XuG"/>
                         <outlet property="dateLabel" destination="z5t-mU-JoE" id="D9g-OH-Ei2"/>
                         <outlet property="datePicker" destination="5VZ-cK-zZ2" id="Ath-oi-Elq"/>
-                        <outlet property="mealNameLabel" destination="O3T-dP-Hlw" id="PCU-fd-36o"/>
                         <outlet property="mealRating" destination="hFt-qx-cyW" id="ohf-V4-PDk"/>
                         <outlet property="nameTextField" destination="8AF-lG-P1m" id="rei-PQ-a0I"/>
                         <segue destination="FrF-7t-rJG" kind="modal" identifier="BackToCalendar" id="DWt-o7-UCB"/>
@@ -163,6 +154,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dnd-BF-ZF9">
+                            <rect key="frame" x="0.0" y="118" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Back"/>
+                            <connections>
+                                <segue destination="0Sl-iJ-S00" kind="show" id="7bF-ev-xhv"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FoodTableViewCell" rowHeight="90" id="Idd-1T-Krz" customClass="FoodTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
@@ -371,6 +370,6 @@
         <segue reference="RYb-rQ-XwL"/>
         <segue reference="DWt-o7-UCB"/>
         <segue reference="v7J-Tq-BAp"/>
-        <segue reference="a4j-NH-wAr"/>
+        <segue reference="7bF-ev-xhv"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,38 +8,35 @@
 
 import UIKit
 
-class MealViewController: UIViewController {
+class MealViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Properties
-    @IBOutlet weak var mealNameLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var addMealButton: UIButton!
+    
+    var meal: Meal?
+    
+    //MARK: UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Add Meal button while editing
+        addMealButton.isEnabled = false
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateAddMealButtonState()
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Hides the keyboard
+        return true
+    }
     
     // MARK: Actions
-    @IBAction func SaveMeal(_ sender: UIButton) {
-        mealNameLabel.text = "Test add meal button"
-        
-        // Want to create a MealClass object, then save the object to the database
-        let newMeal = Meal(Meal_Name: nameTextField.text!, Date: datePicker.date)
-        newMeal.SetRating(arg1: mealRating.rating)
-        newMeal.SetIngredients(arg1: ["apple", "orange", "banana"])
-        
-        print("Meal name is \(newMeal.GetMealName()), rating is \(newMeal.GetRating()), ingredients are \(newMeal.GetIngredients()), date is \(newMeal.GetDate()).")
-    }
-    private func setDateLabel() {
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
-        
-        let strDate = dateFormatter.string(from: datePicker.date)
-        dateLabel.text = strDate // Change the date label
-    }
     @IBAction func datePickerChanged(_ sender: Any) {
         setDateLabel()
     }
+    
     @IBAction func AddMeal(_ sender: Any)
     {
         //only go back if valid data is entered
@@ -49,6 +46,17 @@ class MealViewController: UIViewController {
             print("button should work!!!")
             performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
         }
+                
+        // Want to create a MealClass object, then save the object to the database
+        let name = nameTextField.text ?? ""
+        let date = datePicker.date
+        let rating = mealRating.rating
+        let ingredients = ["apple", "orange", "banana"]
+        // Missing the meal type
+        
+        meal = Meal(Meal_Name: name, Date: date)
+        meal?.SetRating(arg1: rating)
+        meal?.SetIngredients(arg1: ingredients)
     }
     
     override func viewDidLoad() {
@@ -56,6 +64,8 @@ class MealViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setDateLabel() // Shows today's date when starting
+        nameTextField.delegate = self // Handle the text field's input through delegate callbacks
+        updateAddMealButtonState() // Enable the add meal button only if the meal text field is not empty
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,4 +83,19 @@ class MealViewController: UIViewController {
     }
     */
 
+    // MARK: Private methods
+    private func setDateLabel() {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
+        
+        let strDate = dateFormatter.string(from: datePicker.date)
+        dateLabel.text = strDate // Change the date label
+    }
+    private func updateAddMealButtonState() {
+        // Enable the Add Meal button if the text field isn't empty
+        let text = nameTextField.text ?? ""
+        addMealButton.isEnabled = !text.isEmpty
+    }
 }
