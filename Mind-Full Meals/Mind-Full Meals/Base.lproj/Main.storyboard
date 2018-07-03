@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -154,17 +155,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dnd-BF-ZF9">
-                            <rect key="frame" x="0.0" y="118" width="375" height="44"/>
+                        <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="3Lo-QJ-K0V">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Back"/>
-                            <connections>
-                                <segue destination="0Sl-iJ-S00" kind="show" id="7bF-ev-xhv"/>
-                            </connections>
-                        </button>
+                            <subviews>
+                                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N11-1E-rST">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <items>
+                                        <navigationItem title="Your food" id="mN6-2z-EXt">
+                                            <barButtonItem key="leftBarButtonItem" title="Back" id="TzW-59-mzu">
+                                                <connections>
+                                                    <segue destination="0Sl-iJ-S00" kind="show" id="jrs-G8-2pY"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <rightBarButtonItems>
+                                                <barButtonItem systemItem="edit" id="t7H-Vo-1d6">
+                                                    <connections>
+                                                        <action selector="editFood:" destination="G2m-Pt-23E" id="0az-GA-D4e"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem systemItem="add" id="mEH-0a-zq3">
+                                                    <connections>
+                                                        <action selector="addFood:" destination="G2m-Pt-23E" id="Kay-Yp-pe4"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </rightBarButtonItems>
+                                        </navigationItem>
+                                    </items>
+                                </navigationBar>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="53a-RQ-Bl3"/>
+                        </stackView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FoodTableViewCell" rowHeight="90" id="Idd-1T-Krz" customClass="FoodTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Idd-1T-Krz" id="vqm-Ng-aMS">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
@@ -472,10 +496,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPp-Cd-1Os"/>
         <segue reference="qj7-FM-sAM"/>
         <segue reference="DWt-o7-UCB"/>
         <segue reference="W8D-Ou-As4"/>
-        <segue reference="7bF-ev-xhv"/>
+        <segue reference="jrs-G8-2pY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,6 +13,14 @@ class FoodTableViewController: UITableViewController {
     //MARK: Properties
     var foods = [Food]()
     
+    //MARK: Actions
+
+    @IBAction func editFood(_ sender: UIBarButtonItem) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
+    @IBAction func addFood(_ sender: UIBarButtonItem) {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,25 +66,30 @@ class FoodTableViewController: UITableViewController {
         return cell
     }
 
-    /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            // Remove the food from the array
+            foods.remove(at: indexPath.row)
+            
+            // Update the table view
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            self.foods.append(Food(name: "test", amount: 2))
+            let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
+            
+            tableView.beginUpdates()
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         }    
     }
-    */
 
     /*
     // Override to support rearranging the table view.
