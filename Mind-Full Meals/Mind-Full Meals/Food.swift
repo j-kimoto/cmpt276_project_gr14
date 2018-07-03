@@ -10,10 +10,11 @@ import Foundation
 
 class Food {
     private var name: String
-    private var amount: Int?
+    private var amount: Int
     
-    init(name: String) {
+    init(name: String, amount: Int) {
         self.name = name
+        self.amount = amount
     }
     func getName() -> String {
         return name
@@ -22,11 +23,7 @@ class Food {
         self.name = name
     }
     func getAmount() -> Int {
-        if let unwrappedAmount = amount {
-            return unwrappedAmount
-        } else {
-            return 0
-        }
+        return amount
     }
     func setAmount(amount: Int) {
         self.amount = amount
