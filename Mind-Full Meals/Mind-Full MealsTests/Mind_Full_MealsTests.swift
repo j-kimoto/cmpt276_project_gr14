@@ -36,7 +36,7 @@ class Mind_Full_MealsTests: XCTestCase {
     
     // Confirm that the Meal initializer returns a Meal object when passed valid parameters.
     func testMealInitializationSucceeds() {
-        let emptyMeal = Meal.init()
+        let emptyMeal = Meal.init(Meal_Name: "", Date: Date())
         XCTAssertNotNil(emptyMeal)
     }
 }
