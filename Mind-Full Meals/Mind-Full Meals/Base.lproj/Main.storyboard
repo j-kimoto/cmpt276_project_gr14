@@ -146,6 +146,88 @@
             </objects>
             <point key="canvasLocation" x="4805.6000000000004" y="-795.6521739130435"/>
         </scene>
+        <!--Edit food-->
+        <scene sceneID="seK-AU-rwn">
+            <objects>
+                <tableViewController id="tpg-YV-LXg" customClass="EditFoodTableViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="PfP-RQ-KMR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Food name" id="gkQ-ym-gnJ">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="VNN-9t-2Wg">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VNN-9t-2Wg" id="6W9-al-JT1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k0w-rp-z0S">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="k0w-rp-z0S" firstAttribute="top" secondItem="6W9-al-JT1" secondAttribute="top" id="6kg-Ts-kiM"/>
+                                                <constraint firstItem="k0w-rp-z0S" firstAttribute="leading" secondItem="6W9-al-JT1" secondAttribute="leading" id="iz2-f5-z4x"/>
+                                                <constraint firstAttribute="trailing" secondItem="k0w-rp-z0S" secondAttribute="trailing" id="u3o-Q3-EhO"/>
+                                                <constraint firstAttribute="bottom" secondItem="k0w-rp-z0S" secondAttribute="bottom" id="vMz-Ir-l14"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Amount of food" id="nfr-C6-RO7">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sP6-nF-SkK">
+                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sP6-nF-SkK" id="UtE-p8-bbd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="0WE-dk-Hlp">
+                                                    <rect key="frame" x="265" y="7" width="94" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </stepper>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AmK-8d-m0E">
+                                                    <rect key="frame" x="16" y="11" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="tpg-YV-LXg" id="UiL-Yx-6V5"/>
+                            <outlet property="delegate" destination="tpg-YV-LXg" id="8Mg-sw-CZn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Edit food" id="Sbp-kV-pTL">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="do0-yR-CKE">
+                            <connections>
+                                <segue destination="gFR-9o-mcO" kind="unwind" identifier="saveFood" unwindAction="saveToFoodTableViewControllerWithSegue:" id="6OI-kK-tP3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editFoodNameTextField" destination="k0w-rp-z0S" id="4tH-xE-1Sd"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kav-1J-JXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gFR-9o-mcO" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6664.8000000000002" y="-1610.6446776611695"/>
+        </scene>
         <!--Your food-->
         <scene sceneID="hY5-5Z-Beq">
             <objects>
@@ -181,6 +263,7 @@
                                 <connections>
                                     <outlet property="foodAmountLabel" destination="lrh-JK-fDY" id="XOc-Cz-ZaK"/>
                                     <outlet property="foodNameLabel" destination="lGG-K7-gaA" id="MhD-OC-n40"/>
+                                    <segue destination="tpg-YV-LXg" kind="show" identifier="editFood" id="fsX-ci-iNz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -490,7 +573,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="qj7-FM-sAM"/>
-        <segue reference="DWt-o7-UCB"/>
+        <segue reference="2u4-Kq-Rvt"/>
         <segue reference="W8D-Ou-As4"/>
         <segue reference="81k-Tu-gyx"/>
     </inferredMetricsTieBreakers>
