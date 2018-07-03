@@ -29,8 +29,10 @@ class FoodTableViewController: UITableViewController {
         let editFoodController = segue.source as! EditFoodTableViewController
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
+        //let amount = editFoodController.editedFoodAmount
         
         foods[index!].setName(name: foodString!)
+        //foods[index!].setAmount(amount: amount!)
         tableView.reloadData()
     }
     
@@ -94,14 +96,7 @@ class FoodTableViewController: UITableViewController {
             // Update the table view
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            /*// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            self.foods.append(Food(name: "test", amount: 2))
-            print(foods)
-            let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
-            
-            tableView.beginUpdates()
-            tableView.insertRows(at: [indexPath], with: .automatic)
-            tableView.endUpdates()*/
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
 

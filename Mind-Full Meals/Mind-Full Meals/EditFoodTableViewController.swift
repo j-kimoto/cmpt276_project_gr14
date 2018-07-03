@@ -15,6 +15,7 @@ class EditFoodTableViewController: UITableViewController {
     var index: Int?
     var foods: [Food]!
     var editedFoodName: String?
+    //var editedFoodAmount: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,8 @@ class EditFoodTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 { // Field order is hardcoded for now
             editFoodNameTextField.becomeFirstResponder() // Select the text field
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            //editFoodAmountTextField.becomeFirstResponder()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -105,6 +108,7 @@ class EditFoodTableViewController: UITableViewController {
         // Pass the selected food to the food table controller
         case "saveFood":
             editedFoodName = editFoodNameTextField.text
+            //editedFoodAmount = Int(editFoodAmountTextField.text ?? 0) // If no amount is entered, 0 is the default amount
             
         default:
             fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
