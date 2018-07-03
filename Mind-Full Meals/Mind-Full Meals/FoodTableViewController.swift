@@ -24,8 +24,9 @@ class FoodTableViewController: UITableViewController {
         tableView.endUpdates()
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
+    
     @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
-        if let editFoodController = segue.source as! EditFoodTableViewController, let food = editFoodController
+        let editFoodController = segue.source as! EditFoodTableViewController
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
         
