@@ -17,17 +17,20 @@ class FoodTableViewController: UITableViewController {
     @IBAction func addFoodButton(_ sender: UIBarButtonItem) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         foods.append(Food(name: "test", amount: 2))
-        print(foods)
         let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
         
         tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        /*let alertController = UIAlertController(title: "Hint", message: "You have selected row \(IndexPath.row).", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        alertController.addAction(alertAction)
-        present(alertController, animated: true, completion: nil)*/
+    }
+    @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
+        if let editFoodController = segue.source as! EditFoodTableViewController, let food = editFoodController
+        let index = editFoodController.index
+        let foodString = editFoodController.editedFoodName
+        
+        foods[index!].setName(name: foodString!)
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -90,14 +93,14 @@ class FoodTableViewController: UITableViewController {
             // Update the table view
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            /*// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
             self.foods.append(Food(name: "test", amount: 2))
             print(foods)
             let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
             
             tableView.beginUpdates()
             tableView.insertRows(at: [indexPath], with: .automatic)
-            tableView.endUpdates()
+            tableView.endUpdates()*/
         }    
     }
 
@@ -116,16 +119,24 @@ class FoodTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
+        super.prepare(for: segue, sender: sender)
+        switch(segue.identifier ?? "") {
+            // Pass the selected food to the edit controller
+            case "editFood":
+                var path = tableView.indexPathForSelectedRow
+                let editFoodController = segue.destination as! EditFoodTableViewController
+            
+                editFoodController.index = path?.row
+                editFoodController.foods = foods
+            
+        default:
+            fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
+        }
     }
-    */
 
     // MARK: Private Methods
     private func loadSampleFood() {
