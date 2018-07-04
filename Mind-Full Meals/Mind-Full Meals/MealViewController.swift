@@ -58,8 +58,7 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         
         meal = Meal(Meal_Name: name, Date: date)
         meal?.SetRating(arg1: rating)
-        meal?.SetIngredients(arg1: ingredients)
-        
+        meal?.SetIngredients(arg1: ingredients)        
         var stmt: OpaquePointer?
         // String to insert the meal into the database
         let queryString = "Insert into Meals (name, rating, date, ingredients) VALUES (?, ?, ?, ?)"

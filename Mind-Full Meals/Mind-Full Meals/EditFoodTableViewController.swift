@@ -12,15 +12,26 @@ class EditFoodTableViewController: UITableViewController {
 
     // MARK: Properties
     @IBOutlet weak var editFoodNameTextField: UITextField!
+    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var amountLabel: UILabel!
+    
     var index: Int?
     var foods: [Food]!
     var editedFoodName: String?
-    //var editedFoodAmount: Int?
+    var editedFoodAmount: Int?
+    
+    // MARK: Actions
+    @IBAction func stepperValueChanged(_ sender: UIStepper) {
+        amountLabel.text = Int(sender.value).description // Double -> Int -> String
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        stepper.value = Double(foods[index!].getAmount()) // Int -> Double
 
-        editFoodNameTextField.text = foods[index!].getName() // Get the name of the food item
+        editFoodNameTextField.text = foods[index!].getName() // Get the food's name
+        amountLabel.text = String(foods[index!].getAmount()) // Get the food's amount
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,8 +49,6 @@ class EditFoodTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 { // Field order is hardcoded for now
             editFoodNameTextField.becomeFirstResponder() // Select the text field
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            //editFoodAmountTextField.becomeFirstResponder()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -108,7 +117,7 @@ class EditFoodTableViewController: UITableViewController {
         // Pass the selected food to the food table controller
         case "saveFood":
             editedFoodName = editFoodNameTextField.text
-            //editedFoodAmount = Int(editFoodAmountTextField.text ?? 0) // If no amount is entered, 0 is the default amount
+            editedFoodAmount = Int(amountLabel.text!) // The amount label always has a value
             
         default:
             fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
