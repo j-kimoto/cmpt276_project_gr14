@@ -10,6 +10,7 @@ import UIKit
 
 var n = 0
 
+
 let day = ["Sun","Mon", "Tues", "Wed", "Thur", "Fri",  "Sat"]
 let month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 var numOfDays = [31,28,31,30,31,30,31,31,30,31,30,31]
@@ -80,10 +81,25 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         else if n >= 14 + skip && n < 14 + skip + numOfDays[CurrentMonth-1] //the days of the month
         {
+            let numYear = CurrentYear - 1970
+            var leapYears = Int(round(Double(numYear/4)))
+            for index in 0...CurrentMonth-2
+            {
+                leapYears += numOfDays[index]
+            }
+            let numDays = numYear * 365 + leapYears + n - 14 - skip
+            let numHours = numDays * 24
+            let numSeconds = numHours * 3600
+            let numEndSeconds = numSeconds + 86400
             cell.date.text = String(n-13-skip)
             //check for meals
             //if there are meals for this day
             //makemeals()
+            if let x = UserDefaults.standard.object(forKey:String(numSeconds)) as? String
+            {
+                cell.makeBreakfast()
+            }
+           
         }
         else //beyond the days of the month
         {

@@ -62,6 +62,10 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         var stmt: OpaquePointer?
         // String to insert the meal into the database
         let queryString = "Insert into Meals (name, rating, date, ingredients) VALUES (?, ?, ?, ?)"
+        var need = Int32(convertFromDate(arg1:date))
+        var tempneed = need%86400
+        need = need - tempneed
+        UserDefaults.standard.set(name, forKey: String(need))
         
         // Preparing the query
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK {
@@ -69,7 +73,7 @@ class MealViewController: UIViewController, UITextFieldDelegate {
             print("Error preparing insert: \(errmsg)")
             return
         }
-        
+        UserDefaults.standard.set(name, forKey: String(Int32(convertFromDate(arg1:date))))
         // Binding the parameters and throwing error if not ok
         if sqlite3_bind_text(stmt, 1, name, -1, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
