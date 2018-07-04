@@ -355,7 +355,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6p5-MB-58S">
-                                <rect key="frame" x="0.0" y="78" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="78" width="375" height="491"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="4mm-f1-Izs">
@@ -379,27 +379,39 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-51-CsE" userLabel="Meal1">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLc-tR-1ph">
                                                     <rect key="frame" x="24" y="24" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.20369481510000001" green="0.56088082900000003" blue="0.075938329200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z99-UJ-9fh" userLabel="Meal2">
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <connections>
+                                                        <action selector="meal1:" destination="js0-ye-bHo" eventType="touchUpInside" id="yXk-nR-HJe"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8Z-w5-mB5" userLabel="meal2">
                                                     <rect key="frame" x="0.0" y="24" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.1419215861" green="0.40152370720000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sx-Ds-MPB" userLabel="Meal3">
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0198914904" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="meal1:" destination="js0-ye-bHo" eventType="touchUpInside" id="Awb-2K-1AE"/>
+                                                        <action selector="meal2:" destination="js0-ye-bHo" eventType="touchUpInside" id="rxF-Lg-CyR"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhK-aH-TyI" userLabel="meal3">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.019891490399700729" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="backgroundColor" red="0.1419215861" green="0.40152370720000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="meal1:" destination="js0-ye-bHo" eventType="touchUpInside" id="WRS-av-laK"/>
+                                                        <action selector="meal2:" destination="js0-ye-bHo" eventType="touchUpInside" id="0dR-OD-SWz"/>
+                                                        <action selector="meal3:" destination="js0-ye-bHo" eventType="touchUpInside" id="iSL-d0-BrS"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xw3-nh-61P">
+                                                    <rect key="frame" x="20" y="24" width="34" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -408,9 +420,10 @@
                                         <size key="customSize" width="48" height="48"/>
                                         <connections>
                                             <outlet property="date" destination="ewZ-Y9-sSM" id="Jj9-6u-Fvn"/>
-                                            <outlet property="meal1" destination="bUo-51-CsE" id="2gO-Qb-zSe"/>
-                                            <outlet property="meal2" destination="z99-UJ-9fh" id="1Py-If-ZE0"/>
-                                            <outlet property="meal3" destination="4Sx-Ds-MPB" id="BlL-Gt-1Lt"/>
+                                            <outlet property="meal1" destination="gLc-tR-1ph" id="Be1-6x-dvA"/>
+                                            <outlet property="meal1labe" destination="xw3-nh-61P" id="hjL-QY-doW"/>
+                                            <outlet property="meal2" destination="x8Z-w5-mB5" id="ifL-H1-Q37"/>
+                                            <outlet property="meal3" destination="HhK-aH-TyI" id="TSr-BP-R0U"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -433,7 +446,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cgn-Ih-WOf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302" y="118"/>
+            <point key="canvasLocation" x="1301.5999999999999" y="117.39130434782609"/>
         </scene>
         <!--Setting Controller-->
         <scene sceneID="Y2m-pz-w4G">
@@ -593,8 +606,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rhy-h1-ToT"/>
+        <segue reference="TSi-lz-XbF"/>
         <segue reference="DWw-wO-5cz"/>
-        <segue reference="NNf-kl-cah"/>
+        <segue reference="cqT-Le-5v6"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -98,6 +98,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             if let x = UserDefaults.standard.object(forKey:String(numSeconds)) as? String
             {
                 cell.makeBreakfast()
+                cell.meal1labe.text = x
             }
            
         }
