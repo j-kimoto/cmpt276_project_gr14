@@ -25,14 +25,15 @@ class FoodTableViewController: UITableViewController {
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
+    // Called after the edit screen's save button was pressed
     @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
         let editFoodController = segue.source as! EditFoodTableViewController
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
-        //let amount = editFoodController.editedFoodAmount
+        let amount = editFoodController.editedFoodAmount
         
         foods[index!].setName(name: foodString!)
-        //foods[index!].setAmount(amount: amount!)
+        foods[index!].setAmount(amount: amount!)
         tableView.reloadData()
     }
     
@@ -129,8 +130,11 @@ class FoodTableViewController: UITableViewController {
                 editFoodController.index = path?.row
                 editFoodController.foods = foods
             
-        default:
-            fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
+            case "goBack":
+                print("test")
+            
+            default:
+                fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
         }
     }
 

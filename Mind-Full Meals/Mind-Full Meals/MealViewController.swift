@@ -47,7 +47,7 @@ class MealViewController: UIViewController, UITextFieldDelegate {
             performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
         }
                 
-        // Want to create a MealClass object, then save the object to the database
+        /*// Want to create a MealClass object, then save the object to the database
         let name = nameTextField.text ?? ""
         let date = datePicker.date
         let rating = mealRating.rating
@@ -56,7 +56,7 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         
         meal = Meal(Meal_Name: name, Date: date)
         meal?.SetRating(arg1: rating)
-        meal?.SetIngredients(arg1: ingredients)
+        meal?.SetIngredients(arg1: ingredients)*/
     }
     
     override func viewDidLoad() {
