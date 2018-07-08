@@ -27,6 +27,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        n = 0 // Resets n before loading the calendar
         
         self.MyCollectionView.delegate = self
         self.MyCollectionView.dataSource = self
