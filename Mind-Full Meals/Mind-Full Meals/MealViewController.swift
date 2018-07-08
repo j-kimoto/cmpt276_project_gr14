@@ -20,7 +20,7 @@ class MealViewController: UIViewController {
     
     @IBOutlet weak var addMealButton: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
-    let mealTypes = ["Other", "Breakfast", "Lunch", "Dinner", "Snacks"] // Can I use an enum for this?
+    let mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"]
     
     var meal: Meal?
     var db: OpaquePointer?
@@ -59,7 +59,7 @@ class MealViewController: UIViewController {
 
         var stmt: OpaquePointer?
         // String to insert the meal into the database
-        let queryString = "Insert into Meals (name, rating, date, ingredients) VALUES (?, ?, ?, ?)"
+        let queryString = "Insert into Meals (name, rating, date, ingredients, type) VALUES (?, ?, ?, ?, ?)"
         var need = Int32(convertFromDate(arg1:date))
         var tempneed = need%86400
         need = need - tempneed
@@ -93,11 +93,11 @@ class MealViewController: UIViewController {
             print("Error binding ingredients: \(errmsg)")
             return
         }
-        /*if sqlite3_bind_text(stmt, 5, type, -1, nil) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 5, type, -1, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding type: \(errmsg)")
             return
-        }*/
+        }
         
         print("Data before insert: \(name)\n\(Int32(rating))\n\(convertIngredients(arg1: ingredients))\n\(Int32(convertFromDate(arg1:date)))\n\(type)")
         print("------------\n")
@@ -126,7 +126,7 @@ class MealViewController: UIViewController {
         print("Opened the database located at \(fileURL.path)")
         
         // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error creating meal table: \(errmsg)")
         }
