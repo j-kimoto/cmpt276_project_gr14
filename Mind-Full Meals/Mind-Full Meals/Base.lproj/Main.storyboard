@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -119,13 +119,24 @@
                                 </connections>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y41-lJ-x1r">
-                                <rect key="frame" x="117" y="570" width="141" height="30"/>
+                                <rect key="frame" x="117" y="607" width="141" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add/edit/delete food"/>
                                 <connections>
                                     <segue destination="yK9-2C-Gr0" kind="show" id="iPp-Cd-1Os"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meal Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od2-lB-ZI8">
+                                <rect key="frame" x="16" y="483" width="79" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ioI-Ih-lel">
+                                <rect key="frame" x="0.0" y="512" width="375" height="90"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -140,14 +151,15 @@
                         <outlet property="datePicker" destination="5VZ-cK-zZ2" id="Ath-oi-Elq"/>
                         <outlet property="mealRating" destination="hFt-qx-cyW" id="ohf-V4-PDk"/>
                         <outlet property="nameTextField" destination="8AF-lG-P1m" id="rei-PQ-a0I"/>
+                        <outlet property="typePicker" destination="ioI-Ih-lel" id="N9Q-r6-25g"/>
                         <segue destination="FrF-7t-rJG" kind="modal" identifier="BackToCalendar" id="DWt-o7-UCB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2414" y="-764"/>
+            <point key="canvasLocation" x="2413.5999999999999" y="-764.16791604197908"/>
         </scene>
-        <!--Edit food-->
+        <!--Edit Food-->
         <scene sceneID="seK-AU-rwn">
             <objects>
                 <tableViewController id="tpg-YV-LXg" customClass="EditFoodTableViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
@@ -216,7 +228,7 @@
                             <outlet property="delegate" destination="tpg-YV-LXg" id="8Mg-sw-CZn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit food" id="Sbp-kV-pTL">
+                    <navigationItem key="navigationItem" title="Edit Food" id="Sbp-kV-pTL">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="do0-yR-CKE">
                             <connections>
                                 <segue destination="gFR-9o-mcO" kind="unwind" identifier="saveFood" unwindAction="saveToFoodTableViewControllerWithSegue:" id="6OI-kK-tP3"/>
@@ -234,7 +246,7 @@
             </objects>
             <point key="canvasLocation" x="6664.8000000000002" y="-1610.6446776611695"/>
         </scene>
-        <!--Your food-->
+        <!--Your Food-->
         <scene sceneID="hY5-5Z-Beq">
             <objects>
                 <tableViewController id="G2m-Pt-23E" customClass="FoodTableViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
@@ -278,7 +290,7 @@
                             <outlet property="delegate" destination="G2m-Pt-23E" id="G7G-JN-Pbs"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your food" id="yZm-gX-Cyg">
+                    <navigationItem key="navigationItem" title="Your Food" id="yZm-gX-Cyg">
                         <leftBarButtonItems>
                             <barButtonItem systemItem="add" id="koY-aP-25H">
                                 <connections>
@@ -287,7 +299,7 @@
                             </barButtonItem>
                             <barButtonItem title="Back" id="x63-Th-Gh2">
                                 <connections>
-                                    <segue destination="0Sl-iJ-S00" kind="modal" identifier="goBack" id="4gf-dw-xFU"/>
+                                    <segue destination="0Sl-iJ-S00" kind="modal" identifier="backToAddMeal" id="4gf-dw-xFU"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -607,7 +619,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="TSi-lz-XbF"/>
-        <segue reference="DWw-wO-5cz"/>
-        <segue reference="cqT-Le-5v6"/>
+        <segue reference="14b-LY-cSb"/>
+        <segue reference="4gf-dw-xFU"/>
     </inferredMetricsTieBreakers>
 </document>

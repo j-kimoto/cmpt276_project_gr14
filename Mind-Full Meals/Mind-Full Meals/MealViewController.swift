@@ -9,30 +9,21 @@
 import UIKit
 import SQLite3
 
-class MealViewController: UIViewController, UITextFieldDelegate {
+class MealViewController: UIViewController {
 
     // MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
+    
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var dateLabel: UILabel!
+    
     @IBOutlet weak var addMealButton: UIButton!
+    @IBOutlet weak var typePicker: UIPickerView!
+    let mealTypes = ["Other", "Breakfast", "Lunch", "Dinner", "Snacks"] // Can I use an enum for this?
     
     var meal: Meal?
     var db: OpaquePointer?
-    
-    //MARK: UITextFieldDelegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        // Disable the Add Meal button while editing
-        addMealButton.isEnabled = false
-    }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        updateAddMealButtonState()
-    }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // Hides the keyboard
-        return true
-    }
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
@@ -52,13 +43,17 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         // Want to create a MealClass object, then save the object to the database
         let name = nameTextField.text ?? ""
         let date = datePicker.date
-        let rating = mealRating.rating
+        let rating = mealRating.rating // 0 if not changed
         let ingredients = ["apple", "orange", "banana"]
-        // Missing the meal type
+        let type = mealTypes[typePicker.selectedRow(inComponent: 0)]
         
-        meal = Meal(Meal_Name: name, Date: date)
+        /* meal = Meal(Meal_Name: name, Date: date)
         meal?.SetRating(arg1: rating)
-        meal?.SetIngredients(arg1: ingredients)        
+        meal?.SetIngredients(arg1: ingredients)
+        meal?.SetMeal_Type(arg1: type) */
+        meal = Meal(Meal_Name: name, Date: date, Rating: rating, Ingredients: ingredients, Meal_Type: type)
+        print(meal ?? "Meal is nil")
+
         var stmt: OpaquePointer?
         // String to insert the meal into the database
         let queryString = "Insert into Meals (name, rating, date, ingredients) VALUES (?, ?, ?, ?)"
@@ -118,6 +113,10 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         setDateLabel() // Shows today's date when starting
         nameTextField.delegate = self // Handle the text field's input through delegate callbacks
         updateAddMealButtonState() // Enable the add meal button only if the meal text field is not empty
+        
+        // Handle the meal type picker's input through delegate callbacks
+        typePicker.delegate = self
+        typePicker.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -171,5 +170,40 @@ class MealViewController: UIViewController, UITextFieldDelegate {
         // Enable the Add Meal button if the text field isn't empty
         let text = nameTextField.text ?? ""
         addMealButton.isEnabled = !text.isEmpty
+    }
+}
+
+//MARK: UITextFieldDelegate
+extension MealViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Add Meal button while editing
+        addMealButton.isEnabled = false
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateAddMealButtonState()
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Hides the keyboard
+        return true
+    }
+}
+
+//MARK: UIPickerViewDataSource
+extension MealViewController: UIPickerViewDataSource {
+    // The number of columns (components) in the picker
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    // The number of rows in the picker
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return mealTypes.count
+    }
+}
+
+//MARK: UIPickerViewDelegate
+extension MealViewController: UIPickerViewDelegate {
+    // The content of each row
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return mealTypes[row]
     }
 }
