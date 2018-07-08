@@ -13,6 +13,10 @@ class Food {
     private var amount: Int
     
     init(name: String, amount: Int) {
+        /* Used assert because not using failable initializers
+           Assert runs in Xcode's Debug configuration but not in the release version */
+        assert(amount >= 0, "The food amount should be at least 0")
+        
         self.name = name
         self.amount = amount
     }

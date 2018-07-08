@@ -22,6 +22,14 @@ class Meal {
         self.Date = Date
         self.Meal_Type = " "
     }
+    init(Meal_Name: String, Date: Date, Rating: NSInteger, Ingredients: Array<String>, Meal_Type: String)
+    {
+        self.Meal_Name = Meal_Name
+        self.Rating = Rating
+        self.Ingredients = Ingredients
+        self.Date = Date
+        self.Meal_Type = Meal_Type
+    }
     func SetMealName(arg1:String)
     {
         self.Meal_Name = arg1
@@ -61,5 +69,16 @@ class Meal {
     func GetMeal_Type() -> String
     {
         return self.Meal_Type
+    }
+}
+
+// Lets you print meal objects with print(object)
+extension Meal: CustomStringConvertible {
+    public var description: String {
+        return  "Meal_Name: \(Meal_Name)\n" +
+                "Date: \(Date)\n" +
+                "Rating: \(Rating)\n" +
+                "Ingredients: \(Ingredients)\n" +
+                "Meal_Type: \(Meal_Type)"
     }
 }

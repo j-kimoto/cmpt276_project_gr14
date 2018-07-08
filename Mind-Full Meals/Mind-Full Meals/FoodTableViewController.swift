@@ -16,7 +16,7 @@ class FoodTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func addFoodButton(_ sender: UIBarButtonItem) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        foods.append(Food(name: "test", amount: 2))
+        foods.append(Food(name: "New food", amount: 1))
         let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
         
         tableView.beginUpdates()
@@ -122,6 +122,7 @@ class FoodTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         switch(segue.identifier ?? "") {
+            
             // Pass the selected food to the edit controller
             case "editFood":
                 var path = tableView.indexPathForSelectedRow
@@ -130,8 +131,8 @@ class FoodTableViewController: UITableViewController {
                 editFoodController.index = path?.row
                 editFoodController.foods = foods
             
-            case "goBack":
-                print("test")
+            case "backToAddMeal":
+                print("Going back to the add meal screen")
             
             default:
                 fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
@@ -141,8 +142,8 @@ class FoodTableViewController: UITableViewController {
     // MARK: Private Methods
     private func loadSampleFood() {
         let food1 = Food(name: "Apple", amount: 2)
-        let food2 = Food(name: "Orange", amount: -4)
-        let food3 = Food(name: "Banana", amount: 34)
+        let food2 = Food(name: "Orange", amount: 3)
+        let food3 = Food(name: "Banana", amount: 4)
         foods += [food1, food2, food3]
     }
 
