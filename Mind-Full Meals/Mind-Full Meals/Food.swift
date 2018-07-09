@@ -33,3 +33,10 @@ class Food {
         self.amount = amount
     }
 }
+
+// Lets you print food objects with print(object)
+extension Food: CustomStringConvertible {
+    public var description: String {
+        return  "Food name: \(name). Amount: \(amount)"
+    }
+}

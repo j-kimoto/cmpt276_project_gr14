@@ -29,6 +29,23 @@ class Mind_Full_MealsUITests: XCTestCase {
     }
     
     func testExample() {
+        
+        let app = XCUIApplication()
+        let viewMealsButton = app.buttons["View Meals"]
+        viewMealsButton.tap()
+        
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery/*@START_MENU_TOKEN@*/.staticTexts["1"]/*[[".cells.staticTexts[\"1\"]",".staticTexts[\"1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Setting"].tap()
+        app.buttons["Log Out"].tap()
+        viewMealsButton.tap()
+        collectionViewsQuery.children(matching: .cell).element(boundBy: 16).otherElements.containing(.staticText, identifier:"  ").element.tap()
+        
+        let collectionView = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element(boundBy: 3).children(matching: .other).element.children(matching: .collectionView).element
+        collectionView.tap()
+        collectionViewsQuery.children(matching: .cell).element(boundBy: 19).otherElements.containing(.staticText, identifier:"  ").element.tap()
+        collectionView.tap()
+
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

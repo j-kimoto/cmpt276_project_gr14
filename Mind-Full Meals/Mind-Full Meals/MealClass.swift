@@ -22,7 +22,7 @@ class Meal {
         self.Date = Date
         self.Meal_Type = " "
     }
-    init(Meal_Name: String, Date: Date, Rating: NSInteger, Ingredients: Array<String>, Meal_Type: String)
+    init(Meal_Name: String, Rating: NSInteger, Ingredients: Array<String>, Date: Date, Meal_Type: String)
     {
         self.Meal_Name = Meal_Name
         self.Rating = Rating
@@ -75,10 +75,12 @@ class Meal {
 // Lets you print meal objects with print(object)
 extension Meal: CustomStringConvertible {
     public var description: String {
-        return  "Meal_Name: \(Meal_Name)\n" +
-                "Date: \(Date)\n" +
-                "Rating: \(Rating)\n" +
-                "Ingredients: \(Ingredients)\n" +
-                "Meal_Type: \(Meal_Type)"
+        return  """
+                Meal_Name: \(Meal_Name)
+                Rating: \(Rating)
+                Ingredients: \(Ingredients)
+                Date: \(Date)
+                Meal_Type: \(Meal_Type)
+                """
     }
 }

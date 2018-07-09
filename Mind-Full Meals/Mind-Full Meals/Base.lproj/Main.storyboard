@@ -249,6 +249,7 @@
         <!--Your Food-->
         <scene sceneID="hY5-5Z-Beq">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B8Q-ON-37w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="G2m-Pt-23E" customClass="FoodTableViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kw3-gy-qPv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -297,15 +298,14 @@
                                     <action selector="addFoodButton:" destination="G2m-Pt-23E" id="rGl-1P-IIz"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Back" id="x63-Th-Gh2">
+                            <barButtonItem title="Save" id="x63-Th-Gh2">
                                 <connections>
-                                    <segue destination="0Sl-iJ-S00" kind="modal" identifier="backToAddMeal" id="4gf-dw-xFU"/>
+                                    <segue destination="0Sl-iJ-S00" kind="showDetail" identifier="backToAddMeal" id="4gf-dw-xFU"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
                     </navigationItem>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="B8Q-ON-37w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6664.8000000000002" y="-796.55172413793105"/>
         </scene>
@@ -601,6 +601,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zbf-fw-e3G">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T3J-d7-fjF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yK9-2C-Gr0" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zMQ-71-prY">
@@ -612,7 +613,6 @@
                         <segue destination="G2m-Pt-23E" kind="relationship" relationship="rootViewController" id="gGN-0B-igx"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T3J-d7-fjF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5943" y="-797"/>
         </scene>

@@ -20,10 +20,11 @@ class MealViewController: UIViewController {
     
     @IBOutlet weak var addMealButton: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
-    let mealTypes = ["Other", "Breakfast", "Lunch", "Dinner", "Snacks"] // Can I use an enum for this?
+    let mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"]
     
     var meal: Meal?
     var db: OpaquePointer?
+    var ingredients = [String]() // Passed from FoodTableViewController in backToAddMeal segue
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
@@ -40,23 +41,25 @@ class MealViewController: UIViewController {
             performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
         }
                 
-        // Want to create a MealClass object, then save the object to the database
+        // Want to create a Meal object, then save the object to the database
         let name = nameTextField.text ?? ""
-        let date = datePicker.date
         let rating = mealRating.rating // 0 if not changed
-        let ingredients = ["apple", "orange", "banana"]
+        let date = datePicker.date
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)]
         
         /* meal = Meal(Meal_Name: name, Date: date)
         meal?.SetRating(arg1: rating)
         meal?.SetIngredients(arg1: ingredients)
         meal?.SetMeal_Type(arg1: type) */
-        meal = Meal(Meal_Name: name, Date: date, Rating: rating, Ingredients: ingredients, Meal_Type: type)
+        meal = Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type)
+        
+        print("\nMeal object data:")
         print(meal ?? "Meal is nil")
+        print("------------\n")
 
         var stmt: OpaquePointer?
         // String to insert the meal into the database
-        let queryString = "Insert into Meals (name, rating, date, ingredients) VALUES (?, ?, ?, ?)"
+        let queryString = "Insert into Meals (name, rating, date, ingredients, type) VALUES (?, ?, ?, ?, ?)"
         var need = Int32(convertFromDate(arg1:date))
         var tempneed = need%86400
         need = need - tempneed
@@ -90,11 +93,30 @@ class MealViewController: UIViewController {
             print("Error binding ingredients: \(errmsg)")
             return
         }
+        if sqlite3_bind_text(stmt, 5, type, -1, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("Error binding type: \(errmsg)")
+            return
+        }
+        
+        print("Data before insert: \(name)\n\(Int32(rating))\n\(convertIngredients(arg1: ingredients))\n\(Int32(convertFromDate(arg1:date)))\n\(type)")
+        print("------------\n")
+        
+        // Insert the meal
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errmsg = String(cString: sqlite3_errmsg(db))
+            print("Error inserting meal: \(errmsg)")
+            return
+        }
         print("Meal added successfully")
+        
+        // Delete the prepared statement to release its memory (it can't be used anymore)
+        sqlite3_finalize(stmt)
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(ingredients)
 
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
@@ -102,9 +124,10 @@ class MealViewController: UIViewController {
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening meal database");
         }
+        print("Opened the database located at \(fileURL.path)")
         
         // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT)", nil, nil, nil) != SQLITE_OK {
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error creating meal table: \(errmsg)")
         }
@@ -119,6 +142,14 @@ class MealViewController: UIViewController {
         typePicker.dataSource = self
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        // Close the database when switching views
+        sqlite3_close(db)
+        print("Closed the database")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
