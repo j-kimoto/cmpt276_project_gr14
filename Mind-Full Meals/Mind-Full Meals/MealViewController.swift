@@ -127,19 +127,8 @@ class MealViewController: UIViewController {
         super.viewDidLoad()
         print(ingredients)
 
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Meal Database")
-        // Opening the database
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database");
-        }
-        print("Opened the database located at \(fileURL.path)")
-        
-        // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error creating meal table: \(errmsg)")
-        }
+        db = openDatabase()
+        createMealTable(db)
         
         // Do any additional setup after loading the view.
         setDateLabel() // Shows today's date when starting
@@ -152,7 +141,7 @@ class MealViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         // Close the database when switching views
         sqlite3_close(db)
