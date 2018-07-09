@@ -24,6 +24,7 @@ class MealViewController: UIViewController {
     
     var meal: Meal?
     var db: OpaquePointer?
+    var ingredients = [String]() // Passed from FoodTableViewController in backToAddMeal segue
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
@@ -43,7 +44,6 @@ class MealViewController: UIViewController {
         // Want to create a Meal object, then save the object to the database
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
-        let ingredients = ["apple", "orange", "banana"]
         let date = datePicker.date
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)]
         
@@ -113,9 +113,10 @@ class MealViewController: UIViewController {
         // Delete the prepared statement to release its memory (it can't be used anymore)
         sqlite3_finalize(stmt)
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(ingredients)
 
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
