@@ -20,6 +20,8 @@ class MealViewController: UIViewController {
     
     @IBOutlet weak var addMealButton: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
+    
+    @IBOutlet weak var currentFullness: UILabel!
     let mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"]
     
     var meal: Meal?
@@ -113,24 +115,20 @@ class MealViewController: UIViewController {
         // Delete the prepared statement to release its memory (it can't be used anymore)
         sqlite3_finalize(stmt)
     }
-        
+    
+    // Called whenever the slider's value changes
+    @IBAction func fullnessChanged(_ sender: UISlider) {
+        // Sliders are floats so round it, then cast to integer
+        let fullnessInt = Int(round(sender.value))
+        currentFullness.text = String(fullnessInt)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(ingredients)
 
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Meal Database")
-        // Opening the database
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database");
-        }
-        print("Opened the database located at \(fileURL.path)")
-        
-        // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error creating meal table: \(errmsg)")
-        }
+        db = openDatabase()
+        createMealTable(db)
         
         // Do any additional setup after loading the view.
         setDateLabel() // Shows today's date when starting
@@ -143,7 +141,7 @@ class MealViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         // Close the database when switching views
         sqlite3_close(db)

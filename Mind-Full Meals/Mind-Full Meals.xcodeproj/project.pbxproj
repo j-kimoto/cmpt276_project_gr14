@@ -25,6 +25,7 @@
 		7081683920E70CAE005659C2 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683820E70CAE005659C2 /* CalendarViewController.swift */; };
 		7081683B20E70D03005659C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683A20E70D03005659C2 /* SettingsViewController.swift */; };
 		7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */; };
+		70E1791D20F4240C0085D52A /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E1791C20F4240C0085D52A /* SQLiteDatabase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		7081683820E70CAE005659C2 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		7081683A20E70D03005659C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditFoodTableViewController.swift; sourceTree = "<group>"; };
+		70E1791C20F4240C0085D52A /* SQLiteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				7081683620E70BA9005659C2 /* RatingControl.swift */,
 				2B61482420E87F5300CAC106 /* MealClass.swift */,
 				560C054420EAEC7B00B69DCE /* Food.swift */,
+				70E1791C20F4240C0085D52A /* SQLiteDatabase.swift */,
 				2B1DDF9220E58E41001A1304 /* Assets.xcassets */,
 				2B1DDF9720E58E41001A1304 /* Info.plist */,
 			);
@@ -298,6 +301,7 @@
 				2B61482520E87F5300CAC106 /* MealClass.swift in Sources */,
 				7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */,
 				2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */,
+				70E1791D20F4240C0085D52A /* SQLiteDatabase.swift in Sources */,
 				2B1DDF8E20E58E41001A1304 /* ViewController.swift in Sources */,
 				2B1DDF8C20E58E41001A1304 /* AppDelegate.swift in Sources */,
 				560C054620EAEC8500B69DCE /* Food.swift in Sources */,
