@@ -20,6 +20,8 @@ class MealViewController: UIViewController {
     
     @IBOutlet weak var addMealButton: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
+    
+    @IBOutlet weak var currentFullness: UILabel!
     let mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"]
     
     var meal: Meal?
@@ -113,7 +115,14 @@ class MealViewController: UIViewController {
         // Delete the prepared statement to release its memory (it can't be used anymore)
         sqlite3_finalize(stmt)
     }
-        
+    
+    // Called whenever the slider's value changes
+    @IBAction func fullnessChanged(_ sender: UISlider) {
+        // Sliders are floats so round it, then cast to integer
+        let fullnessInt = Int(round(sender.value))
+        currentFullness.text = String(fullnessInt)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(ingredients)
