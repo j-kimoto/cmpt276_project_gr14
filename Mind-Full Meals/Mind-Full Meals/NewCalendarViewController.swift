@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite3
 
 var n = 0
 
@@ -23,6 +24,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
 {
 
     @IBOutlet weak var MyCollectionView: UICollectionView!
+    var db: OpaquePointer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,15 +93,59 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             let numDays = numYear * 365 + leapYears + n - 14 - skip
             let numHours = numDays * 24
             let numSeconds = numHours * 3600
-            let numEndSeconds = numSeconds + 86400
+            let numEndSeconds = numSeconds + 86399
             cell.date.text = String(n-13-skip)
             //check for meals
             //if there are meals for this day
             //makemeals()
-            if let x = UserDefaults.standard.object(forKey:String(numSeconds)) as? String
-            {
-                cell.makeBreakfast()
-                cell.meal1labe.text = x
+            
+            var stmt: OpaquePointer?
+            let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
+            //connecting to database
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Meal Database")
+            if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+                print("Error opening meal database");
+            }
+            
+            // Preparing the query
+            if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error preparing insert: \(errmsg)")
+            }
+            
+            // Binding the parameters and throwing error if not ok
+            if sqlite3_bind_int(stmt, 1, Int32(numSeconds)) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error binding start date: \(errmsg)")
+            }
+            if sqlite3_bind_int(stmt, 2, Int32(numEndSeconds)) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error binding end date: \(errmsg)")
+            }
+            
+            // Query through meals of day and printing on calendar if hit
+            while (sqlite3_step(stmt) == SQLITE_ROW) {
+                let resultscol0 = sqlite3_column_text(stmt, 0)
+                let mealName = String(cString: resultscol0!)
+                let mealDate = sqlite3_column_int(stmt, 1)
+                let resultscol2 = sqlite3_column_text(stmt,2)
+                let mealType = String(cString: resultscol2!)
+                print(mealName, mealDate, mealType)
+                
+                if mealType == "Breakfast" {
+                    cell.makeBreakfast()
+                }
+                if mealType == "Lunch" {
+                    cell.makeLunch()
+                }
+                if mealType == "Dinner" {
+                    cell.makeDinner()
+                }
+                if mealType == "Snacks" {
+                    //cell.makeSnack()
+                    cell.makeBreakfast()
+                }
             }
            
         }
@@ -109,6 +155,29 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         n += 1
         return cell
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        // Close the database when switching views
+        sqlite3_close(db)
+        print("Closed the database")
+    }
+    
+    // Converts from Date format to Seconds since 1970-01-01 00:00:00
+    private func convertFromDate(arg1:Date) -> Int {
+        let date = arg1
+        let seconds = date.timeIntervalSince1970
+        return Int(seconds)
+        
+    }
+    
+    // Converts from seconds since 1970-01-01 00:00:00 to Date format
+    private func convertToDate(arg1:Int) -> Date {
+        let seconds = Double(arg1)
+        let date = Date(timeIntervalSince1970: seconds)
+        return date
     }
 }
 
