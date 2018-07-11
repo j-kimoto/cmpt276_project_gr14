@@ -6,6 +6,9 @@
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
 
+let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
+let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
 import UIKit
 import SQLite3
 
@@ -73,9 +76,10 @@ class MealViewController: UIViewController {
             print("Error preparing insert: \(errmsg)")
             return
         }
+
         UserDefaults.standard.set(name, forKey: String(Int32(convertFromDate(arg1:date))))
         // Binding the parameters and throwing error if not ok
-        if sqlite3_bind_text(stmt, 1, name, -1, nil) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 1, name, -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding name: \(errmsg)")
             return
@@ -90,12 +94,13 @@ class MealViewController: UIViewController {
             print("Error binding date: \(errmsg)")
             return
         }
-        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: ingredients), -1, nil) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: ingredients), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding ingredients: \(errmsg)")
             return
         }
-        if sqlite3_bind_text(stmt, 5, type, -1, nil) != SQLITE_OK {
+        //sqlite3_bind_text()
+        if sqlite3_bind_text(stmt, 5, type, -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding type: \(errmsg)")
             return
