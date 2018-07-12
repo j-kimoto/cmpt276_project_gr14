@@ -26,6 +26,7 @@ class MealViewController: UIViewController {
     @IBOutlet weak var typePicker: UIPickerView!
     
     @IBOutlet weak var currentFullness: UILabel!
+    @IBOutlet weak var fullnessSlider: UISlider!
     let mealTypes = [MealType.Breakfast.rawValue, MealType.Lunch.rawValue, MealType.Dinner.rawValue, MealType.Snacks.rawValue]
     
     var meal: Meal?
@@ -55,7 +56,7 @@ class MealViewController: UIViewController {
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
         let date = datePicker.date
-        let type = mealTypes[typePicker.selectedRow(inComponent: 0)]
+        let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         
         /* meal = Meal(Meal_Name: name, Date: date)
         meal?.SetRating(arg1: rating)
@@ -127,7 +128,7 @@ class MealViewController: UIViewController {
         sqlite3_finalize(stmt)
     }
     
-    // Called whenever the slider's value changes
+    // Sets the fullness label whenever the slider's value changes
     @IBAction func fullnessChanged(_ sender: UISlider) {
         // Sliders are floats so round it, then cast to integer
         let fullnessInt = Int(round(sender.value))
@@ -191,7 +192,7 @@ class MealViewController: UIViewController {
         UserDefaults.standard.set(nameTextField.text, forKey:"udname")
         UserDefaults.standard.set(mealRating.rating, forKey:"udrating")
         UserDefaults.standard.set(datePicker.date, forKey:"uddate")
-        UserDefaults.standard.set(mealTypes[typePicker.selectedRow(inComponent: 0)], forKey:"udtype")
+        //UserDefaults.standard.set(typePicker.selectedRow(inComponent: 0), forKey:"udtype") // Stores row as integer
         UserDefaults.standard.set(currentFullness.text, forKey:"udFullness")
     }
 
@@ -199,19 +200,26 @@ class MealViewController: UIViewController {
         nameTextField.text = UserDefaults.standard.string(forKey:"udname")
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
         //datePicker.date = UserDefaults.standard.string(forKey:"uddate")
-        //mealTypes[typePicker.selectedRow(inComponent: 0)] = UserDefaults.standard.integer(forKey:"udtype")
-        //currentFullness.text = UserDefaults.standard.text(forKey:"udFullness")
+        //typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
+        setFullness(UserDefaults.standard.string(forKey:"udFullness")!, fullnessSlider)
     }
     
     func clearUserDefault() {
         UserDefaults.standard.removeObject(forKey: "udname")
         UserDefaults.standard.removeObject(forKey: "udrating")
         //UserDefaults.standard.removeObject(forKey: "uddate")
-        //UserDefaults.standard.removeObject(forKey: "udtype")
-        //UserDefaults.standard.removeObject(forKey: "udFullness")
+        UserDefaults.standard.removeObject(forKey: "udtype")
+        UserDefaults.standard.removeObject(forKey: "udFullness")
     }
     
     // MARK: Private methods
+    
+    // Sets the fullness label and slider
+    private func setFullness(_ fullness: String, _ sender: UISlider!) {
+        currentFullness.text = fullness
+        sender.setValue(Float(fullness)!, animated: true)
+    }
+    
     private func setDateLabel() {
         let dateFormatter = DateFormatter()
         
@@ -243,8 +251,8 @@ class MealViewController: UIViewController {
         return str
     }
     
+    // Enable the Add Meal button if the text field isn't empty
     private func updateAddMealButtonState() {
-        // Enable the Add Meal button if the text field isn't empty
         let text = nameTextField.text ?? ""
         addMealButton.isEnabled = !text.isEmpty
     }

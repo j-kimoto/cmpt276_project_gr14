@@ -86,7 +86,7 @@ extension Meal: CustomStringConvertible {
 }
 
 // Automatically has string raw values the same as case names. This is public
-enum MealType: String {
+enum MealType: String, EnumCollection {
     case Breakfast
     case Lunch
     case Dinner
