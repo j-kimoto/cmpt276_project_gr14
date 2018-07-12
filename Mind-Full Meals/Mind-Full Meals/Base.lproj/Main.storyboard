@@ -118,7 +118,7 @@
                                 <state key="normal" title="Add/edit/delete food"/>
                                 <connections>
                                     <action selector="editFoods:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="2k0-WV-Fzn"/>
-                                    <segue destination="yK9-2C-Gr0" kind="show" id="iPp-Cd-1Os"/>
+                                    <segue destination="yK9-2C-Gr0" kind="show" identifier="goToFoodTable" id="iPp-Cd-1Os"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meal Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od2-lB-ZI8">
