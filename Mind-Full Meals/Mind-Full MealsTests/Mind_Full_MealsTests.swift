@@ -39,4 +39,10 @@ class Mind_Full_MealsTests: XCTestCase {
         let emptyMeal = Meal.init(Meal_Name: "", Date: Date())
         XCTAssertNotNil(emptyMeal)
     }
+    
+    // Test food initializer with food type
+    func testFoodInitializationSucceeds() {
+        let emptyFood = Food(name: "", amount: 0, type: FoodType.grains)
+        XCTAssertNotNil(emptyFood)
+    }
 }
