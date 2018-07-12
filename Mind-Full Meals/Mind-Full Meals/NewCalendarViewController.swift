@@ -29,6 +29,15 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             CurrentMonth = 11
             CurrentYear -= 1
         }
+        //i hate leap years
+        if CurrentMonth == 1 && CurrentYear % 4 == 0
+        {
+            numOfDays[1] = 29
+        }
+        else
+        {
+            numOfDays[1] = 28
+        }
         print(day[dayOfWeek])
         print(dayOfWeek)
         dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
@@ -45,6 +54,15 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         {
             CurrentMonth = 0
             CurrentYear += 1
+        }
+        //i hate leap years
+        if CurrentMonth == 1 && CurrentYear % 4 == 0
+        {
+            numOfDays[1] = 29
+        }
+        else
+        {
+            numOfDays[1] = 28
         }
         print(month[CurrentMonth])
         dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+numOfDays[(CurrentMonth+11)%12] + 1)%7
@@ -119,7 +137,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         {
             let numYear = CurrentYear - 1970
             var leapYears = Int(round(Double(numYear/4)))
-            for index in 0...CurrentMonth-2
+            for index in 0...CurrentMonth
             {
                 leapYears += numOfDays[index]
             }
