@@ -16,7 +16,7 @@ class FoodTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func addFoodButton(_ sender: UIBarButtonItem) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        foods.append(Food(name: "New food", amount: 1))
+        foods.append(Food(name: "New food", amount: 1, type: FoodType.dairy))
         let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
         
         tableView.beginUpdates()
@@ -143,9 +143,9 @@ class FoodTableViewController: UITableViewController {
 
     // MARK: Private Methods
     private func loadSampleFood() {
-        let food1 = Food(name: "Apple", amount: 2)
-        let food2 = Food(name: "Orange", amount: 3)
-        let food3 = Food(name: "Banana", amount: 4)
+        let food1 = Food(name: "Apple", amount: 2, type: FoodType.vegetablesAndFruit)
+        let food2 = Food(name: "Orange", amount: 3, type: FoodType.vegetablesAndFruit)
+        let food3 = Food(name: "Banana", amount: 4, type: FoodType.vegetablesAndFruit)
         foods += [food1, food2, food3]
     }
     
