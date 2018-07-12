@@ -137,16 +137,15 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        retrieveUserDefaults()
-        print(ingredients)
 
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
         // Opening the database
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening meal database");
+        } else {
+            print("Opened the database located at \(fileURL.path)")
         }
-        print("Opened the database located at \(fileURL.path)")
         
         // Creating the meal table
         if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
@@ -155,13 +154,19 @@ class MealViewController: UIViewController {
         }
         
         // Do any additional setup after loading the view.
-        setDateLabel() // Shows today's date when starting
         nameTextField.delegate = self // Handle the text field's input through delegate callbacks
         updateAddMealButtonState() // Enable the add meal button only if the meal text field is not empty
         
         // Handle the meal type picker's input through delegate callbacks
         typePicker.delegate = self
         typePicker.dataSource = self
+    }
+    
+    // Called after view is added to view hierarchy since UIPickerView's titleForRow is called after viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        retrieveUserDefaults()
+        setDateLabel() // Set the date label after loading the stored date
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -197,20 +202,21 @@ class MealViewController: UIViewController {
         UserDefaults.standard.set(currentFullness.text, forKey:"udFullness") // String
     }
 
+    // On first run, the values may be nil
     func retrieveUserDefaults() {
-        nameTextField.text = UserDefaults.standard.string(forKey:"udname")
+        nameTextField.text = UserDefaults.standard.string(forKey:"udname") ?? ""
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
         // as? casts the Any? object to optionally cast to Date object. ?? uses new object if key is nil. setDateLabel() is called later
         datePicker.date = UserDefaults.standard.object(forKey: "uddate") as? Date ?? Date()
         print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )
-        //typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
-        setFullness(UserDefaults.standard.string(forKey:"udFullness")!, fullnessSlider)
+        typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
+        setFullness(UserDefaults.standard.string(forKey:"udFullness") ?? "", fullnessSlider)
     }
     
     func clearUserDefault() {
         UserDefaults.standard.removeObject(forKey: "udname")
         UserDefaults.standard.removeObject(forKey: "udrating")
-        //UserDefaults.standard.removeObject(forKey: "uddate")
+        UserDefaults.standard.removeObject(forKey: "uddate")
         UserDefaults.standard.removeObject(forKey: "udtype")
         UserDefaults.standard.removeObject(forKey: "udFullness")
     }
@@ -220,7 +226,7 @@ class MealViewController: UIViewController {
     // Sets the fullness label and slider
     private func setFullness(_ fullness: String, _ sender: UISlider!) {
         currentFullness.text = fullness
-        sender.setValue(Float(fullness)!, animated: true)
+        sender.setValue(Float(fullness) ?? 1.0, animated: true)
     }
     
     private func setDateLabel() {
