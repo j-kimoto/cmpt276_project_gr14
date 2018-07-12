@@ -6,6 +6,7 @@
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
 
+
 import UIKit
 import SQLite3
 
@@ -22,7 +23,7 @@ var dayOfWeek =  Calendar.current.component(.weekday, from: Date())
 
 class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
-
+    
     @IBOutlet weak var MyCollectionView: UICollectionView!
     var db: OpaquePointer?
     
@@ -147,7 +148,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                     cell.makeBreakfast()
                 }
             }
-           
+            
         }
         else //beyond the days of the month
         {
@@ -180,4 +181,3 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return date
     }
 }
-

@@ -118,12 +118,11 @@
                                     <action selector="datePickerChanged:" destination="0Sl-iJ-S00" eventType="valueChanged" id="H4e-kB-nWh"/>
                                 </connections>
                             </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="editFoods" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y41-lJ-x1r">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y41-lJ-x1r">
                                 <rect key="frame" x="117" y="607" width="141" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add/edit/delete food"/>
                                 <connections>
-                                    <action selector="editFoods:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="2k0-WV-Fzn"/>
                                     <segue destination="yK9-2C-Gr0" kind="show" id="iPp-Cd-1Os"/>
                                 </connections>
                             </button>
@@ -634,9 +633,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="DWt-o7-UCB"/>
-        <segue reference="JW2-33-APR"/>
-        <segue reference="DWw-wO-5cz"/>
-        <segue reference="NNf-kl-cah"/>
+        <segue reference="loD-Qt-BFa"/>
+        <segue reference="xYF-Yw-kvb"/>
+        <segue reference="7X2-yf-5Ho"/>
     </inferredMetricsTieBreakers>
 </document>

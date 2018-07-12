@@ -5,7 +5,6 @@
 //  Created by mwa96 on 6/29/18.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
-
 let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
 let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
@@ -13,7 +12,7 @@ import UIKit
 import SQLite3
 
 class MealViewController: UIViewController {
-
+    
     // MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
@@ -50,7 +49,7 @@ class MealViewController: UIViewController {
             print("button should work!!!")
             performSegue(withIdentifier: "BackToCalendar", sender: "AddMeal")
         }
-                
+        
         // Want to create a Meal object, then save the object to the database
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
@@ -58,15 +57,15 @@ class MealViewController: UIViewController {
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)]
         
         /* meal = Meal(Meal_Name: name, Date: date)
-        meal?.SetRating(arg1: rating)
-        meal?.SetIngredients(arg1: ingredients)
-        meal?.SetMeal_Type(arg1: type) */
+         meal?.SetRating(arg1: rating)
+         meal?.SetIngredients(arg1: ingredients)
+         meal?.SetMeal_Type(arg1: type) */
         meal = Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type)
         
         print("\nMeal object data:")
         print(meal ?? "Meal is nil")
         print("------------\n")
-
+        
         var stmt: OpaquePointer?
         // String to insert the meal into the database
         let queryString = "Insert into Meals (name, rating, date, ingredients, type) VALUES (?, ?, ?, ?, ?)"
@@ -81,7 +80,7 @@ class MealViewController: UIViewController {
             print("Error preparing insert: \(errmsg)")
             return
         }
-
+        
         UserDefaults.standard.set(name, forKey: String(Int32(convertFromDate(arg1:date))))
         // Binding the parameters and throwing error if not ok
         if sqlite3_bind_text(stmt, 1, name, -1, SQLITE_TRANSIENT) != SQLITE_OK {
@@ -138,7 +137,7 @@ class MealViewController: UIViewController {
         super.viewDidLoad()
         retrieveUserDefaults()
         print(ingredients)
-
+        
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
         // Opening the database
@@ -162,7 +161,7 @@ class MealViewController: UIViewController {
         typePicker.delegate = self
         typePicker.dataSource = self
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
@@ -177,15 +176,14 @@ class MealViewController: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
     // Save all values in fields
     func storeUserDefault() {
         UserDefaults.standard.set(nameTextField.text, forKey:"udname")
@@ -194,7 +192,7 @@ class MealViewController: UIViewController {
         UserDefaults.standard.set(mealTypes[typePicker.selectedRow(inComponent: 0)], forKey:"udtype")
         UserDefaults.standard.set(currentFullness.text, forKey:"udFullness")
     }
-
+    
     func retrieveUserDefaults() {
         nameTextField.text = UserDefaults.standard.string(forKey:"udname")
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
