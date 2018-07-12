@@ -158,7 +158,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         // Close the database when switching views
         sqlite3_close(db)
