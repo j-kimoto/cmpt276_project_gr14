@@ -165,6 +165,7 @@
                         <outlet property="currentFullness" destination="ves-9d-ABc" id="aEf-RU-d4I"/>
                         <outlet property="dateLabel" destination="z5t-mU-JoE" id="D9g-OH-Ei2"/>
                         <outlet property="datePicker" destination="5VZ-cK-zZ2" id="Ath-oi-Elq"/>
+                        <outlet property="fullnessSlider" destination="SXB-8v-001" id="Ild-Jc-o7h"/>
                         <outlet property="mealRating" destination="hFt-qx-cyW" id="ohf-V4-PDk"/>
                         <outlet property="nameTextField" destination="8AF-lG-P1m" id="rei-PQ-a0I"/>
                         <outlet property="typePicker" destination="ioI-Ih-lel" id="N9Q-r6-25g"/>
