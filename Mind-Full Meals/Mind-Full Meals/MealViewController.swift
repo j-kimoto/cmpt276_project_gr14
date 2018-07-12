@@ -26,12 +26,8 @@ class MealViewController: UIViewController {
     @IBOutlet weak var typePicker: UIPickerView!
     
     @IBOutlet weak var currentFullness: UILabel!
-<<<<<<< HEAD
     @IBOutlet weak var fullnessSlider: UISlider!
     let mealTypes = [MealType.Breakfast.rawValue, MealType.Lunch.rawValue, MealType.Dinner.rawValue, MealType.Snacks.rawValue]
-=======
-    let mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"]
->>>>>>> upstream/master
     
     var meal: Meal?
     var db: OpaquePointer?
@@ -169,7 +165,7 @@ class MealViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
         
         // Close the database when switching views
         sqlite3_close(db)
