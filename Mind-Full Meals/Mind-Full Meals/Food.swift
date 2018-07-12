@@ -8,12 +8,11 @@
 
 import Foundation
 
-// Types of food. This is public
-enum FoodType: String, EnumCollection {
+enum FoodType: String {
     case vegetablesAndFruit = "Vegetables and Fruit"
-    case proteins = "Meat and Alternatives"
+    case proteins = "Milk and Alternatives"
     case grains = "Grain Products"
-    case dairy = "Milk and Alternatives"
+    case dairy = "Meat and Alternatives"
 }
 
 class Food {

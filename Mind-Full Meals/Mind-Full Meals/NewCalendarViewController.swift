@@ -18,7 +18,7 @@ var numOfDays = [31,28,31,30,31,30,31,31,30,31,30,31]
 var CurrentDay = Calendar.current.component(.day, from: Date())
 var CurrentMonth = Calendar.current.component(.month, from: Date())-1
 var CurrentYear = Calendar.current.component(.year, from: Date())
-var dayOfWeek =  Calendar.current.component(.weekday, from: Date())
+var dayOfWeek =  Calendar.current.component(.weekday, from: Date())-1
 
 class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
@@ -29,7 +29,15 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             CurrentMonth = 11
             CurrentYear -= 1
         }
+        print(day[dayOfWeek])
+        print(dayOfWeek)
+        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
+        CurrentDay = numOfDays[CurrentMonth]
+        print(CurrentDay)
+        print(day[dayOfWeek])
         print(month[CurrentMonth])
+        n = 0
+        MyCollectionView.reloadData()
     }
     @IBAction func rightButton(_ sender: Any) {
         CurrentMonth += 1
@@ -39,6 +47,13 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             CurrentYear += 1
         }
         print(month[CurrentMonth])
+        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+numOfDays[(CurrentMonth+11)%12] + 1)%7
+        CurrentDay = 1
+        print(CurrentDay)
+        print(day[dayOfWeek])
+        print(month[CurrentMonth])
+        n = 0
+        MyCollectionView.reloadData()
     }
     
     @IBOutlet weak var MyCollectionView: UICollectionView!
@@ -48,7 +63,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         n = 0 // Resets n before loading the calendar
-        
+        print("view is loading")
         self.MyCollectionView.delegate = self
         self.MyCollectionView.dataSource = self
     }
@@ -68,7 +83,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         
         
         // empty days at the start of the month
-        var skip = dayOfWeek - (CurrentDay % 7)
+        var skip = dayOfWeek + 1 - (CurrentDay % 7)
         if skip < 0
         {
             skip = (skip+14)%7
@@ -84,11 +99,11 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             numOfDays[1] = 28
         }
         
-        if n <= 6
+        if n <= 6 //0 to 6
         {
             if n == 3 // label the month
             {
-                cell.date.text = month[CurrentMonth-1]
+                cell.date.text = month[CurrentMonth]
                 print(skip)
             }
             else
@@ -96,7 +111,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                 cell.date.text = "  "
             }
         }
-        else if n < 14 && n > 6 //label the days of the week
+        else if n < 14 && n > 6 //label the days of the week cells 7 to 13
         {
             cell.date.text = day[n-7]
         }
@@ -176,7 +191,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillDisappear(true)
         
         // Close the database when switching views
         sqlite3_close(db)
