@@ -16,13 +16,31 @@ let day = ["Sun","Mon", "Tues", "Wed", "Thur", "Fri",  "Sat"]
 let month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 var numOfDays = [31,28,31,30,31,30,31,31,30,31,30,31]
 var CurrentDay = Calendar.current.component(.day, from: Date())
-var CurrentMonth = Calendar.current.component(.month, from: Date())
+var CurrentMonth = Calendar.current.component(.month, from: Date())-1
 var CurrentYear = Calendar.current.component(.year, from: Date())
 var dayOfWeek =  Calendar.current.component(.weekday, from: Date())
 
 class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
-
+    @IBAction func leftButton(_ sender: Any) {
+        CurrentMonth -= 1
+        if CurrentMonth < 0
+        {
+            CurrentMonth = 11
+            CurrentYear -= 1
+        }
+        print(month[CurrentMonth])
+    }
+    @IBAction func rightButton(_ sender: Any) {
+        CurrentMonth += 1
+        if CurrentMonth > 11
+        {
+            CurrentMonth = 0
+            CurrentYear += 1
+        }
+        print(month[CurrentMonth])
+    }
+    
     @IBOutlet weak var MyCollectionView: UICollectionView!
     var db: OpaquePointer?
     
@@ -82,7 +100,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         {
             cell.date.text = day[n-7]
         }
-        else if n >= 14 + skip && n < 14 + skip + numOfDays[CurrentMonth-1] //the days of the month
+        else if n >= 14 + skip && n < 14 + skip + numOfDays[CurrentMonth] //the days of the month
         {
             let numYear = CurrentYear - 1970
             var leapYears = Int(round(Double(numYear/4)))
