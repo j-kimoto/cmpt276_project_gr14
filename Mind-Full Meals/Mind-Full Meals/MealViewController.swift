@@ -189,17 +189,20 @@ class MealViewController: UIViewController {
 
     // Save all values in fields
     func storeUserDefault() {
-        UserDefaults.standard.set(nameTextField.text, forKey:"udname")
-        UserDefaults.standard.set(mealRating.rating, forKey:"udrating")
-        UserDefaults.standard.set(datePicker.date, forKey:"uddate")
-        //UserDefaults.standard.set(typePicker.selectedRow(inComponent: 0), forKey:"udtype") // Stores row as integer
-        UserDefaults.standard.set(currentFullness.text, forKey:"udFullness")
+        UserDefaults.standard.set(nameTextField.text, forKey:"udname") // String
+        UserDefaults.standard.set(mealRating.rating, forKey:"udrating") // Int
+        UserDefaults.standard.set(datePicker.date, forKey:"uddate") // Date is stored as Any object
+        UserDefaults.standard.set(typePicker.selectedRow(inComponent: 0), forKey:"udtype") // Int
+        print("Store: Selected row is \(typePicker.selectedRow(inComponent: 0)) which is \(mealTypes[typePicker.selectedRow(inComponent: 0)] )")
+        UserDefaults.standard.set(currentFullness.text, forKey:"udFullness") // String
     }
 
     func retrieveUserDefaults() {
         nameTextField.text = UserDefaults.standard.string(forKey:"udname")
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
-        //datePicker.date = UserDefaults.standard.string(forKey:"uddate")
+        // as? casts the Any? object to optionally cast to Date object. ?? uses new object if key is nil. setDateLabel() is called later
+        datePicker.date = UserDefaults.standard.object(forKey: "uddate") as? Date ?? Date()
+        print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )
         //typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udFullness")!, fullnessSlider)
     }
