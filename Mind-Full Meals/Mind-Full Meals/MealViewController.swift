@@ -22,6 +22,7 @@ class MealViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var addMealButton: UIButton!
+    @IBOutlet weak var editFoods: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
     
     @IBOutlet weak var currentFullness: UILabel!
@@ -34,6 +35,10 @@ class MealViewController: UIViewController {
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
         setDateLabel()
+    }
+    
+    @IBAction func editFoods(_ sender: Any) {
+        storeUserDefault()
     }
     
     @IBAction func AddMeal(_ sender: Any)
@@ -116,6 +121,7 @@ class MealViewController: UIViewController {
             return
         }
         print("Meal added successfully")
+        clearUserDefault()
         
         // Delete the prepared statement to release its memory (it can't be used anymore)
         sqlite3_finalize(stmt)
@@ -130,6 +136,7 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        retrieveUserDefaults()
         print(ingredients)
 
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -179,6 +186,31 @@ class MealViewController: UIViewController {
     }
     */
 
+    // Save all values in fields
+    func storeUserDefault() {
+        UserDefaults.standard.set(nameTextField.text, forKey:"udname")
+        UserDefaults.standard.set(mealRating.rating, forKey:"udrating")
+        UserDefaults.standard.set(datePicker.date, forKey:"uddate")
+        UserDefaults.standard.set(mealTypes[typePicker.selectedRow(inComponent: 0)], forKey:"udtype")
+        UserDefaults.standard.set(currentFullness.text, forKey:"udFullness")
+    }
+
+    func retrieveUserDefaults() {
+        nameTextField.text = UserDefaults.standard.string(forKey:"udname")
+        mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
+        //datePicker.date = UserDefaults.standard.string(forKey:"uddate")
+        //mealTypes[typePicker.selectedRow(inComponent: 0)] = UserDefaults.standard.integer(forKey:"udtype")
+        //currentFullness.text = UserDefaults.standard.text(forKey:"udFullness")
+    }
+    
+    func clearUserDefault() {
+        UserDefaults.standard.removeObject(forKey: "udname")
+        UserDefaults.standard.removeObject(forKey: "udrating")
+        //UserDefaults.standard.removeObject(forKey: "uddate")
+        //UserDefaults.standard.removeObject(forKey: "udtype")
+        //UserDefaults.standard.removeObject(forKey: "udFullness")
+    }
+    
     // MARK: Private methods
     private func setDateLabel() {
         let dateFormatter = DateFormatter()
