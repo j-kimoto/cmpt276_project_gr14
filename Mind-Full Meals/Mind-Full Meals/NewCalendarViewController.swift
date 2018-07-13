@@ -73,6 +73,17 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //connecting to database
+        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            .appendingPathComponent("Meal Database")
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+            print("Error opening meal database");
+        }
+        else {
+            print("Connected to database")
+        }
+        
         n = 0 // Resets n before loading the calendar
         print("view is loading")
         self.MyCollectionView.delegate = self
@@ -92,6 +103,10 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCollectionViewCell
         
+        // database variables
+        var stmt: OpaquePointer?
+        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
+
         
         // empty days at the start of the month
         var skip = dayOfWeek + 1 - (CurrentDay % 7)
@@ -150,15 +165,6 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             //check for meals
             //if there are meals for this day
             //makemeals()
-            
-            var stmt: OpaquePointer?
-            let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
-            //connecting to database
-            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                .appendingPathComponent("Meal Database")
-            if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-                print("Error opening meal database");
-            }
             
             // Preparing the query
             if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
