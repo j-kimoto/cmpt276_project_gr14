@@ -32,7 +32,18 @@ class MyCollectionViewCell: UICollectionViewCell
     }
     
     
-    
+    func hideBreakfast()
+    {
+        meal1.isHidden = true
+    }
+    func hideLunch()
+    {
+        meal2.isHidden = true
+    }
+    func hideDinner()
+    {
+        meal3.isHidden = true
+    }
     func makeBreakfast()
     {
         meal1.isHidden = false
