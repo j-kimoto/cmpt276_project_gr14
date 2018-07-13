@@ -5,7 +5,6 @@
 //  Created by Jason Kimoto on 2018-07-03.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
-
 import UIKit
 import SQLite3
 
@@ -106,7 +105,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         // database variables
         var stmt: OpaquePointer?
         let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
-
+        
         
         // empty days at the start of the month
         var skip = dayOfWeek + 1 - (CurrentDay % 7)
@@ -211,7 +210,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                     cell.makeBreakfast()
                 }
             }
-           
+            
         }
         else //beyond the days of the month
         {
@@ -247,4 +246,3 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return date
     }
 }
-
