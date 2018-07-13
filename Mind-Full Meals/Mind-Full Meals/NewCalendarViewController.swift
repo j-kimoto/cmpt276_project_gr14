@@ -5,6 +5,7 @@
 //  Created by Jason Kimoto on 2018-07-03.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
+
 import UIKit
 import SQLite3
 
@@ -74,7 +75,14 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         // Do any additional setup after loading the view, typically from a nib.
         
         //connecting to database
-        db = openDatabase()
+        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            .appendingPathComponent("Meal Database")
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+            print("Error opening meal database")
+        }
+        else {
+            print("Connected to database")
+        }
         
         n = 0 // Resets n before loading the calendar
         print("view is loading")
@@ -98,7 +106,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         // database variables
         var stmt: OpaquePointer?
         let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
-        
+
         
         // empty days at the start of the month
         var skip = dayOfWeek + 1 - (CurrentDay % 7)
@@ -157,13 +165,22 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             //check for meals
             //if there are meals for this day
             //makemeals()
-
-            // Preparing the query
-            prepareStatement(db, queryString, &stmt)
+            
+            // Preparing the query for database search
+            if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error preparing insert: \(errmsg)")
+            }
             
             // Binding the parameters and throwing error if not ok
-            bindInt(db, stmt, 1, Int32(numSeconds), "start date")
-            bindInt(db, stmt, 2, Int32(numEndSeconds), "end date")
+            if sqlite3_bind_int(stmt, 1, Int32(numSeconds)) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error binding start date: \(errmsg)")
+            }
+            if sqlite3_bind_int(stmt, 2, Int32(numEndSeconds)) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("Error binding end date: \(errmsg)")
+            }
             
             // Query through meals of day and printing on calendar if hit
             while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -194,7 +211,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                     cell.makeBreakfast()
                 }
             }
-            
+           
         }
         else //beyond the days of the month
         {
@@ -230,3 +247,4 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return date
     }
 }
+
