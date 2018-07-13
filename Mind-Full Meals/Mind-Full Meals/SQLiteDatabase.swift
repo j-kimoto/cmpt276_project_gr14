@@ -15,13 +15,13 @@ let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDom
     .appendingPathComponent("Meal Database")
 
 
-// Returns a db pointer to the database if successful
+// Returns a db pointer to the database if successful. If unsuccessful, returns nil
 func openDatabase() -> OpaquePointer? {
     var db: OpaquePointer? = nil
     if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
         print("Error opening meal database");
     } else {
-        print("Opened the database located at \(fileURL.path)")
+        print("Connected to the database at \(fileURL.path)")
     }
     return db
 }
@@ -36,20 +36,20 @@ func prepareStatement(_ db: OpaquePointer!, _ queryString: UnsafePointer<Int8>!,
     }
 }
 
-// Binds the "string" argument to "position". "parameter" is part of the error message
-func bindText(_ db: OpaquePointer!, _ stmt: OpaquePointer!, _ position: Int32, _ string: UnsafePointer<Int8>!, _ destructor: ((UnsafeMutableRawPointer?) -> Void)!, _ parameter: String) {
-    if sqlite3_bind_text(stmt, 1, string, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+// Binds the "string" argument to "position". "debug" is part of the error message
+func bindText(_ db: OpaquePointer!, _ stmt: OpaquePointer!, _ position: Int32, _ string: UnsafePointer<Int8>!, _ debug: String) {
+    if sqlite3_bind_text(stmt, position, string, -1, SQLITE_TRANSIENT) != SQLITE_OK {
         let errmsg = String(cString: sqlite3_errmsg(db)!)
-        print("Error binding \(parameter): \(errmsg)")
+        print("Error binding \(debug): \(errmsg)")
         return
     }
 }
 
-// Binds the "int" argument to "position". "parameter" is part of the error message
-func bindInt(_ db: OpaquePointer!, _ stmt: OpaquePointer!, _ position: Int32, _ int: Int32, _ parameter: String) {
+// Binds the "int" argument to "position". "debug" is part of the error message
+func bindInt(_ db: OpaquePointer!, _ stmt: OpaquePointer!, _ position: Int32, _ int: Int32, _ debug: String) {
     if sqlite3_bind_int(stmt, position, Int32(int)) != SQLITE_OK {
         let errmsg = String(cString: sqlite3_errmsg(db)!)
-        print("Error binding \(parameter): \(errmsg)")
+        print("Error binding \(debug): \(errmsg)")
         return
     }
 }
