@@ -5,8 +5,9 @@
 //  Created by mwa96 on 6/29/18.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
-let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
-let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
+//let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
+//let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 import UIKit
 import SQLite3
@@ -76,40 +77,15 @@ class MealViewController: UIViewController {
         UserDefaults.standard.set(name, forKey: String(need))
         
         // Preparing the query
-        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error preparing insert: \(errmsg)")
-            return
-        }
-        
+        prepareStatement(db, queryString, &stmt)
+
         UserDefaults.standard.set(name, forKey: String(Int32(convertFromDate(arg1:date))))
         // Binding the parameters and throwing error if not ok
-        if sqlite3_bind_text(stmt, 1, name, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding name: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_int(stmt, 2, Int32(rating)) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding rating: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_int(stmt, 3, Int32(convertFromDate(arg1:date))) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding date: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: ingredients), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding ingredients: \(errmsg)")
-            return
-        }
-        //sqlite3_bind_text()
-        if sqlite3_bind_text(stmt, 5, type, -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding type: \(errmsg)")
-            return
-        }
+        bindText(db, stmt, 1, name, "name")
+        bindInt(db, stmt, 2, Int32(rating), "rating")
+        bindInt(db, stmt, 3, Int32(convertFromDate(arg1:date)), "date")
+        bindText(db, stmt, 4, convertIngredients(arg1: ingredients), "ingredients")
+        bindText(db, stmt, 5, type, "type")
         
         print("Data before insert: \(name)\n\(Int32(rating))\n\(convertIngredients(arg1: ingredients))\n\(Int32(convertFromDate(arg1:date)))\n\(type)")
         print("------------\n")
@@ -136,15 +112,9 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Meal Database")
+
         // Opening the database
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database");
-        } else {
-            print("Opened the database located at \(fileURL.path)")
-        }
+        db = openDatabase()
         
         // Creating the meal table
         if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT)", nil, nil, nil) != SQLITE_OK {
@@ -196,7 +166,6 @@ class MealViewController: UIViewController {
         UserDefaults.standard.set(mealRating.rating, forKey:"udrating") // Int
         UserDefaults.standard.set(datePicker.date, forKey:"uddate") // Date is stored as Any object
         UserDefaults.standard.set(typePicker.selectedRow(inComponent: 0), forKey:"udtype") // Int
-        print("Store: Selected row is \(typePicker.selectedRow(inComponent: 0)) which is \(mealTypes[typePicker.selectedRow(inComponent: 0)] )")
         UserDefaults.standard.set(currentFullness.text, forKey:"udFullness") // String
     }
     
@@ -206,7 +175,6 @@ class MealViewController: UIViewController {
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
         // as? casts the Any? object to optionally cast to Date object. ?? uses new object if key is nil. setDateLabel() is called later
         datePicker.date = UserDefaults.standard.object(forKey: "uddate") as? Date ?? Date()
-        print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )
         typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udFullness") ?? "", fullnessSlider)
     }

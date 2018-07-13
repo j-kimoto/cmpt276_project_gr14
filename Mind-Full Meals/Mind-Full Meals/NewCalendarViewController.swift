@@ -74,14 +74,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         // Do any additional setup after loading the view, typically from a nib.
         
         //connecting to database
-        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            .appendingPathComponent("Meal Database")
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database");
-        }
-        else {
-            print("Connected to database")
-        }
+        db = openDatabase()
         
         n = 0 // Resets n before loading the calendar
         print("view is loading")
@@ -164,22 +157,13 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             //check for meals
             //if there are meals for this day
             //makemeals()
-            
+
             // Preparing the query
-            if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error preparing insert: \(errmsg)")
-            }
+            prepareStatement(db, queryString, &stmt)
             
             // Binding the parameters and throwing error if not ok
-            if sqlite3_bind_int(stmt, 1, Int32(numSeconds)) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error binding start date: \(errmsg)")
-            }
-            if sqlite3_bind_int(stmt, 2, Int32(numEndSeconds)) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error binding end date: \(errmsg)")
-            }
+            bindInt(db, stmt, 1, Int32(numSeconds), "start date")
+            bindInt(db, stmt, 2, Int32(numEndSeconds), "end date")
             
             // Query through meals of day and printing on calendar if hit
             while (sqlite3_step(stmt) == SQLITE_ROW) {
