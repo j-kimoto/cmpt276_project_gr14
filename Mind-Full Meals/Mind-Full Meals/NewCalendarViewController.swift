@@ -5,7 +5,6 @@
 //  Created by Jason Kimoto on 2018-07-03.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
-
 import UIKit
 import SQLite3
 
@@ -73,6 +72,17 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //connecting to database
+        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            .appendingPathComponent("Meal Database")
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+            print("Error opening meal database");
+        }
+        else {
+            print("Connected to database")
+        }
+        
         n = 0 // Resets n before loading the calendar
         print("view is loading")
         self.MyCollectionView.delegate = self
@@ -91,6 +101,10 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MyCollectionViewCell
+        
+        // database variables
+        var stmt: OpaquePointer?
+        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
         
         
         // empty days at the start of the month
@@ -151,15 +165,6 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             //if there are meals for this day
             //makemeals()
             
-            var stmt: OpaquePointer?
-            let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
-            //connecting to database
-            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                .appendingPathComponent("Meal Database")
-            if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-                print("Error opening meal database");
-            }
-            
             // Preparing the query
             if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -205,7 +210,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                     cell.makeBreakfast()
                 }
             }
-           
+            
         }
         else //beyond the days of the month
         {
@@ -241,4 +246,3 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return date
     }
 }
-
