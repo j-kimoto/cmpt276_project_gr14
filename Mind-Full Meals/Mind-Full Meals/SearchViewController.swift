@@ -15,8 +15,8 @@ class SearchViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         let sampleMeals = [
-            Meal(Meal_Name: "Meal 1", Rating: 1, Ingredients: ["abc", "def"], Date: Date(), Meal_Type: "Breakfast"),
-            Meal(Meal_Name: "Meal 2", Rating: 2, Ingredients: ["ghi", "jkl"], Date: Date(), Meal_Type: "Lunch")
+            Meal(Meal_Name: "Meal 1", Rating: 1, Ingredients: ["abc", "def"], Date: Date(), Meal_Type: "Breakfast", Before: "3", After: "3"),
+            Meal(Meal_Name: "Meal 2", Rating: 2, Ingredients: ["ghi", "jkl"], Date: Date(), Meal_Type: "Lunch", Before: "3", After: "3")
         ]
         // Create an instance of the data source so the table loads our meals
         self.dataSource = MealsTableDataSource(meals: sampleMeals)
@@ -28,10 +28,10 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        tableView.estimatedRowHeight = 200 // Preset height from interface builder
+        tableView.estimatedRowHeight = 284 // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension // Set the row height automatically
         tableView.dataSource = dataSource // Set the data source of the table view to this class's property
-        tableView.reloadData()
+        //tableView.reloadData()
     }
     
     // Resize the cell heights automatically
