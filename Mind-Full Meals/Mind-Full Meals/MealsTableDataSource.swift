@@ -24,14 +24,15 @@ extension MealsTableDataSource: UITableViewDataSource {
         return meals.count
     }
     
-    // Returns the meal cell and sets the labels using didSet in MealTableViewCell
+    // Returns the meal cell and sets the labels using using setMeal() in MealTableViewCell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "MealTableViewCell"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MealTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as? MealTableViewCell else {
             fatalError("The dequeued cell is not an instance of MealTableViewCell.")
         }
         
-        cell.meal = meals[indexPath.row]
+        let item = meals[indexPath.row]
+        cell.setMeal(meal: item)
+        
         return cell
     }
 }

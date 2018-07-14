@@ -14,12 +14,10 @@ class MealTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
-    
-    var meal: Meal? {
-        didSet {
-            nameLabel.text = meal?.GetMealName()
-            ingredientsLabel.text = meal?.GetIngredients().description
-        }
+
+    func setMeal(meal: Meal) {
+        nameLabel.text = meal.GetMealName()
+        ingredientsLabel.text = meal.GetIngredients().description
     }
     
     override func awakeFromNib() {

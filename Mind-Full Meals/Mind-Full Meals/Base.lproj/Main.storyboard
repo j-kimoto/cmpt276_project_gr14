@@ -399,33 +399,42 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </searchBar>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="100" id="K7Q-EO-4jZ" customClass="MealTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="72" width="375" height="100"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="200" id="K7Q-EO-4jZ" customClass="MealTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="72" width="375" height="200"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K7Q-EO-4jZ" id="iJU-kI-fGz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nd-f9-p33">
-                                                            <rect key="frame" x="15" y="-9" width="345" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-sY-blK">
+                                                            <rect key="frame" x="22" y="38.5" width="345" height="148"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-sY-blK">
-                                                            <rect key="frame" x="15" y="33" width="345" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nd-f9-p33">
+                                                            <rect key="frame" x="22" y="11" width="345" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" fixedFrame="YES" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MtT-EP-Xet">
+                                                            <rect key="frame" x="22" y="38" width="345" height="20.5"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="top" secondItem="iJU-kI-fGz" secondAttribute="topMargin" constant="-20" id="2DQ-wt-XV4"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="7nd-f9-p33" secondAttribute="trailing" id="4PU-2j-lsY"/>
-                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" id="5pY-z9-fdx"/>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" id="C5w-jY-JDV"/>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="top" secondItem="7nd-f9-p33" secondAttribute="bottom" constant="21" id="vF9-Wz-ijp"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="tJZ-sY-blK" secondAttribute="trailing" id="wsm-f1-jqr"/>
+                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="top" secondItem="7nd-f9-p33" secondAttribute="bottom" constant="7" id="2EF-6B-ZBd"/>
+                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="top" secondItem="iJU-kI-fGz" secondAttribute="topMargin" id="Saw-nh-pck"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="tJZ-sY-blK" secondAttribute="bottom" constant="2.5" id="b3d-FD-uFj"/>
+                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" constant="7" id="cJ5-r7-LDL"/>
+                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="trailing" secondItem="iJU-kI-fGz" secondAttribute="trailingMargin" constant="7" id="iXo-8U-UCy"/>
+                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" constant="7" id="pv4-p0-l9M"/>
+                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="top" secondItem="7nd-f9-p33" secondAttribute="bottom" constant="7" id="sUb-3b-Bcu"/>
+                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="trailing" secondItem="iJU-kI-fGz" secondAttribute="trailingMargin" constant="7" id="wTx-2q-q76"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>

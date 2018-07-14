@@ -28,9 +28,15 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        tableView.estimatedRowHeight = 100 // Preset height from interface builder
-        tableView.estimatedRowHeight = UITableViewAutomaticDimension // Set the row height automatically
+        tableView.estimatedRowHeight = 200 // Preset height from interface builder
+        tableView.rowHeight = UITableViewAutomaticDimension // Set the row height automatically
         tableView.dataSource = dataSource // Set the data source of the table view to this class's property
+        tableView.reloadData()
+    }
+    
+    // Resize the cell heights automatically
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         tableView.reloadData()
     }
 
