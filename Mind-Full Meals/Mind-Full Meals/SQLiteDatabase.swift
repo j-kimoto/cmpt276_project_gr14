@@ -6,7 +6,7 @@
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
 
-import Foundation
+/*import Foundation
 import SQLite3
 
 let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
@@ -53,3 +53,4 @@ func bindInt(_ db: OpaquePointer!, _ stmt: OpaquePointer!, _ position: Int32, _ 
         return
     }
 }
+*/

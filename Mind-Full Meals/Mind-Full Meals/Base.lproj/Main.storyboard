@@ -49,7 +49,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add old meal"/>
                                 <connections>
-                                    <segue destination="zIm-MV-KPF" kind="show" id="Exe-qO-9a8"/>
+                                    <segue destination="zIm-MV-KPF" kind="show" id="te9-8Q-6mN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -548,47 +548,78 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </searchBar>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="200" id="K7Q-EO-4jZ" customClass="MealTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="72" width="375" height="200"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MealTableViewCell" rowHeight="284" id="K7Q-EO-4jZ" customClass="MealTableViewCell" customModule="Mind_Full_Meals" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="72" width="375" height="284"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K7Q-EO-4jZ" id="iJU-kI-fGz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="283.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-sY-blK">
-                                                            <rect key="frame" x="22" y="38.5" width="345" height="148"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nd-f9-p33">
-                                                            <rect key="frame" x="22" y="11" width="345" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" fixedFrame="YES" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MtT-EP-Xet">
-                                                            <rect key="frame" x="22" y="38" width="345" height="20.5"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FAI-eo-URP">
+                                                            <rect key="frame" x="15" y="11" width="345" height="262"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nd-f9-p33">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5f-0H-TjE">
+                                                                    <rect key="frame" x="0.0" y="20.5" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-sY-blK">
+                                                                    <rect key="frame" x="0.0" y="41" width="345" height="139"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ap-2i-8nG">
+                                                                    <rect key="frame" x="0.0" y="180" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtv-ci-7hV">
+                                                                    <rect key="frame" x="0.0" y="200.5" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Before hunger" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh6-GB-vaL">
+                                                                    <rect key="frame" x="0.0" y="221" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="After hunger" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxy-CO-dBj">
+                                                                    <rect key="frame" x="0.0" y="241.5" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="top" secondItem="7nd-f9-p33" secondAttribute="bottom" constant="7" id="2EF-6B-ZBd"/>
-                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="top" secondItem="iJU-kI-fGz" secondAttribute="topMargin" id="Saw-nh-pck"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="tJZ-sY-blK" secondAttribute="bottom" constant="2.5" id="b3d-FD-uFj"/>
-                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" constant="7" id="cJ5-r7-LDL"/>
-                                                        <constraint firstItem="7nd-f9-p33" firstAttribute="trailing" secondItem="iJU-kI-fGz" secondAttribute="trailingMargin" constant="7" id="iXo-8U-UCy"/>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" constant="7" id="pv4-p0-l9M"/>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="top" secondItem="7nd-f9-p33" secondAttribute="bottom" constant="7" id="sUb-3b-Bcu"/>
-                                                        <constraint firstItem="tJZ-sY-blK" firstAttribute="trailing" secondItem="iJU-kI-fGz" secondAttribute="trailingMargin" constant="7" id="wTx-2q-q76"/>
+                                                        <constraint firstItem="FAI-eo-URP" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" id="3JW-aJ-Gl9"/>
+                                                        <constraint firstItem="FAI-eo-URP" firstAttribute="leading" secondItem="iJU-kI-fGz" secondAttribute="leadingMargin" id="8zC-Mz-XHW"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="FAI-eo-URP" secondAttribute="trailing" id="Cmc-6l-dXt"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="FAI-eo-URP" secondAttribute="bottom" id="Mof-Yt-fuK"/>
+                                                        <constraint firstItem="FAI-eo-URP" firstAttribute="trailing" secondItem="iJU-kI-fGz" secondAttribute="trailingMargin" id="Qd7-F3-L9T"/>
+                                                        <constraint firstItem="FAI-eo-URP" firstAttribute="top" secondItem="iJU-kI-fGz" secondAttribute="topMargin" id="Xjl-T7-9OT"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="afterHunger" destination="dxy-CO-dBj" id="0Zh-6m-Vmx"/>
+                                                    <outlet property="beforeHunger" destination="Wh6-GB-vaL" id="QhC-FZ-tNy"/>
+                                                    <outlet property="dateLabel" destination="4Ap-2i-8nG" id="q3i-zt-FEe"/>
                                                     <outlet property="ingredientsLabel" destination="tJZ-sY-blK" id="UIg-Lh-VUe"/>
                                                     <outlet property="nameLabel" destination="7nd-f9-p33" id="WF4-uR-rq1"/>
+                                                    <outlet property="ratingLabel" destination="I5f-0H-TjE" id="ApK-dm-tJO"/>
+                                                    <outlet property="typeLabel" destination="xtv-ci-7hV" id="T8o-0E-ju1"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -995,8 +1026,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JW2-33-APR"/>
-        <segue reference="DWw-wO-5cz"/>
-        <segue reference="oMt-4Q-69x"/>
+        <segue reference="loD-Qt-BFa"/>
+        <segue reference="xYF-Yw-kvb"/>
+        <segue reference="7X2-yf-5Ho"/>
     </inferredMetricsTieBreakers>
 </document>
