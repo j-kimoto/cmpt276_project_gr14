@@ -14,11 +14,17 @@ class EditFoodTableViewController: UITableViewController {
     @IBOutlet weak var editFoodNameTextField: UITextField!
     @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var foodTypePicker: UIPickerView!
+    
+    //let foodTypes = [FoodType.vegetablesAndFruit.rawValue, FoodType.proteins.rawValue, FoodType.grains.rawValue, FoodType.dairy.rawValue]
+    let foodTypes = Array(FoodType.cases()) // Array of [FoodType]
     
     var index: Int?
     var foods: [Food]!
     var editedFoodName: String?
     var editedFoodAmount: Int?
+    var editedFoodTypeIndex: Int?
+    var editedFoodType: FoodType?
     var addMode = false // true means we are currently adding food
     
     // MARK: Actions
@@ -29,12 +35,16 @@ class EditFoodTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        foodTypePicker.delegate = self
+        foodTypePicker.dataSource = self
+        
         // Edit food
         if (!addMode) {
             stepper.value = Double(foods[index!].getAmount()) // Int -> Double
 
             editFoodNameTextField.text = foods[index!].getName() // Get the food's name
             amountLabel.text = String(foods[index!].getAmount()) // Get the food's amount
+            //foodTypePicker.selectRow(foods[index!].getType(), inComponent: 0, animated: true)
         }
         // Add food
         else {
@@ -84,10 +94,33 @@ class EditFoodTableViewController: UITableViewController {
         case "saveFood":
             editedFoodName = editFoodNameTextField.text
             editedFoodAmount = Int(amountLabel.text!) // The amount label always has a value
+            editedFoodTypeIndex = foodTypePicker.selectedRow(inComponent: 0)
+            editedFoodType = foodTypes[editedFoodTypeIndex!]
             
         default:
             fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
         }
     }
 
+}
+
+
+//MARK: UIPickerViewDataSource
+extension EditFoodTableViewController: UIPickerViewDataSource {
+    // The number of columns (components) in the picker
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    // The number of rows in the picker
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return foodTypes.count
+    }
+}
+
+//MARK: UIPickerViewDelegate
+extension EditFoodTableViewController: UIPickerViewDelegate {
+    // The content of each row
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return foodTypes[row].rawValue
+    }
 }

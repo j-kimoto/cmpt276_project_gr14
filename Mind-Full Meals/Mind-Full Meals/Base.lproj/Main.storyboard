@@ -346,7 +346,7 @@
                             <tableViewSection headerTitle="Food name" id="gkQ-ym-gnJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="VNN-9t-2Wg">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VNN-9t-2Wg" id="6W9-al-JT1">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -372,7 +372,7 @@
                             <tableViewSection headerTitle="Amount of food" id="nfr-C6-RO7">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sP6-nF-SkK">
-                                        <rect key="frame" x="0.0" y="156" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sP6-nF-SkK" id="UtE-p8-bbd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -397,6 +397,24 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Food type" id="Fbq-pO-QSv">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="fS6-yl-Zet">
+                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fS6-yl-Zet" id="0LY-6a-UTS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebr-Nk-OT2">
+                                                    <rect key="frame" x="0.0" y="-23" width="375" height="90"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                </pickerView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="tpg-YV-LXg" id="UiL-Yx-6V5"/>
@@ -413,6 +431,7 @@
                     <connections>
                         <outlet property="amountLabel" destination="AmK-8d-m0E" id="QcX-AI-yS1"/>
                         <outlet property="editFoodNameTextField" destination="k0w-rp-z0S" id="4tH-xE-1Sd"/>
+                        <outlet property="foodTypePicker" destination="ebr-Nk-OT2" id="5hd-21-HzM"/>
                         <outlet property="stepper" destination="0WE-dk-Hlp" id="w24-wc-UjJ"/>
                     </connections>
                 </tableViewController>

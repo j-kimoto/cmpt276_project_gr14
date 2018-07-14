@@ -19,11 +19,13 @@ class FoodTableViewController: UITableViewController {
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
         let amount = editFoodController.editedFoodAmount
+        let foodType = editFoodController.foodTypes[editFoodController.editedFoodTypeIndex!]
         
         // If an item was added in EditFoodTableViewController, reload the food array. For editing items it doesn't do anything
         foods = editFoodController.foods
         foods[index!].setName(name: foodString!)
         foods[index!].setAmount(amount: amount!)
+        foods[index!].setType(type: foodType)
         
         // Add food
         if (editFoodController.addMode) {
