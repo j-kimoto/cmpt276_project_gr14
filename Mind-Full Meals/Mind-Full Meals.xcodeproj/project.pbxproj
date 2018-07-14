@@ -21,16 +21,13 @@
 		560C054620EAEC8500B69DCE /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054420EAEC7B00B69DCE /* Food.swift */; };
 		560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */; };
 		560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */; };
-		70791FAF20F85259004C086C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70791FAE20F85259004C086C /* MealTableViewCell.swift */; };
-		70791FB120F85767004C086C /* MealsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70791FB020F85767004C086C /* MealsTableDataSource.swift */; };
-		70791FB320F85B08004C086C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70791FB220F85B08004C086C /* SearchViewController.swift */; };
+		58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */; };
 		7081683520E70B50005659C2 /* MealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683420E70B50005659C2 /* MealViewController.swift */; };
 		7081683720E70BA9005659C2 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683620E70BA9005659C2 /* RatingControl.swift */; };
 		7081683920E70CAE005659C2 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683820E70CAE005659C2 /* CalendarViewController.swift */; };
 		7081683B20E70D03005659C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683A20E70D03005659C2 /* SettingsViewController.swift */; };
 		7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */; };
 		70D8815520F7C99E0040594D /* IterateEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8815420F7C99E0040594D /* IterateEnum.swift */; };
-		70DA814E20F7EFF90094FB30 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DA814D20F7EFF90094FB30 /* SQLiteDatabase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,16 +68,13 @@
 		560C054420EAEC7B00B69DCE /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewController.swift; sourceTree = "<group>"; };
-		70791FAE20F85259004C086C /* MealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
-		70791FB020F85767004C086C /* MealsTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsTableDataSource.swift; sourceTree = "<group>"; };
-		70791FB220F85B08004C086C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullnessInfoViewController.swift; sourceTree = "<group>"; };
 		7081683420E70B50005659C2 /* MealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewController.swift; sourceTree = "<group>"; };
 		7081683620E70BA9005659C2 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		7081683820E70CAE005659C2 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		7081683A20E70D03005659C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditFoodTableViewController.swift; sourceTree = "<group>"; };
 		70D8815420F7C99E0040594D /* IterateEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IterateEnum.swift; sourceTree = "<group>"; };
-		70DA814D20F7EFF90094FB30 /* SQLiteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,10 +144,10 @@
 				7081683620E70BA9005659C2 /* RatingControl.swift */,
 				2B61482420E87F5300CAC106 /* MealClass.swift */,
 				560C054420EAEC7B00B69DCE /* Food.swift */,
+				58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */,
 				2B1DDF9220E58E41001A1304 /* Assets.xcassets */,
 				2B1DDF9720E58E41001A1304 /* Info.plist */,
 				70D8815420F7C99E0040594D /* IterateEnum.swift */,
-				70DA814D20F7EFF90094FB30 /* SQLiteDatabase.swift */,
 			);
 			path = "Mind-Full Meals";
 			sourceTree = "<group>";
@@ -314,6 +308,7 @@
 				7081683720E70BA9005659C2 /* RatingControl.swift in Sources */,
 				2B6AF35E20EC5E9900D81464 /* MyCollectionViewCell.swift in Sources */,
 				2B61482520E87F5300CAC106 /* MealClass.swift in Sources */,
+				58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */,
 				2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */,
 				70791FB320F85B08004C086C /* SearchViewController.swift in Sources */,
 				7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */,
@@ -328,7 +323,6 @@
 				70D8815520F7C99E0040594D /* IterateEnum.swift in Sources */,
 				7081683B20E70D03005659C2 /* SettingsViewController.swift in Sources */,
 				560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */,
-				70DA814E20F7EFF90094FB30 /* SQLiteDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
