@@ -346,7 +346,7 @@
                             <tableViewSection headerTitle="Food name" id="gkQ-ym-gnJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="VNN-9t-2Wg">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VNN-9t-2Wg" id="6W9-al-JT1">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -372,7 +372,7 @@
                             <tableViewSection headerTitle="Amount of food" id="nfr-C6-RO7">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sP6-nF-SkK">
-                                        <rect key="frame" x="0.0" y="155.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="156" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sP6-nF-SkK" id="UtE-p8-bbd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -469,7 +469,7 @@
                         <leftBarButtonItems>
                             <barButtonItem systemItem="add" id="koY-aP-25H">
                                 <connections>
-                                    <action selector="addFoodButton:" destination="G2m-Pt-23E" id="rGl-1P-IIz"/>
+                                    <segue destination="tpg-YV-LXg" kind="show" identifier="addFood" id="iz0-nE-22d"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Save" id="x63-Th-Gh2">
@@ -1026,8 +1026,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="loD-Qt-BFa"/>
-        <segue reference="xYF-Yw-kvb"/>
-        <segue reference="7X2-yf-5Ho"/>
+        <segue reference="iPp-Cd-1Os"/>
+        <segue reference="TSi-lz-XbF"/>
+        <segue reference="14b-LY-cSb"/>
+        <segue reference="fsX-ci-iNz"/>
+        <segue reference="4gf-dw-xFU"/>
     </inferredMetricsTieBreakers>
 </document>
