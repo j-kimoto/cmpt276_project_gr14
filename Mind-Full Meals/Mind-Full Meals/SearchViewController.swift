@@ -39,6 +39,12 @@ class SearchViewController: UIViewController {
             print("Connected to database at \(fileURL.path)")
         }
         
+        // Creating the meal table if it doesn't exist already
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("Error creating meal table: \(errmsg)")
+        }
+        
         // Create an instance of the data source so the table loads our meals
         dataSource = MealsTableDataSource(meals: loadData())
         
