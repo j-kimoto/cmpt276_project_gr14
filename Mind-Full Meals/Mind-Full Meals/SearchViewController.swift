@@ -117,20 +117,20 @@ class SearchViewController: UIViewController {
                 }
             } // Done reading the row
             
-            // Make the array of strings -> a meal object
-            // Bug: Ingredients is a string (of an array)
-            /*print("Meal name \(temp[0])")
-            print("Meal rating \(temp[1])")
-            print("Meal ingredients \(temp[3])") // Array of strings
-            print("Meal date \(convertToDate(arg1: Int(temp[1])!) )")
-            print("Meal type \(temp[4])")
-            print("Before \(temp[5])")
-            print("After \(temp[6])\n---------")*/
-
+            // Convert the array of strings to a meal object
+            let name = temp[0]
+            let rating = Int(temp[1])!
+            let unixDate: Int = Int(temp[2])!
+            let date: Date = convertToDate(arg1: unixDate)
+            let food: Array<String> = splitFoodAtCommas(foodText: temp[3])
+            let type = temp[4]
+            let beforeHunger = temp[5]
+            let afterHunger = temp[6]
+            
             // Append one meal (one row in DB) to array of meals
             bigStringArray.append(temp)
             
-            let newMeal = Meal(Meal_Name: temp[0], Rating: Int(temp[1])!, Ingredients: [temp[3]], Date: convertToDate(arg1: Int(temp[2])!), Meal_Type: temp[4], Before: temp[5], After: temp[6])
+            let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger)
             bigMealArray.append(newMeal)
         }
 
@@ -150,6 +150,12 @@ class SearchViewController: UIViewController {
         return date
     }
     
+    // Splits comma separated string to an array
+    private func splitFoodAtCommas(foodText: String) -> Array<String> {
+        let splitFood: Array<String>
+        splitFood = foodText.components(separatedBy: ",")
+        return splitFood
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
