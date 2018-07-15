@@ -45,7 +45,7 @@ class MealTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
+        dateFormatter.timeStyle = DateFormatter.Style.none
         
         return dateFormatter.string(from: mealDate)
     }

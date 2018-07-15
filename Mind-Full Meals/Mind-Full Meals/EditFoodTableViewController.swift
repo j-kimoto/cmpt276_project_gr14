@@ -16,7 +16,6 @@ class EditFoodTableViewController: UITableViewController {
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var foodTypePicker: UIPickerView!
     
-    //let foodTypes = [FoodType.vegetablesAndFruit.rawValue, FoodType.proteins.rawValue, FoodType.grains.rawValue, FoodType.dairy.rawValue]
     let foodTypes = Array(FoodType.cases()) // Array of [FoodType]
     
     var index: Int?
@@ -44,7 +43,8 @@ class EditFoodTableViewController: UITableViewController {
 
             editFoodNameTextField.text = foods[index!].getName() // Get the food's name
             amountLabel.text = String(foods[index!].getAmount()) // Get the food's amount
-            //foodTypePicker.selectRow(foods[index!].getType(), inComponent: 0, animated: true)
+            let typeIndex = convertFoodTypeToArrayIndex(from: foodTypes, search: foods[index!].getType()) // Get the index of the food type in the array
+            foodTypePicker.selectRow(typeIndex, inComponent: 0, animated: true)
         }
         // Add food
         else {
@@ -101,7 +101,17 @@ class EditFoodTableViewController: UITableViewController {
             fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
         }
     }
-
+    
+    // Input: FoodType array, FoodType enum. Output: Index in FoodType array, named foodTypes
+    private func convertFoodTypeToArrayIndex(from: [FoodType], search: FoodType) -> Int {
+        if let index = from.index(where: {$0 == search}) {
+            return index
+        }
+        else {
+            return 0 // Returns vegetables and fruit if enum not found
+        }
+    }
+    
 }
 
 

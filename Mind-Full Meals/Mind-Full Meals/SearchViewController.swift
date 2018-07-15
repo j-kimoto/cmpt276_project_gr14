@@ -120,8 +120,7 @@ class SearchViewController: UIViewController {
             // Append one meal (one row in DB) to array of meals
             bigMealArray.append(newMeal)
         }
-        print(bigMealArray)
-        
+
         sqlite3_finalize(stmt)
         
         /*let sampleMeals = [
