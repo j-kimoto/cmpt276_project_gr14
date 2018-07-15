@@ -32,7 +32,8 @@ class MealViewController: UIViewController {
     
     var meal: Meal?
     var db: OpaquePointer?
-    var ingredients = [String]() // Passed from FoodTableViewController in backToAddMeal segue
+    var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
+    var ingredients = [String]()
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
@@ -41,6 +42,7 @@ class MealViewController: UIViewController {
     
     @IBAction func editFoods(_ sender: Any) {
         storeUserDefault()
+        print("FFFF!!")
     }
     
     @IBAction func fullnessInfo(_ sender: Any) {
@@ -61,6 +63,7 @@ class MealViewController: UIViewController {
         // Want to create a Meal object, then save the object to the database
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
+        let ingredients = convertToStringArray(array: foods)
         let date = datePicker.date
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         let beforefull = currentFullness.text ?? ""
@@ -160,6 +163,7 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(ingredients)
         
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
@@ -206,14 +210,16 @@ class MealViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
      // MARK: - Navigation
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     // This segue passes the meal's food back and forth, so food can be seen the second time
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier ?? "" == "goToFoodTable" {
+            let navVC = segue.destination as! UINavigationController // The segue goes to the navigation controller
+            let foodTVC = navVC.viewControllers.first as! FoodTableViewController
+            foodTVC.foods = foods
+        }
      }
-     */
     
     // Save all values in fields
     func storeUserDefault() {
@@ -285,6 +291,15 @@ class MealViewController: UIViewController {
         let array = arg1
         let str =  array.description
         return str
+    }
+    
+    // Converts from Food array to String array
+    private func convertToStringArray(array: [Food]) -> [String] {
+        var strArray = [String]()
+        for item in array {
+            strArray.append(item.description)
+        }
+        return strArray
     }
     
     // Enable the Add Meal button if the text field isn't empty

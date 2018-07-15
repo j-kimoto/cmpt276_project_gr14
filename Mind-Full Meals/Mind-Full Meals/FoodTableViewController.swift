@@ -12,18 +12,7 @@ class FoodTableViewController: UITableViewController {
 
     //MARK: Properties
     var foods = [Food]()
-    
-    //MARK: Actions
-    @IBAction func addFoodButton(_ sender: UIBarButtonItem) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        foods.append(Food(name: "New food", amount: 1, type: FoodType.dairy))
-        let indexPath:IndexPath = IndexPath(row:(self.foods.count - 1), section:0)
-        
-        tableView.beginUpdates()
-        tableView.insertRows(at: [indexPath], with: .automatic)
-        tableView.endUpdates()
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-    }
+    var stringFoods = [String]()
     
     // Called after the edit screen's save button was pressed
     @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
@@ -31,18 +20,33 @@ class FoodTableViewController: UITableViewController {
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
         let amount = editFoodController.editedFoodAmount
+        let foodType = editFoodController.foodTypes[editFoodController.editedFoodTypeIndex!]
         
+        // If an item was added in EditFoodTableViewController, reload the food array. For editing items it doesn't do anything
+        foods = editFoodController.foods
+
         foods[index!].setName(name: foodString!)
         foods[index!].setAmount(amount: amount!)
-        tableView.reloadData()
+        foods[index!].setType(type: foodType)
+        
+        // Add food
+        if (editFoodController.addMode) {
+            let indexPath:IndexPath = IndexPath(row:(index)!, section:0)
+            tableView.beginUpdates()
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            editFoodController.addMode = false
+        }
+        // Edit food
+        else {
+            tableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Load the sample data
-        loadSampleFood()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -128,33 +132,23 @@ class FoodTableViewController: UITableViewController {
                 var path = tableView.indexPathForSelectedRow
                 let editFoodController = segue.destination as! EditFoodTableViewController
             
-                editFoodController.index = path?.row
+                editFoodController.index = path?.row // Index of the row we want to edit
                 editFoodController.foods = foods
             
             case "backToAddMeal":
-                print("Going back to the add meal screen")
-                let mealViewController = segue.destination as! MealViewController // There's got to be a better way to do this
-                mealViewController.ingredients = convertToStringArray(array: foods)
+                let mealViewController = segue.destination as! MealViewController
+                mealViewController.foods = foods // Pass food array back
+            
+            case "addFood":
+                let editFoodController = segue.destination as! EditFoodTableViewController
+                editFoodController.addMode = true
+                
+                // If the array has n items, the array has indices from 0 to n-1. So index n should be the index of the new item
+                editFoodController.index = foods.count
+                editFoodController.foods = foods
             
             default:
                 fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
         }
     }
-
-    // MARK: Private Methods
-    private func loadSampleFood() {
-        let food1 = Food(name: "Apple", amount: 2, type: FoodType.vegetablesAndFruit)
-        let food2 = Food(name: "Orange", amount: 3, type: FoodType.vegetablesAndFruit)
-        let food3 = Food(name: "Banana", amount: 4, type: FoodType.vegetablesAndFruit)
-        foods += [food1, food2, food3]
-    }
-    
-    private func convertToStringArray(array: [Food]) -> [String] {
-        var strArray = [String]()
-        for item in array {
-            strArray.append(item.description)
-        }
-        return strArray
-    }
-
 }
