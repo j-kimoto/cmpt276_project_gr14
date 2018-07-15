@@ -49,7 +49,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add old meal"/>
                                 <connections>
-                                    <segue destination="zIm-MV-KPF" kind="show" id="te9-8Q-6mN"/>
+                                    <segue destination="yRM-6O-Xdy" kind="show" id="te9-8Q-6mN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -127,7 +127,7 @@
                                 <state key="normal" title="Add/edit/delete food"/>
                                 <connections>
                                     <action selector="editFoods:" destination="0Sl-iJ-S00" eventType="touchUpInside" id="2k0-WV-Fzn"/>
-                                    <segue destination="yK9-2C-Gr0" kind="show" id="iPp-Cd-1Os"/>
+                                    <segue destination="yK9-2C-Gr0" kind="show" identifier="goToFoodTable" id="iPp-Cd-1Os"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meal Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od2-lB-ZI8">
@@ -153,6 +153,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Back"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="a4u-ct-gpw"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="currentFullness" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="SXB-8v-001">
                                 <rect key="frame" x="211" y="131" width="118" height="30"/>
@@ -223,7 +226,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRc-fl-J6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2413.5999999999999" y="-764.16791604197908"/>
+            <point key="canvasLocation" x="2752.8000000000002" y="-764.16791604197908"/>
         </scene>
         <!--Fullness Info-->
         <scene sceneID="xWo-DX-QHM">
@@ -501,7 +504,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8Q-ON-37w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6664.8000000000002" y="-796.55172413793105"/>
+            <point key="canvasLocation" x="7004" y="-796.55172413793105"/>
         </scene>
         <!--Week Controller-->
         <scene sceneID="2hO-XE-EMo">
@@ -556,10 +559,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OHY-98-ff1">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="igo-yY-2e2">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <searchBar key="tableHeaderView" contentMode="redraw" id="4s2-nX-zkQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -655,13 +658,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZaA-Lf-T4s"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Search Meals" id="2oV-Dh-HIt">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="RGd-sU-DOM"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="x9u-a4-JCX">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="presentation" id="J2k-DK-3KG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="igo-yY-2e2" id="73O-vW-KRb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYb-YS-Sxr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="872.79999999999995" y="-764.16791604197908"/>
+            <point key="canvasLocation" x="1212" y="-764.16791604197908"/>
         </scene>
         <!--Month Calender-->
         <scene sceneID="8Ze-PQ-IHC">
@@ -1041,14 +1052,32 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T3J-d7-fjF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5943" y="-797"/>
+            <point key="canvasLocation" x="6280.8000000000002" y="-797.45127436281871"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aiT-IX-FNM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yRM-6O-Xdy" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VqD-qa-J1W">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zIm-MV-KPF" kind="relationship" relationship="rootViewController" id="1oe-yF-EV0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="036-bp-qe5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="577" y="-764"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iPp-Cd-1Os"/>
-        <segue reference="TSi-lz-XbF"/>
-        <segue reference="14b-LY-cSb"/>
+        <segue reference="loD-Qt-BFa"/>
+        <segue reference="xYF-Yw-kvb"/>
         <segue reference="fsX-ci-iNz"/>
-        <segue reference="4gf-dw-xFU"/>
+        <segue reference="7X2-yf-5Ho"/>
+        <segue reference="a4u-ct-gpw"/>
     </inferredMetricsTieBreakers>
 </document>

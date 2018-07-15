@@ -29,8 +29,8 @@ extension MealsTableDataSource: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MealTableViewCell", for: indexPath) as? MealTableViewCell else {
             fatalError("The dequeued cell is not an instance of MealTableViewCell.")
         }
-        
-        let item = meals[indexPath.row]
+        let index = indexPath.row
+        let item = meals[index]
         cell.setMeal(meal: item)
         
         return cell

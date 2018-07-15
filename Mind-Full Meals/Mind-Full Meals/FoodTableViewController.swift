@@ -12,6 +12,7 @@ class FoodTableViewController: UITableViewController {
 
     //MARK: Properties
     var foods = [Food]()
+    var stringFoods = [String]()
     
     // Called after the edit screen's save button was pressed
     @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
@@ -19,13 +20,16 @@ class FoodTableViewController: UITableViewController {
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
         let amount = editFoodController.editedFoodAmount
-        let foodType = editFoodController.foodTypes[editFoodController.editedFoodTypeIndex!]
+        //let foodType = editFoodController.foodTypes[editFoodController.editedFoodTypeIndex!]
         
         // If an item was added in EditFoodTableViewController, reload the food array. For editing items it doesn't do anything
+        print(foods)
         foods = editFoodController.foods
+        print(foods)
+
         foods[index!].setName(name: foodString!)
         foods[index!].setAmount(amount: amount!)
-        foods[index!].setType(type: foodType)
+        //foods[index!].setType(type: foodType)
         
         // Add food
         if (editFoodController.addMode) {
