@@ -12,10 +12,15 @@ import SQLite3
 class SearchViewController: UIViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    var db: OpaquePointer?
     fileprivate var dataSource: MealsTableDataSource!
     
-    // DB
-    var db: OpaquePointer?
+    var bigMealArray = [Meal]() // Array of meals
+    
+    var bigStringArray = [[String]]() // This is the string version of bigMealArray, used for searching meals. It is a 2d array (array of String arrays)
+    var filteredBigStringArray = [[String]]() // Holds currently matching meals
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,6 +46,9 @@ class SearchViewController: UIViewController {
         tableView.estimatedRowHeight = 284 // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension // Set the row height automatically
         tableView.dataSource = dataSource // Set the data source of the table view to this class's property
+        
+        searchBar.delegate = self // Handle typing in search bar
+        filteredBigStringArray = bigStringArray
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,8 +93,6 @@ class SearchViewController: UIViewController {
             print("Error preparing select: \(errmsg)")
         }
         
-        var bigMealArray = [Meal]() // Array of meals
-        
         // Get rows one at a time
         while sqlite3_step(stmt) == SQLITE_ROW {
             var temp = [String]()
@@ -115,9 +121,10 @@ class SearchViewController: UIViewController {
             print("Before \(temp[5])")
             print("After \(temp[6])\n---------")*/
 
-            var newMeal = Meal(Meal_Name: temp[0], Rating: Int(temp[1])!, Ingredients: [temp[3]], Date: convertToDate(arg1: Int(temp[2])!), Meal_Type: temp[4], Before: temp[5], After: temp[6])
-
             // Append one meal (one row in DB) to array of meals
+            bigStringArray.append(temp)
+            
+            let newMeal = Meal(Meal_Name: temp[0], Rating: Int(temp[1])!, Ingredients: [temp[3]], Date: convertToDate(arg1: Int(temp[2])!), Meal_Type: temp[4], Before: temp[5], After: temp[6])
             bigMealArray.append(newMeal)
         }
 
@@ -137,4 +144,22 @@ class SearchViewController: UIViewController {
         return date
     }
     
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // How do I filter a 2D array of Strings?
+        // How do I convert the 2D array of Strings back to meals objects so they can be displayed in the table view?
+        // Or should I just use strings in the table view, not meal objects?
+        // Todo: just search the meal name for now to make it easier
+        
+        /*filteredBigStringArray = searchText.isEmpty ? bigStringArray : bigStringArray.filter { (row: [String]) -> Bool in
+            for column in row {
+                return column.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+            }
+        }*/
+        
+        //tableView.reloadData()
+    }
 }

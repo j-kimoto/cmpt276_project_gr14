@@ -214,14 +214,10 @@ class MealViewController: UIViewController {
      // This segue passes the meal's food back and forth, so food can be seen the second time
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        switch(segue.identifier ?? "") {
-
-            case "goToFoodTable":
-                let navVC = segue.destination as! UINavigationController // The segue goes to the navigation controller
-                let foodTVC = navVC.viewControllers.first as! FoodTableViewController
-                foodTVC.foods = foods
-            default:
-                fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
+        if segue.identifier ?? "" == "goToFoodTable" {
+            let navVC = segue.destination as! UINavigationController // The segue goes to the navigation controller
+            let foodTVC = navVC.viewControllers.first as! FoodTableViewController
+            foodTVC.foods = foods
         }
      }
     
