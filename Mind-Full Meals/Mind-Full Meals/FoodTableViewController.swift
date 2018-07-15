@@ -137,7 +137,7 @@ class FoodTableViewController: UITableViewController {
             
             case "backToAddMeal":
                 let mealViewController = segue.destination as! MealViewController
-                mealViewController.ingredients = convertToStringArray(array: foods)
+                mealViewController.foods = foods // Pass food array back
             
             case "addFood":
                 let editFoodController = segue.destination as! EditFoodTableViewController
@@ -151,14 +151,4 @@ class FoodTableViewController: UITableViewController {
                 fatalError("Unexpected Segue Identifier: \(String(describing: segue.identifier))")
         }
     }
-
-    // MARK: Private Methods
-    private func convertToStringArray(array: [Food]) -> [String] {
-        var strArray = [String]()
-        for item in array {
-            strArray.append(item.description)
-        }
-        return strArray
-    }
-
 }
