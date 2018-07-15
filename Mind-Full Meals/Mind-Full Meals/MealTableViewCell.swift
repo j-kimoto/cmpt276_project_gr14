@@ -23,7 +23,7 @@ class MealTableViewCell: UITableViewCell {
     func setMeal(meal: Meal) {
         nameLabel.text = meal.GetMealName()
         ratingLabel.text = String(meal.GetRating())
-        ingredientsLabel.text = meal.GetIngredients().description
+        ingredientsLabel.text = convertIngredients(arg1: meal.GetIngredients())
         dateLabel.text = dateToString(mealDate: meal.GetDate())
         typeLabel.text = meal.GetMeal_Type()
         beforeHunger.text = meal.GetBefore()
@@ -48,5 +48,13 @@ class MealTableViewCell: UITableViewCell {
         dateFormatter.timeStyle = DateFormatter.Style.none
         
         return dateFormatter.string(from: mealDate)
+    }
+    
+    // Convert an array of strings to a comma separated string
+    private func convertIngredients(arg1:Array<String>) -> String {
+        let array = arg1
+        //let str =  array.description
+        let str = array.joined(separator: ",")
+        return str
     }
 }

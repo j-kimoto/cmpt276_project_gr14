@@ -21,34 +21,27 @@ class MealViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var addMealButton: UIButton!
-    @IBOutlet weak var editFoods: UIButton!
     @IBOutlet weak var typePicker: UIPickerView!
+    @IBOutlet weak var foodTextField: UITextField!
     
     @IBOutlet weak var currentFullness: UILabel!
     @IBOutlet weak var afterFullness: UILabel!
     @IBOutlet weak var fullnessSlider: UISlider!
     @IBOutlet weak var afterfullSlider: UISlider!
+    
     let mealTypes = [MealType.Breakfast.rawValue, MealType.Lunch.rawValue, MealType.Dinner.rawValue, MealType.Snacks.rawValue]
     
     var meal: Meal?
     var db: OpaquePointer?
-    var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
-    var ingredients = [String]()
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
         setDateLabel()
     }
     
-    @IBAction func editFoods(_ sender: Any) {
-        storeUserDefault()
-        print("FFFF!!")
-    }
-    
     @IBAction func fullnessInfo(_ sender: Any) {
         storeUserDefault()
     }
-    
     
     @IBAction func AddMeal(_ sender: Any)
     {
@@ -63,7 +56,14 @@ class MealViewController: UIViewController {
         // Want to create a Meal object, then save the object to the database
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
-        let ingredients = convertToStringArray(array: foods)
+        
+        let foodText = foodTextField.text
+        var ingredients = [""]      // Assume no text is in the food text field by default
+        if let foodText = foodText {
+            // Some food was entered
+            ingredients = splitFoodAtCommas(foodText: foodText)
+        }
+        
         let date = datePicker.date
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         let beforefull = currentFullness.text ?? ""
@@ -163,7 +163,6 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(ingredients)
         
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
@@ -209,17 +208,6 @@ class MealViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-     // MARK: - Navigation
-     // This segue passes the meal's food back and forth, so food can be seen the second time
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        if segue.identifier ?? "" == "goToFoodTable" {
-            let navVC = segue.destination as! UINavigationController // The segue goes to the navigation controller
-            let foodTVC = navVC.viewControllers.first as! FoodTableViewController
-            foodTVC.foods = foods
-        }
-     }
     
     // Save all values in fields
     func storeUserDefault() {
@@ -287,19 +275,19 @@ class MealViewController: UIViewController {
         return date
     }
     
+    // Convert an array of strings to a comma separated string
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
-        let str =  array.description
+        //let str =  array.description
+        let str = array.joined(separator: ",")
         return str
     }
     
-    // Converts from Food array to String array
-    private func convertToStringArray(array: [Food]) -> [String] {
-        var strArray = [String]()
-        for item in array {
-            strArray.append(item.description)
-        }
-        return strArray
+    // Splits the text in foodTextField to an array using comma separator
+    private func splitFoodAtCommas(foodText: String) -> Array<String> {
+        let splitFood: Array<String>
+        splitFood = foodText.components(separatedBy: ",")
+        return splitFood
     }
     
     // Enable the Add Meal button if the text field isn't empty

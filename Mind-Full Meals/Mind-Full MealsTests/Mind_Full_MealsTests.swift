@@ -39,29 +39,4 @@ class Mind_Full_MealsTests: XCTestCase {
         let emptyMeal = Meal.init(Meal_Name: "", Date: Date())
         XCTAssertNotNil(emptyMeal, "Meal is nil")
     }
-    
-    // Test food initializer returns a Food object when passed valid parameters
-    func testFoodInitializationSucceeds() {
-        let emptyFood = Food(name: "", amount: 0, type: FoodType.grains)
-        XCTAssertNotNil(emptyFood, "Food is nil")
-    }
-
-    // Test string values of food types are OK
-    func testFoodTypes() {
-        for foodCategory in Array(FoodType.cases()) {
-            let testFood = Food(name: "", amount: 0, type: foodCategory)
-            let typeToString = testFood.getType().rawValue
-
-            switch foodCategory {
-                case .dairy:
-                    XCTAssertEqual(typeToString, "Milk and Alternatives", "Dairy string not equal")
-                case .grains:
-                    XCTAssertEqual(typeToString, "Grain Products", "Grains string not equal")
-                case .proteins:
-                    XCTAssertEqual(typeToString, "Meat and Alternatives", "Proteins string not equal")
-                case .vegetablesAndFruit:
-                    XCTAssertEqual(typeToString, "Vegetables and Fruit", "Vegetables string not equal")
-            }
-        }
-    }
 }
