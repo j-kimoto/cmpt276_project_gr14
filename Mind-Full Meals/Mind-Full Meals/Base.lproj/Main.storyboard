@@ -70,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                <rect key="frame" x="57" y="201" width="260" height="48"/>
+                                <rect key="frame" x="57" y="245" width="260" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="ILu-Gn-VTE"/>
                                     <constraint firstAttribute="width" constant="260" id="iqH-qA-WbK"/>
@@ -639,6 +639,7 @@
                                             <outlet property="nameLabel" destination="7nd-f9-p33" id="WF4-uR-rq1"/>
                                             <outlet property="ratingLabel" destination="I5f-0H-TjE" id="ApK-dm-tJO"/>
                                             <outlet property="typeLabel" destination="xtv-ci-7hV" id="T8o-0E-ju1"/>
+                                            <segue destination="0Sl-iJ-S00" kind="show" identifier="editMealInfo" id="PvA-eS-qfn"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1073,7 +1074,7 @@
         <segue reference="loD-Qt-BFa"/>
         <segue reference="xYF-Yw-kvb"/>
         <segue reference="fsX-ci-iNz"/>
-        <segue reference="7X2-yf-5Ho"/>
-        <segue reference="a4u-ct-gpw"/>
+        <segue reference="PvA-eS-qfn"/>
+        <segue reference="J2k-DK-3KG"/>
     </inferredMetricsTieBreakers>
 </document>

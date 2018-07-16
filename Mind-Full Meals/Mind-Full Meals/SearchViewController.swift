@@ -77,15 +77,22 @@ class SearchViewController: UIViewController {
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // editMealInfo
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier == "editMealInfo" {
+            // Want to edit the selected meal
+            var path = tableView.indexPathForSelectedRow
+            let mealViewController = segue.destination as! MealViewController
+            
+            mealViewController.meal = filteredBigMealArray[(path?.row)!] // Gets meal from the filtered array
+            mealViewController.editMeal = true // Currently editing meal
+            print(mealViewController.meal ?? "meal is nil")
+        }
     }
-    */
     
     // Selects all rows in the Meal database and returns an array of Meal objects
     func loadData() -> [Meal] {
