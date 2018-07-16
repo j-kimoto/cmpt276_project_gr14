@@ -18,9 +18,7 @@ class SearchViewController: UIViewController {
     fileprivate var dataSource: MealsTableDataSource!
     
     var bigMealArray = [Meal]() // Array of meals
-    
-    var bigStringArray = [[String]]() // This is the string version of bigMealArray, used for searching meals. It is a 2d array (array of String arrays)
-    var filteredBigStringArray = [[String]]() // Holds currently matching meals
+    var filteredBigMealArray = [Meal]()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,16 +43,18 @@ class SearchViewController: UIViewController {
             print("Error creating meal table: \(errmsg)")
         }
         
+        searchBar.delegate = self // Handle typing in search bar
+        
+        bigMealArray = loadData() // Loads data to bigMealArray
+        filteredBigMealArray = bigMealArray
+        
         // Create an instance of the data source so the table loads our meals
-        dataSource = MealsTableDataSource(meals: loadData())
+        dataSource = MealsTableDataSource(meals: filteredBigMealArray)
         
         // Do any additional setup after loading the view.
         tableView.estimatedRowHeight = 284 // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension // Set the row height automatically
         tableView.dataSource = dataSource // Set the data source of the table view to this class's property
-        
-        searchBar.delegate = self // Handle typing in search bar
-        filteredBigStringArray = bigStringArray
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,8 +88,8 @@ class SearchViewController: UIViewController {
     */
     
     // Selects all rows in the Meal database and returns an array of Meal objects
-    // Very memory intensive
     func loadData() -> [Meal] {
+        var tmp = [Meal]()
         let queryString = "SELECT name, rating, date, ingredients, type, before, after FROM Meals"
         var stmt: OpaquePointer?
         
@@ -128,19 +128,12 @@ class SearchViewController: UIViewController {
             print("After \(temp[6])\n---------")*/
 
             // Append one meal (one row in DB) to array of meals
-            bigStringArray.append(temp)
-            
             let newMeal = Meal(Meal_Name: temp[0], Rating: Int(temp[1])!, Ingredients: [temp[3]], Date: convertToDate(arg1: Int(temp[2])!), Meal_Type: temp[4], Before: temp[5], After: temp[6])
-            bigMealArray.append(newMeal)
+            tmp.append(newMeal)
         }
 
         sqlite3_finalize(stmt)
-        
-        /*let sampleMeals = [
-            Meal(Meal_Name: "Meal 1", Rating: 1, Ingredients: ["abc", "def"], Date: Date(), Meal_Type: "Breakfast", Before: "3", After: "3"),
-            Meal(Meal_Name: "Meal 2", Rating: 2, Ingredients: ["ghi", "jkl"], Date: Date(), Meal_Type: "Lunch", Before: "3", After: "3")
-        ]*/
-        return bigMealArray
+        return tmp
     }
 
     // Converts from seconds since 1970-01-01 00:00:00 to Date format
@@ -155,17 +148,15 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // How do I filter a 2D array of Strings?
-        // How do I convert the 2D array of Strings back to meals objects so they can be displayed in the table view?
-        // Or should I just use strings in the table view, not meal objects?
-        // Todo: just search the meal name for now to make it easier
+        // Searches meal name only for now. Use lowercase to search
+        // range finds the first occurence of searchText in its calle. Returns {NSNotFound, 0} if not found/empty
+        filteredBigMealArray = searchText.isEmpty ? bigMealArray : bigMealArray.filter {(aMeal: Meal) -> Bool in
+            return aMeal.GetMealName().range(of: searchText.lowercased(), options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
         
-        /*filteredBigStringArray = searchText.isEmpty ? bigStringArray : bigStringArray.filter { (row: [String]) -> Bool in
-            for column in row {
-                return column.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-            }
-        }*/
-        
-        //tableView.reloadData()
+        // Set the table view's data source to the filtered list of meals
+        dataSource = MealsTableDataSource(meals: filteredBigMealArray)
+        tableView.dataSource = dataSource
+        tableView.reloadData()
     }
 }
