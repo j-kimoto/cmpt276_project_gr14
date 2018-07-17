@@ -290,7 +290,8 @@ class MealViewController: UIViewController {
     
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
-        let str =  array.description
+        //let str =  array.description
+        let str = array.joined(separator: ",")
         return str
     }
     

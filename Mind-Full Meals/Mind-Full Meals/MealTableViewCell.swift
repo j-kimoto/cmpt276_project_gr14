@@ -23,24 +23,14 @@ class MealTableViewCell: UITableViewCell {
     func setMeal(meal: Meal) {
         nameLabel.text = meal.GetMealName()
         ratingLabel.text = String(meal.GetRating())
-        ingredientsLabel.text = meal.GetIngredients().description
+        ingredientsLabel.text = convertIngredients(arg1: meal.GetIngredients())
         dateLabel.text = dateToString(mealDate: meal.GetDate())
         typeLabel.text = meal.GetMeal_Type()
         beforeHunger.text = meal.GetBefore()
         afterHunger.text = meal.GetAfter()
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    // Returns a text representation of the date parameter
     private func dateToString(mealDate: Date) -> String {
         let dateFormatter = DateFormatter()
         
@@ -48,5 +38,12 @@ class MealTableViewCell: UITableViewCell {
         dateFormatter.timeStyle = DateFormatter.Style.none
         
         return dateFormatter.string(from: mealDate)
+    }
+    
+    // Converts the array of ingredients to a string
+    private func convertIngredients(arg1:Array<String>) -> String {
+        let array = arg1
+        let str = array.joined(separator: ",")
+        return str
     }
 }
