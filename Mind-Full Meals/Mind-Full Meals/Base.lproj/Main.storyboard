@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -70,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hFt-qx-cyW" customClass="RatingControl" customModule="Mind_Full_Meals" customModuleProvider="target">
-                                <rect key="frame" x="57" y="245" width="260" height="48"/>
+                                <rect key="frame" x="57" y="201" width="260" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="ILu-Gn-VTE"/>
                                     <constraint firstAttribute="width" constant="260" id="iqH-qA-WbK"/>
@@ -509,7 +509,7 @@
         <!--Week Controller-->
         <scene sceneID="2hO-XE-EMo">
             <objects>
-                <viewController id="FrF-7t-rJG" userLabel="Week Controller" customClass="CalendarViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FrF-7t-rJG" userLabel="Week Controller" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L5g-gx-YZa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -802,7 +802,7 @@
         <!--Setting Controller-->
         <scene sceneID="Y2m-pz-w4G">
             <objects>
-                <viewController id="NYI-qe-Euj" userLabel="Setting Controller" customClass="SettingsViewController" customModule="Mind_Full_Meals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NYI-qe-Euj" userLabel="Setting Controller" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H9Y-zg-7yY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1071,10 +1071,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="loD-Qt-BFa"/>
-        <segue reference="xYF-Yw-kvb"/>
+        <segue reference="JW2-33-APR"/>
+        <segue reference="14b-LY-cSb"/>
         <segue reference="fsX-ci-iNz"/>
-        <segue reference="PvA-eS-qfn"/>
+        <segue reference="NNf-kl-cah"/>
         <segue reference="J2k-DK-3KG"/>
     </inferredMetricsTieBreakers>
 </document>
