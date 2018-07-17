@@ -43,7 +43,6 @@ class MealViewController: UIViewController {
     
     @IBAction func editFoods(_ sender: Any) {
         storeUserDefault()
-        print("FFFF!!")
     }
     
     @IBAction func fullnessInfo(_ sender: Any) {
@@ -267,7 +266,7 @@ class MealViewController: UIViewController {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
+        dateFormatter.timeStyle = DateFormatter.Style.medium // Time format like 3:30:32 PM
         
         let strDate = dateFormatter.string(from: datePicker.date)
         dateLabel.text = strDate // Change the date label

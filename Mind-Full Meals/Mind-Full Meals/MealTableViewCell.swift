@@ -20,6 +20,7 @@ class MealTableViewCell: UITableViewCell {
     @IBOutlet weak var beforeHunger: UILabel!
     @IBOutlet weak var afterHunger: UILabel!
 
+    // Sets the table cell text to the meal object's properties
     func setMeal(meal: Meal) {
         nameLabel.text = meal.GetMealName()
         ratingLabel.text = String(meal.GetRating())
@@ -35,7 +36,7 @@ class MealTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateFormatter.timeStyle = DateFormatter.Style.medium
         
         return dateFormatter.string(from: mealDate)
     }
