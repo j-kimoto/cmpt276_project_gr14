@@ -34,6 +34,7 @@ class MealViewController: UIViewController {
     var db: OpaquePointer?
     var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
     var ingredients = [String]()
+    var editMeal = false // Are we currently editing a meal?
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
