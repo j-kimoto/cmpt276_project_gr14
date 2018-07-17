@@ -33,7 +33,6 @@ class MealViewController: UIViewController {
     var meal: Meal?
     var db: OpaquePointer?
     var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
-    var ingredients = [String]()
     var editMeal = false // Are we currently editing a meal?
     
     // MARK: Actions
@@ -43,7 +42,6 @@ class MealViewController: UIViewController {
     
     @IBAction func editFoods(_ sender: Any) {
         storeUserDefault()
-        print("FFFF!!")
     }
     
     @IBAction func fullnessInfo(_ sender: Any) {
@@ -53,6 +51,7 @@ class MealViewController: UIViewController {
     
     @IBAction func AddMeal(_ sender: Any)
     {
+
         //only go back if valid data is entered
         if !(nameTextField.text?.isEmpty ?? true)
         {
@@ -62,31 +61,15 @@ class MealViewController: UIViewController {
         }
         
         // Want to create a Meal object, then save the object to the database
-        let name = nameTextField.text ?? ""
-        let rating = mealRating.rating // 0 if not changed
-        let ingredients = convertToStringArray(array: foods)
-        let date = datePicker.date
-        let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
-        let beforefull = currentFullness.text ?? ""
-        let afterfull = afterFullness.text ?? ""
-        
-        /* meal = Meal(Meal_Name: name, Date: date)
-         meal?.SetRating(arg1: rating)
-         meal?.SetIngredients(arg1: ingredients)
-         meal?.SetMeal_Type(arg1: type) */
-        meal = Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull)
-        
-        print("\nMeal object data:")
-        print(meal ?? "Meal is nil")
-        print("------------\n")
+        meal = createMeal()
         
         var stmt: OpaquePointer?
         // String to insert the meal into the database
         let queryString = "Insert into Meals (name, rating, date, ingredients, type, before, after) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        var need = Int32(convertFromDate(arg1:date))
+        var need = Int32(convertFromDate(arg1:(meal?.GetDate())!))
         let tempneed = need%86400
         need = need - tempneed
-        UserDefaults.standard.set(name, forKey: String(need))
+        UserDefaults.standard.set(meal?.GetMealName(), forKey: String(need))
         
         // Preparing the query
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK {
@@ -95,46 +78,56 @@ class MealViewController: UIViewController {
             return
         }
         
-        UserDefaults.standard.set(name, forKey: String(Int32(convertFromDate(arg1:date))))
+        UserDefaults.standard.set(meal?.GetMealName(), forKey: String(Int32(convertFromDate(arg1:(meal?.GetDate())!))))
         // Binding the parameters and throwing error if not ok
-        if sqlite3_bind_text(stmt, 1, name, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 1, meal?.GetMealName(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding name: \(errmsg)")
             return
         }
-        if sqlite3_bind_int(stmt, 2, Int32(rating)) != SQLITE_OK {
+        
+        let rating = meal?.GetRating()
+        let int32Rating: Int32?
+        if let rating = rating {
+            int32Rating = Int32(rating)
+        }
+        else {
+            int32Rating = 0
+        }
+        
+        if sqlite3_bind_int(stmt, 2, int32Rating!) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding rating: \(errmsg)")
             return
         }
-        if sqlite3_bind_int(stmt, 3, Int32(convertFromDate(arg1:date))) != SQLITE_OK {
+        if sqlite3_bind_int(stmt, 3, Int32(convertFromDate(arg1:(meal?.GetDate())!))) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding date: \(errmsg)")
             return
         }
-        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: ingredients), -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: (meal?.GetIngredients())!), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding ingredients: \(errmsg)")
             return
         }
-        //sqlite3_bind_text()
-        if sqlite3_bind_text(stmt, 5, type, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 5, meal?.GetMeal_Type(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding type: \(errmsg)")
             return
         }
-        if sqlite3_bind_text(stmt, 6, beforefull, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 6, meal?.GetBefore(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding before fullness: \(errmsg)")
             return
         }
-        if sqlite3_bind_text(stmt, 7, afterfull, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+        if sqlite3_bind_text(stmt, 7, meal?.GetAfter(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error binding after fullness: \(errmsg)")
             return
         }
         
-        print("Data before insert: \(name)\n\(Int32(rating))\n\(convertIngredients(arg1: ingredients))\n\(Int32(convertFromDate(arg1:date)))\n\(type)\n\(beforefull)\n\(afterfull)")
+        print("Data before insert:")
+        print(meal ?? "meal is nil")
         print("------------\n")
         
         // Insert the meal
@@ -164,7 +157,6 @@ class MealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(ingredients)
         
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
@@ -193,9 +185,16 @@ class MealViewController: UIViewController {
     // Called after view is added to view hierarchy since UIPickerView's titleForRow is called after viewDidLoad()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         retrieveUserDefaults()
         updateAddMealButtonState() // Enable the add meal button only if the meal text field is not empty
         setDateLabel() // Set the date label after loading the stored date
+        
+        // Set the labels so you can edit the meal info
+        if (editMeal) {
+            setLabels(oldMeal: meal!)
+            editMeal = false
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -257,6 +256,31 @@ class MealViewController: UIViewController {
     
     // MARK: Private methods
     
+    // Uses input fields to return a meal
+    private func createMeal() -> Meal {
+        let name = nameTextField.text ?? ""
+        let rating = mealRating.rating // 0 if not changed
+        let ingredients = convertToStringArray(array: foods)
+        let date = datePicker.date
+        let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
+        let beforefull = currentFullness.text ?? ""
+        let afterfull = afterFullness.text ?? ""
+        
+        return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull)
+    }
+    
+    // Setting labels to edit the meal. Meal type and food are not restored
+    private func setLabels(oldMeal: Meal) {
+        nameTextField.text = meal?.GetMealName()
+        mealRating.rating = (meal?.GetRating())!
+        //foods = meal?.GetIngredients()
+        datePicker.date = (meal?.GetDate())!
+        setDateLabel()
+        //typePicker.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
+        setFullness((meal?.GetBefore())!, fullnessSlider, currentFullness)
+        setFullness((meal?.GetAfter())!, afterfullSlider, afterFullness)
+    }
+    
     // Sets the fullness label and slider
     private func setFullness(_ fullness: String, _ sender: UISlider!, _ tlabel: UILabel) {
         tlabel.text = fullness
@@ -267,7 +291,7 @@ class MealViewController: UIViewController {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeStyle = DateFormatter.Style.none // No time is shown
+        dateFormatter.timeStyle = DateFormatter.Style.medium // Time format like 3:30:32 PM
         
         let strDate = dateFormatter.string(from: datePicker.date)
         dateLabel.text = strDate // Change the date label
@@ -290,7 +314,8 @@ class MealViewController: UIViewController {
     
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
-        let str =  array.description
+        //let str =  array.description
+        let str = array.joined(separator: ",")
         return str
     }
     
