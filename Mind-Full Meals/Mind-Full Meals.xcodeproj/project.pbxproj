@@ -14,12 +14,10 @@
 		2B1DDF9620E58E41001A1304 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B1DDF9420E58E41001A1304 /* LaunchScreen.storyboard */; };
 		2B1DDFA120E58E41001A1304 /* Mind_Full_MealsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DDFA020E58E41001A1304 /* Mind_Full_MealsTests.swift */; };
 		2B1DDFAC20E58E41001A1304 /* Mind_Full_MealsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DDFAB20E58E41001A1304 /* Mind_Full_MealsUITests.swift */; };
-		2B34B91D20FEE388002AA11E /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B34B91C20FEE388002AA11E /* WeekViewController.swift */; };
 		2B61482520E87F5300CAC106 /* MealClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B61482420E87F5300CAC106 /* MealClass.swift */; };
 		2B6AF35E20EC5E9900D81464 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */; };
 		2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */; };
 		2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */; };
-		2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */; };
 		5609187020FBE4FC003C7822 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */; };
 		5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187120FBE509003C7822 /* MealsTableDataSource.swift */; };
 		5609187420FBE521003C7822 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187320FBE521003C7822 /* SearchViewController.swift */; };
@@ -65,12 +63,10 @@
 		2B1DDFA720E58E41001A1304 /* Mind-Full MealsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mind-Full MealsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B1DDFAB20E58E41001A1304 /* Mind_Full_MealsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mind_Full_MealsUITests.swift; sourceTree = "<group>"; };
 		2B1DDFAD20E58E41001A1304 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B34B91C20FEE388002AA11E /* WeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 		2B61482420E87F5300CAC106 /* MealClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealClass.swift; sourceTree = "<group>"; };
 		2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCalendarViewController.swift; sourceTree = "<group>"; };
 		2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		5609187120FBE509003C7822 /* MealsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableDataSource.swift; sourceTree = "<group>"; };
 		5609187320FBE521003C7822 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -134,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				2B1DDF8F20E58E41001A1304 /* Main.storyboard */,
-				2B34B91C20FEE388002AA11E /* WeekViewController.swift */,
-				2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */,
 				2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */,
 				2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */,
 				2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */,
@@ -323,14 +317,12 @@
 				2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */,
 				2B1DDF8E20E58E41001A1304 /* ViewController.swift in Sources */,
 				2B1DDF8C20E58E41001A1304 /* AppDelegate.swift in Sources */,
-				2B34B91D20FEE388002AA11E /* WeekViewController.swift in Sources */,
 				560C054620EAEC8500B69DCE /* Food.swift in Sources */,
 				70E0CE4B20F9858F009D3ABD /* SQLiteDatabase.swift in Sources */,
 				7081683520E70B50005659C2 /* MealViewController.swift in Sources */,
 				5609187420FBE521003C7822 /* SearchViewController.swift in Sources */,
 				560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */,
 				70D8815520F7C99E0040594D /* Public.swift in Sources */,
-				2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */,
 				560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */,
 				5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */,
 			);
