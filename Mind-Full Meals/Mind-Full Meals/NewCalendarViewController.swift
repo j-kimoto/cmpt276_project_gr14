@@ -145,6 +145,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             cell.hideLunch()
             cell.hideDinner()
             cell.date.text = day[n-7]
+            cell.date.textAlignment = .center
         }
         else if n >= 14 + skip && n < 14 + skip + numOfDays[CurrentMonth] //the days of the month
         {
@@ -157,7 +158,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             {
                 leapYearsDays += numOfDays[index]
             }
-            let numDays = numYear * 365 + leapYearsDays + n - 14 - skip-31
+            let numDays = numYear * 365 + leapYearsDays + n - skip - 44
             let numHours = numDays * 24
             let numSeconds = numHours * 3600
             let numEndSeconds = numSeconds + 86399

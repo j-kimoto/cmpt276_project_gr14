@@ -18,6 +18,7 @@
 		2B6AF35E20EC5E9900D81464 /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */; };
 		2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */; };
 		2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */; };
+		2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */; };
 		5609187020FBE4FC003C7822 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */; };
 		5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187120FBE509003C7822 /* MealsTableDataSource.swift */; };
 		5609187420FBE521003C7822 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187320FBE521003C7822 /* SearchViewController.swift */; };
@@ -67,6 +68,7 @@
 		2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCalendarViewController.swift; sourceTree = "<group>"; };
 		2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		5609187120FBE509003C7822 /* MealsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableDataSource.swift; sourceTree = "<group>"; };
 		5609187320FBE521003C7822 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				2B1DDF8F20E58E41001A1304 /* Main.storyboard */,
+				2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */,
 				2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */,
 				2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */,
 				2B6AF35D20EC5E9900D81464 /* MyCollectionViewCell.swift */,
@@ -323,6 +326,7 @@
 				5609187420FBE521003C7822 /* SearchViewController.swift in Sources */,
 				560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */,
 				70D8815520F7C99E0040594D /* Public.swift in Sources */,
+				2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */,
 				560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */,
 				5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */,
 			);
