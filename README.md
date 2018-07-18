@@ -3,9 +3,9 @@ CMPT 276 Group 14 Read me Document
 Website: https://sites.google.com/view/group-14-project/home
  
 Known bugs:
-- Calendar dissapears after second viewing
-- Calendar only shows most recent meal
-- Cannot read from database
+- Weekly calendar only shows one meal per day.
+- When adding a meal from search you cannot add a meal type or food.
+- Hunger level form text movement is bugged.
  
 Coding Standard:
 - Classes are always named starting with an uppercase
