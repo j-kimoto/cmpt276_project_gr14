@@ -579,7 +579,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="igo-yY-2e2">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" showsScopeBar="YES" id="4s2-nX-zkQ">
+                                <searchBar key="tableHeaderView" contentMode="redraw" text="" showsScopeBar="YES" id="4s2-nX-zkQ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -765,8 +765,14 @@
                                 <segue destination="BYZ-38-t0r" kind="presentation" id="J2k-DK-3KG"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Export meals" id="Adc-04-h5y">
+                            <connections>
+                                <action selector="exportMeals:" destination="zIm-MV-KPF" id="Q6P-mb-Bw9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="exportButton" destination="Adc-04-h5y" id="3id-gX-eCj"/>
                         <outlet property="searchBar" destination="4s2-nX-zkQ" id="gPC-IN-8Rh"/>
                         <outlet property="tableView" destination="igo-yY-2e2" id="73O-vW-KRb"/>
                     </connections>

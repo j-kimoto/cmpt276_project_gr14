@@ -84,6 +84,12 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             print("Connected to database")
         }
         
+        // Creating the meal table
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("Error creating meal table: \(errmsg)")
+        }
+        
         n = 0 // Resets n before loading the calendar
         print("view is loading")
         self.MyCollectionView.delegate = self

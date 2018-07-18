@@ -30,6 +30,7 @@
 		7081683520E70B50005659C2 /* MealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683420E70B50005659C2 /* MealViewController.swift */; };
 		7081683720E70BA9005659C2 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683620E70BA9005659C2 /* RatingControl.swift */; };
 		7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */; };
+		70BC94F120FEF2C70077672F /* SendMailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BC94F020FEF2C70077672F /* SendMailViewController.swift */; };
 		70D8815520F7C99E0040594D /* Public.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D8815420F7C99E0040594D /* Public.swift */; };
 		70E0CE4B20F9858F009D3ABD /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0CE4A20F9858F009D3ABD /* SQLiteDatabase.swift */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		7081683420E70B50005659C2 /* MealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewController.swift; sourceTree = "<group>"; };
 		7081683620E70BA9005659C2 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditFoodTableViewController.swift; sourceTree = "<group>"; };
+		70BC94F020FEF2C70077672F /* SendMailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMailViewController.swift; sourceTree = "<group>"; };
 		70D8815420F7C99E0040594D /* Public.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Public.swift; sourceTree = "<group>"; };
 		70E0CE4A20F9858F009D3ABD /* SQLiteDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +154,7 @@
 				58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */,
 				5609187120FBE509003C7822 /* MealsTableDataSource.swift */,
 				5609187320FBE521003C7822 /* SearchViewController.swift */,
+				70BC94F020FEF2C70077672F /* SendMailViewController.swift */,
 				5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */,
 				2B1DDF9220E58E41001A1304 /* Assets.xcassets */,
 				2B1DDF9720E58E41001A1304 /* Info.plist */,
@@ -319,6 +322,7 @@
 				2B61482520E87F5300CAC106 /* MealClass.swift in Sources */,
 				58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */,
 				2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */,
+				70BC94F120FEF2C70077672F /* SendMailViewController.swift in Sources */,
 				7097CD5E20EC27C600FEDC47 /* EditFoodTableViewController.swift in Sources */,
 				2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */,
 				2B1DDF8E20E58E41001A1304 /* ViewController.swift in Sources */,

@@ -8,20 +8,31 @@
 
 import UIKit
 import SQLite3
+import MessageUI
 
 class SearchViewController: UIViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet fileprivate weak var searchBar: UISearchBar!
+    @IBOutlet fileprivate weak var exportButton: UIBarButtonItem!
 
     private var db: OpaquePointer?
     fileprivate var dataSource: MealsTableDataSource!
     
     private var bigMealArray: [Meal] = []
     private var filteredBigMealArray: [Meal] = []
+    private var mealsAsString: [[String]] = [] // Contains the database contents in string format
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    // Try to export your meals to a comma separated values file
+    @IBAction func exportMeals(_ sender: Any) {
+        let emailText = writeMealsToFile()
+        
+        // Now email your meal to someone
+        sendEmail(file: emailText)
     }
     
     override func viewDidLoad() {
@@ -130,6 +141,7 @@ class SearchViewController: UIViewController {
             let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger)
 
             tmp.append(newMeal)
+            mealsAsString.append(temp) // Used for exporting data to a file
         }
 
         sqlite3_finalize(stmt)
@@ -167,6 +179,34 @@ class SearchViewController: UIViewController {
         return str
     }
     
+    // Converts 2d array of strings to a string for a CSV file
+    // A much simpler way would be using SQL commands, but the date would still be an integer
+    private func convert2DToString(twoDimArray: [[String]]) -> String {
+        var tmp: String = "Name,Rating,Date,Ingredients,Type,Before Hunger,After Hunger\n"
+
+        for array in twoDimArray {
+            for i in 0...6 {
+                if i == 2 { // Converts unix date to text
+                    let unixDate = Int(array[i])!
+                    let date = convertToDate(arg1: unixDate)
+                    let dateAsString = dateToString(mealDate: date)
+                    tmp.append("\"\(dateAsString)\",")
+                }
+                else if i == 3 { // Surround ingredients with double quotes so it's one column
+                    tmp.append("\"\(array[i])\",")
+                }
+                else if i == 6 {
+                    tmp.append(array[i])
+                }
+                else {
+                    tmp.append(array[i] + ",")
+                }
+            }
+            tmp.append("\n")
+        }
+        return tmp
+    }
+    
     // Searches bigMealArray for searchText, returning the filtered array
     private func filterMealsForSearchText(searchText: String, scope: Int) -> [Meal] {
         // Searches meal name only for now. Use lowercase to search
@@ -202,6 +242,30 @@ class SearchViewController: UIViewController {
         }
     }
     
+    // Writes your meals to a CSV file and also returns the string that was written
+    private func writeMealsToFile() -> String {
+        var text: String = ""
+        do {
+            let exportURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("myMeals.csv")
+            do {
+                text = convert2DToString(twoDimArray: mealsAsString)
+                try text.write(to: exportURL, atomically: false, encoding: .utf8)
+                print("Wrote your meals to a file: \(exportURL.path)")
+            }
+            catch {
+                print("Could not write meals to CSV file")
+            }
+        }
+        catch {
+            print("Could not open file")
+        }
+        return text
+    }
+    
+    private func sendEmail(file: String) {
+        let mail = newMailComposeViewController(file: file)
+        presentMailComposeView(mailComposeViewController: mail)
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -216,4 +280,3 @@ extension SearchViewController: UISearchBarDelegate {
         tableView.reloadData()
     }
 }
-
