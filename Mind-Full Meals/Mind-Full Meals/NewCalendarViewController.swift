@@ -103,7 +103,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return 57
+        return 51
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
@@ -164,7 +164,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             {
                 leapYearsDays += numOfDays[index]
             }
-            let numDays = numYear * 365 + leapYearsDays + n - skip - 44
+            let numDays = numYear * 365 + leapYearsDays + n - skip - 45
             let numHours = numDays * 24
             let numSeconds = numHours * 3600
             let numEndSeconds = numSeconds + 86399
@@ -246,12 +246,12 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return Int(seconds)
         
     }
-    
+    /*
     // Converts from seconds since 1970-01-01 00:00:00 to Date format
     private func convertToDate(arg1:Int) -> Date {
         let seconds = Double(arg1)
         let date = Date(timeIntervalSince1970: seconds)
         return date
-    }
+    }*/
 }
 
