@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B0F434F20FFB4AA0088EFFA /* WeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0F434E20FFB4AA0088EFFA /* WeekTableViewCell.swift */; };
 		2B1DDF8C20E58E41001A1304 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DDF8B20E58E41001A1304 /* AppDelegate.swift */; };
 		2B1DDF8E20E58E41001A1304 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1DDF8D20E58E41001A1304 /* ViewController.swift */; };
 		2B1DDF9120E58E41001A1304 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B1DDF8F20E58E41001A1304 /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B0F434E20FFB4AA0088EFFA /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		2B1DDF8820E58E41001A1304 /* Mind-Full Meals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mind-Full Meals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B1DDF8B20E58E41001A1304 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B1DDF8D20E58E41001A1304 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				2B1DDF8F20E58E41001A1304 /* Main.storyboard */,
+				2B0F434E20FFB4AA0088EFFA /* WeekTableViewCell.swift */,
 				2B34B91C20FEE388002AA11E /* WeekViewController.swift */,
 				2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */,
 				2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */,
@@ -331,6 +334,7 @@
 				560C054620EAEC8500B69DCE /* Food.swift in Sources */,
 				70E0CE4B20F9858F009D3ABD /* SQLiteDatabase.swift in Sources */,
 				7081683520E70B50005659C2 /* MealViewController.swift in Sources */,
+				2B0F434F20FFB4AA0088EFFA /* WeekTableViewCell.swift in Sources */,
 				5609187420FBE521003C7822 /* SearchViewController.swift in Sources */,
 				560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */,
 				70D8815520F7C99E0040594D /* Public.swift in Sources */,
