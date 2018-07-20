@@ -119,9 +119,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         var stmt: OpaquePointer?
         let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ? ORDER BY Date"
         
-        
         // empty days at the start of the month
-        
         
             let numYear = CurrentYear - 1970
             var leapYearsDays = Int(round(Double(numYear/4)))
