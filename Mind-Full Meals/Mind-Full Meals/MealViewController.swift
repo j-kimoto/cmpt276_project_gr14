@@ -311,7 +311,24 @@ class MealViewController: UIViewController {
         let date = Date(timeIntervalSince1970: seconds)
         return date
     }
+    /*
+    // Combines the date into format YYYYMMDD
+    private func combineDate(arg1: Date) -> Int {
+        let cDay = Calendar.current.component(.day, from: arg1)
+        let cMonth = Calendar.current.component(.month, from: arg1)
+        let cYear = Calendar.current.component(.year, from: arg1)
+        let ret = (cYear * 10000) + (cMonth * 100) + cDay
+        return ret
+    }
     
+    // Combines the time into format HHMM in 24 hour clock format
+    private func combineTime(arg1: Date) -> Int {
+        let cHour = Calendar.current.component(.hour, from: arg1)
+        let cMin = Calendar.current.component(.minute, from: arg1)
+        let ret = (cHour*100) + cMin
+        return ret
+    }
+    */
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
         //let str =  array.description

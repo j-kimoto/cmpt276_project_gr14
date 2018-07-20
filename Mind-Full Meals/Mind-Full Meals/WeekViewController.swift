@@ -117,7 +117,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekCell", for: indexPath) as! WeekCollectionViewCell
         // database variables
         var stmt: OpaquePointer?
-        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
+        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ? ORDER BY Date"
         
         
         // empty days at the start of the month
@@ -133,6 +133,8 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let numHours = numDays * 24
             let numSeconds = numHours * 3600
             let numEndSeconds = numSeconds + 86399
+            // var tempdate = date(era: 0, year: CurrentYear, month: CurrentMonth, day: CurrentDay, hour: 0, minute: 0, second: 0, nanosecond:0)
+
             //check for meals
             //if there are meals for this day
             //makemeals()
@@ -167,6 +169,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.MealName.text = mealName
                 cell.MealType.text = mealType
               }
+        cell.layer.borderWidth = 0.8
         n += 1
         return cell
     }
