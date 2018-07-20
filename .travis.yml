@@ -6,4 +6,4 @@ osx_image: xcode9.2
 language: swift
 xcode_project: Mind-Full\ Meals.xcodeproj
 xcode_scheme: Mind-Full\ Meals
-script: xcodebuild clean build -sdk iphonesimulator -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals CODE_SIGNING_REQUIRED=NO && xctool -project Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals run-tests
+script: xcodebuild clean build -sdk iphonesimulator -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals CODE_SIGNING_REQUIRED=NO && xctool -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals run-tests
