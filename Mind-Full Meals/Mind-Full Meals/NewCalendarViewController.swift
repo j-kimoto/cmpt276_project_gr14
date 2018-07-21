@@ -218,6 +218,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                     cell.makeBreakfast()
                 }
             }
+            cell.layer.borderWidth = 0.8
            
         }
         else //beyond the days of the month

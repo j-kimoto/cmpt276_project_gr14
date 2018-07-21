@@ -28,6 +28,7 @@
 		560C054620EAEC8500B69DCE /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054420EAEC7B00B69DCE /* Food.swift */; };
 		560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */; };
 		560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */; };
+		58AEF96321028323008F0861 /* AddMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEF96221028323008F0861 /* AddMealViewController.swift */; };
 		58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */; };
 		7081683520E70B50005659C2 /* MealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683420E70B50005659C2 /* MealViewController.swift */; };
 		7081683720E70BA9005659C2 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683620E70BA9005659C2 /* RatingControl.swift */; };
@@ -82,6 +83,7 @@
 		560C054420EAEC7B00B69DCE /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewController.swift; sourceTree = "<group>"; };
+		58AEF96221028323008F0861 /* AddMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealViewController.swift; sourceTree = "<group>"; };
 		58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullnessInfoViewController.swift; sourceTree = "<group>"; };
 		7081683420E70B50005659C2 /* MealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewController.swift; sourceTree = "<group>"; };
 		7081683620E70BA9005659C2 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				7081683620E70BA9005659C2 /* RatingControl.swift */,
 				2B61482420E87F5300CAC106 /* MealClass.swift */,
 				560C054420EAEC7B00B69DCE /* Food.swift */,
+				58AEF96221028323008F0861 /* AddMealViewController.swift */,
 				58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */,
 				5609187120FBE509003C7822 /* MealsTableDataSource.swift */,
 				5609187320FBE521003C7822 /* SearchViewController.swift */,
@@ -343,6 +346,7 @@
 				560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */,
 				70D8815520F7C99E0040594D /* Public.swift in Sources */,
 				2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */,
+				58AEF96321028323008F0861 /* AddMealViewController.swift in Sources */,
 				560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */,
 				5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */,
 			);

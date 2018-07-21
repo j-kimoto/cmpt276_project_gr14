@@ -238,7 +238,7 @@ class MealViewController: UIViewController {
         mealRating.rating = UserDefaults.standard.integer(forKey:"udrating")
         // as? casts the Any? object to optionally cast to Date object. ?? uses new object if key is nil. setDateLabel() is called later
         datePicker.date = UserDefaults.standard.object(forKey: "uddate") as? Date ?? Date()
-        print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )
+        print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )      
         typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udbeforefull") ?? "", fullnessSlider, currentFullness)
         setFullness(UserDefaults.standard.string(forKey:"udafterfull") ?? "", afterfullSlider, afterFullness)
@@ -311,7 +311,24 @@ class MealViewController: UIViewController {
         let date = Date(timeIntervalSince1970: seconds)
         return date
     }
+    /*
+    // Combines the date into format YYYYMMDD
+    private func combineDate(arg1: Date) -> Int {
+        let cDay = Calendar.current.component(.day, from: arg1)
+        let cMonth = Calendar.current.component(.month, from: arg1)
+        let cYear = Calendar.current.component(.year, from: arg1)
+        let ret = (cYear * 10000) + (cMonth * 100) + cDay
+        return ret
+    }
     
+    // Combines the time into format HHMM in 24 hour clock format
+    private func combineTime(arg1: Date) -> Int {
+        let cHour = Calendar.current.component(.hour, from: arg1)
+        let cMin = Calendar.current.component(.minute, from: arg1)
+        let ret = (cHour*100) + cMin
+        return ret
+    }
+    */
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
         //let str =  array.description

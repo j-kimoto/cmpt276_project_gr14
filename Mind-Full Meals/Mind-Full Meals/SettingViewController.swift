@@ -51,4 +51,6 @@ class SettingViewController: UIViewController {
         print("loaded")
     }
     
+    
+    
 }
