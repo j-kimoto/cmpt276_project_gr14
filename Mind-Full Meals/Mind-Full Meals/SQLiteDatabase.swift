@@ -71,12 +71,13 @@ class SQLiteDatabase {
         print("Closed the database (from deinit)")
     }
     
+    /** Returns an SQLiteDatabase object if opening database is ok
+     - throws: SQLite.OpenDatabase error is not ok */
     static func open(path: String) throws -> SQLiteDatabase {
         var db: OpaquePointer? = nil
 
-        // Returns an SQLiteDatabase object if opening database is OK
         if sqlite3_open(path, &db) == SQLITE_OK {
-            print("Connected to database")
+            print("111 Connected to database at \(path)") // Why is this not printed?
             return SQLiteDatabase(dbPointer: db)
         } else {
             // The defer statement is guaranteed to run after execution leaves the current scope
@@ -115,10 +116,11 @@ extension SQLiteDatabase {
     }
 }
 
-/** Creates the table by first preparing the statement, then running the SQL
- - parameter table: Accepts anything that conforms to the SQLTable protocol, meaning it has a createStatement variable
- */
 extension SQLiteDatabase {
+    /** Creates the table by first preparing the statement, then running the SQL
+     
+     - parameter table: Accepts anything that conforms to the SQLTable protocol, meaning it has a createStatement variable
+     */
     func createTable(table: SQLTable.Type) throws {
         let createTableStatement = try prepareStatement(sql: table.createStatement)
         defer {
@@ -128,17 +130,25 @@ extension SQLiteDatabase {
         guard sqlite3_step(createTableStatement) == SQLITE_DONE else {
             throw SQLiteError.Step(message: "Error creating \(table) table: \(errorMessage)")
         }
-        print("\(table) table created.")
+        print("\(table) table created!")
     }
 }
 
-/** Inserts a meal object into the database. Does not set any userdefaults values (can do it yourself) */
 extension SQLiteDatabase {
+    /** Inserts a meal object into the database. Does not set any userdefaults values (can do it yourself)
+     
+     - throws: SQLiteError.Prepare if error with creating table.
+     SQLiteError.Bind if binding parameters not ok.
+     SQLiteError.Step if inserting meal not ok. */
     func insertMeal(meal: Meal) throws {
         
+        // String to insert the meal into the database
         let insertSql = "Insert into Meals (name, rating, date, ingredients, type, before, after) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        let insertStatement = try prepareStatement(sql: insertSql) // The prepareStatement's throw is passed up the chain
+        
+        // The prepareStatement's throw is passed up the chain
+        let insertStatement = try prepareStatement(sql: insertSql)
         defer {
+            // Delete the prepared statement to release its memory when scope exists insertMeal function
             sqlite3_finalize(insertStatement)
         }
         
@@ -157,16 +167,16 @@ extension SQLiteDatabase {
         let type = meal.GetMeal_Type()
         let beforeHunger = meal.GetBefore()
         let afterHunger = meal.GetAfter()
-        
+    
         
         // Use separate booleans to check if bind succeeded
         let bindName = sqlite3_bind_text(insertStatement, 1, name, -1, SQLITE_TRANSIENT) == SQLITE_OK
         let bindRating = sqlite3_bind_int(insertStatement, 2, int32Rating) == SQLITE_OK
         let bindDate = sqlite3_bind_int(insertStatement, 3, int32UnixDate) == SQLITE_OK
         let bindIngredients = sqlite3_bind_text(insertStatement, 4, commaSeparatedIngredients, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindType = sqlite3_bind_text(insertStatement, 5, meal.GetMeal_Type(), -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindBeforeHunger = sqlite3_bind_text(insertStatement, 6, meal.GetBefore(), -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindAfterHunger = sqlite3_bind_text(insertStatement, 7, meal.GetAfter(), -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindType = sqlite3_bind_text(insertStatement, 5, type, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindBeforeHunger = sqlite3_bind_text(insertStatement, 6, beforeHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindAfterHunger = sqlite3_bind_text(insertStatement, 7, afterHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
         
         // Binding the parameters and throwing error if not ok
         guard bindName && bindRating && bindDate && bindIngredients && bindType && bindBeforeHunger && bindAfterHunger else {
@@ -182,7 +192,7 @@ extension SQLiteDatabase {
             throw SQLiteError.Step(message: "Error inserting meal: \(errorMessage)")
         }
         
-        print("Meal added successfully")
+        print("Meal added successfully!")
     }
 }
 

@@ -5,11 +5,8 @@
 //  Created by mwa96 on 6/29/18.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
-let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
-let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
 import UIKit
-import SQLite3
 
 class MealViewController: UIViewController {
     
@@ -31,7 +28,8 @@ class MealViewController: UIViewController {
     let mealTypes = [MealType.Breakfast.rawValue, MealType.Lunch.rawValue, MealType.Dinner.rawValue, MealType.Snacks.rawValue]
     
     var meal: Meal?
-    var db: OpaquePointer?
+    var db: SQLiteDatabase?
+
     var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
     var editMeal = false // Are we currently editing a meal?
     
@@ -63,84 +61,21 @@ class MealViewController: UIViewController {
         // Want to create a Meal object, then save the object to the database
         meal = createMeal()
         
-        var stmt: OpaquePointer?
-        // String to insert the meal into the database
-        let queryString = "Insert into Meals (name, rating, date, ingredients, type, before, after) VALUES (?, ?, ?, ?, ?, ?, ?)"
         var need = Int32(convertFromDate(arg1:(meal?.GetDate())!))
         let tempneed = need%86400
         need = need - tempneed
         UserDefaults.standard.set(meal?.GetMealName(), forKey: String(need))
         
-        // Preparing the query
-        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error preparing insert: \(errmsg)")
-            return
-        }
-        
         UserDefaults.standard.set(meal?.GetMealName(), forKey: String(Int32(convertFromDate(arg1:(meal?.GetDate())!))))
-        // Binding the parameters and throwing error if not ok
-        if sqlite3_bind_text(stmt, 1, meal?.GetMealName(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding name: \(errmsg)")
-            return
-        }
         
-        let rating = meal?.GetRating()
-        let int32Rating: Int32?
-        if let rating = rating {
-            int32Rating = Int32(rating)
+        // Try to insert a meal into the database and print the error if unsuccessful
+        do {
+            try db?.insertMeal(meal: meal!)
+        } catch {
+            print(db?.getError() ?? "db is nil")
         }
-        else {
-            int32Rating = 0
-        }
-        
-        if sqlite3_bind_int(stmt, 2, int32Rating!) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding rating: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_int(stmt, 3, Int32(convertFromDate(arg1:(meal?.GetDate())!))) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding date: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_text(stmt, 4, convertIngredients(arg1: (meal?.GetIngredients())!), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding ingredients: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_text(stmt, 5, meal?.GetMeal_Type(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding type: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_text(stmt, 6, meal?.GetBefore(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding before fullness: \(errmsg)")
-            return
-        }
-        if sqlite3_bind_text(stmt, 7, meal?.GetAfter(), -1, SQLITE_TRANSIENT) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error binding after fullness: \(errmsg)")
-            return
-        }
-        
-        print("Data before insert:")
-        print(meal ?? "meal is nil")
-        print("------------\n")
-        
-        // Insert the meal
-        if sqlite3_step(stmt) != SQLITE_DONE {
-            let errmsg = String(cString: sqlite3_errmsg(db))
-            print("Error inserting meal: \(errmsg)")
-            return
-        }
-        print("Meal added successfully")
+
         clearUserDefault()
-        
-        // Delete the prepared statement to release its memory (it can't be used anymore)
-        sqlite3_finalize(stmt)
     }
     
     // Sets the fullness label whenever the slider's value changes
@@ -160,17 +95,26 @@ class MealViewController: UIViewController {
         
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
-        // Opening the database
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database")
-        } else {
-            print("Opened the database located at \(fileURL.path)")
+        
+        do {
+            db = try SQLiteDatabase.open(path: fileURL.path)
+            print("Successfully opened connection to meal database!")
+        }
+        catch SQLiteError.OpenDatabase(let message) {
+            print("Unable to open database")
+            print(message)
+            return
+        }
+        catch {
+            print("Another type of error happened")
+            return
         }
 
-        // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error creating meal table: \(errmsg)")
+        do {
+            try db?.createTable(table: Meal.self)
+        }
+        catch {
+            print(db?.getError() ?? "db is nil")
         }
         
         // Do any additional setup after loading the view.
@@ -200,9 +144,9 @@ class MealViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Close the database when switching views
+        /*// Close the database when switching views
         sqlite3_close(db)
-        print("Closed the database")
+        print("Closed the database")*/
     }
     
     override func didReceiveMemoryWarning() {
