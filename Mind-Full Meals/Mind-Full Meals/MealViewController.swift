@@ -166,7 +166,7 @@ class MealViewController: UIViewController {
         } else {
             print("Opened the database located at \(fileURL.path)")
         }
-        
+
         // Creating the meal table
         if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -329,6 +329,8 @@ class MealViewController: UIViewController {
         return ret
     }
     */
+    
+    // Converts an array (of ingredients) to a comma separated string
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
         //let str =  array.description
