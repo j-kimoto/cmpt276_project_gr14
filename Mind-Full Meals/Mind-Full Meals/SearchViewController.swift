@@ -143,8 +143,8 @@ class SearchViewController: UIViewController {
     
     // Searches bigMealArray for searchText, returning the filtered array
     private func filterMealsForSearchText(searchText: String, scope: Int) -> [Meal] {
-        // Searches meal name only for now. Use lowercase to search
-        // range finds the first occurence of searchText in its calle. Returns {NSNotFound, 0} if not found/empty
+        // Uses lowercase to search
+        // range finds the first occurence of searchText in its calle. Returns nil if not found/empty
         if searchText.isEmpty {
             return bigMealArray
         }
@@ -182,7 +182,7 @@ class SearchViewController: UIViewController {
         var text: String = ""
         
         do {
-            let exportURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("myMeals.csv")
+            let exportURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("myMeals.txt")
             do {
                 // Iterate over all meals from the database and append them to a string
                 for (index, meal) in bigMealArray.enumerated() {
@@ -195,7 +195,7 @@ class SearchViewController: UIViewController {
                 print("Wrote your meals to a file: \(exportURL.path)")
             }
             catch {
-                print("Could not write meals to CSV file")
+                print("Could not write meals to text file")
             }
         }
         catch {
