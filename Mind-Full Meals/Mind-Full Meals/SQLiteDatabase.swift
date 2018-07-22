@@ -66,8 +66,15 @@ class SQLiteDatabase {
     }
     
     deinit {
-        sqlite3_close(dbPointer)
-        print("Closed the database (from deinit)")
+        closeDatabase()
+    }
+    
+    /** Close the database manually since we can't call the deinit ourselves */
+    func closeDatabase() {
+        if dbPointer != nil {
+            sqlite3_close(dbPointer)
+            print("Closed the database")
+        }
     }
     
     /**

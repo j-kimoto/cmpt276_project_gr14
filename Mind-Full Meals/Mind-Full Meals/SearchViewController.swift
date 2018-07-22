@@ -82,6 +82,13 @@ class SearchViewController: UIViewController {
         // Resize the cell heights automatically: called every time the view appears
         tableView.reloadData()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Close the database when switching views
+        db?.closeDatabase()
+    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

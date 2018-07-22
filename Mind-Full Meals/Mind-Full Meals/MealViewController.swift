@@ -156,9 +156,8 @@ class MealViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        /*// Close the database when switching views
-        sqlite3_close(db)
-        print("Closed the database")*/
+        // Close the database when switching views
+        db?.closeDatabase()
     }
     
     override func didReceiveMemoryWarning() {
