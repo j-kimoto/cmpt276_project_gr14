@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SQLite3
-import MessageUI
 
 class SearchViewController: UIViewController {
     
@@ -16,43 +14,53 @@ class SearchViewController: UIViewController {
     @IBOutlet fileprivate weak var searchBar: UISearchBar!
     @IBOutlet fileprivate weak var exportButton: UIBarButtonItem!
 
-    private var db: OpaquePointer?
+    private var db: SQLiteDatabase?
     fileprivate var dataSource: MealsTableDataSource!
     
     private var bigMealArray: [Meal] = []
     private var filteredBigMealArray: [Meal] = []
-    private var mealsAsString: [[String]] = [] // Contains the database contents in string format
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    // Try to export your meals to a comma separated values file
+    // Try to export your meals to a file and then email that file to someone
     @IBAction func exportMeals(_ sender: Any) {
         let emailText = writeMealsToFile()
         
-        // Now email your meal to someone
+        // Now email your meals to someone
         sendEmail(file: emailText)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Open database
+        // Open database and catch errors
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database")
+        
+        do {
+            db = try SQLiteDatabase.open(path: fileURL.path)
+            print("Successfully opened connection to meal database!")
         }
-        else {
-            print("Connected to database at \(fileURL.path)")
+        catch SQLiteError.OpenDatabase(let message) {
+            print("Unable to open database: \(message)")
+            print(message)
+            return
+        }
+        catch {
+            print("Another type of error happened: \(error)")
+            return
         }
         
         // Creating the meal table if it doesn't exist already
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error creating meal table: \(errmsg)")
+        do {
+            try db?.createTable(table: Meal.self)
         }
+        catch {
+            print(db?.getError() ?? "db is nil")
+        }
+        
         
         // Handle typing in search bar
         searchBar.delegate = self
@@ -75,13 +83,6 @@ class SearchViewController: UIViewController {
         // Resize the cell heights automatically: called every time the view appears
         tableView.reloadData()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        sqlite3_close(db) // Close the database when switching views
-        print("Closed the database")
-    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -100,52 +101,14 @@ class SearchViewController: UIViewController {
     
     // Selects all rows in the Meal database and returns an array of Meal objects
     private func loadData() -> [Meal] {
-        var tmp = [Meal]()
-        let queryString = "SELECT name, rating, date, ingredients, type, before, after FROM Meals"
-        var stmt: OpaquePointer?
-        
-        // Prepare select statement
-        if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error preparing select: \(errmsg)")
+        var listOfMeals: [Meal] = []
+        do {
+            listOfMeals = (try db?.selectAllMeals())!
         }
-        
-        // Get rows one at a time
-        while sqlite3_step(stmt) == SQLITE_ROW {
-            var temp: [String] = []
-            var mealField: String
-            
-            // Loop through all columns (no id) in one row
-            for index in 0...6 {
-                if index == 1 || index == 2 { // Integer columns are rating (1) and date (2)
-                    let mealInt = sqlite3_column_int(stmt, Int32(index))
-                    mealField = String(mealInt)
-                }
-                else {
-                    let resultscol = sqlite3_column_text(stmt, Int32(index))
-                    mealField = String(cString: resultscol!)
-                }
-                temp.append(mealField)
-            } // Done reading the row
-            
-            // Convert the array of strings to a meal object
-            let name = temp[0]
-            let rating = Int(temp[1])!
-            let unixDate: Int = Int(temp[2])!
-            let date: Date = convertToDate(arg1: unixDate)
-            let food: Array<String> = splitFoodAtCommas(foodText: temp[3])
-            let type = temp[4]
-            let beforeHunger = temp[5]
-            let afterHunger = temp[6]
-            
-            let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger)
-
-            tmp.append(newMeal)
-            mealsAsString.append(temp) // Used for exporting data to a file
+        catch {
+            print("Error getting all meals from database")
         }
-
-        sqlite3_finalize(stmt)
-        return tmp
+        return listOfMeals
     }
 
     // Converts from seconds since 1970-01-01 00:00:00 to Date format
@@ -177,34 +140,6 @@ class SearchViewController: UIViewController {
         let array = arg1
         let str = array.joined(separator: ",")
         return str
-    }
-    
-    // Converts 2d array of strings to a string for a CSV file
-    // A much simpler way would be using SQL commands, but the date would still be an integer
-    private func convert2DToString(twoDimArray: [[String]]) -> String {
-        var tmp: String = "Name,Rating,Date,Ingredients,Type,Before Hunger,After Hunger\n"
-
-        for array in twoDimArray {
-            for i in 0...6 {
-                if i == 2 { // Converts unix date to text
-                    let unixDate = Int(array[i])!
-                    let date = convertToDate(arg1: unixDate)
-                    let dateAsString = dateToString(mealDate: date)
-                    tmp.append("\"\(dateAsString)\",")
-                }
-                else if i == 3 { // Surround ingredients with double quotes so it's one column
-                    tmp.append("\"\(array[i])\",")
-                }
-                else if i == 6 {
-                    tmp.append(array[i])
-                }
-                else {
-                    tmp.append(array[i] + ",")
-                }
-            }
-            tmp.append("\n")
-        }
-        return tmp
     }
     
     // Searches bigMealArray for searchText, returning the filtered array
@@ -242,13 +177,21 @@ class SearchViewController: UIViewController {
         }
     }
     
-    // Writes your meals to a CSV file and also returns the string that was written
+    /** Writes your meals to a file using the meal object's description property
+     and also returns the string that was written */
     private func writeMealsToFile() -> String {
         var text: String = ""
+        
         do {
             let exportURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("myMeals.csv")
             do {
-                text = convert2DToString(twoDimArray: mealsAsString)
+                // Iterate over all meals from the database and append them to a string
+                for (index, meal) in bigMealArray.enumerated() {
+                    text += "Meal id: \(index + 1)\n" // Index starts at 0 but database index starts at 1
+                    text += meal.description
+                    text += "\n\n" // Newline after each meal
+                }
+                
                 try text.write(to: exportURL, atomically: false, encoding: .utf8)
                 print("Wrote your meals to a file: \(exportURL.path)")
             }
@@ -262,6 +205,7 @@ class SearchViewController: UIViewController {
         return text
     }
     
+    // Sends an email while attaching the file parameter as an attachment
     private func sendEmail(file: String) {
         let mail = newMailComposeViewController(file: file)
         presentMailComposeView(mailComposeViewController: mail)

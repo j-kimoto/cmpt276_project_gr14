@@ -71,8 +71,19 @@ class MealViewController: UIViewController {
         // Try to insert a meal into the database and print the error if unsuccessful
         do {
             try db?.insertMeal(meal: meal!)
-        } catch {
+        }
+        catch {
             print(db?.getError() ?? "db is nil")
+        }
+        
+        // Get the first meal in the db
+        do {
+            let first = try db?.meal(id: 1)
+            print("====== Printing first meal in database:")
+            print(first ?? "no meal with id=1")
+        }
+        catch {
+            print(error)
         }
 
         clearUserDefault()
@@ -96,20 +107,22 @@ class MealViewController: UIViewController {
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
         
+        // Open database and catch errors
         do {
             db = try SQLiteDatabase.open(path: fileURL.path)
             print("Successfully opened connection to meal database!")
         }
         catch SQLiteError.OpenDatabase(let message) {
-            print("Unable to open database")
+            print("Unable to open database: \(message)")
             print(message)
             return
         }
         catch {
-            print("Another type of error happened")
+            print("Another type of error happened: \(error)")
             return
         }
 
+        // Creating the meal table if it doesn't exist already
         do {
             try db?.createTable(table: Meal.self)
         }

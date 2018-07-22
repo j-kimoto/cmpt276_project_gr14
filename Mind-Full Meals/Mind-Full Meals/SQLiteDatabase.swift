@@ -204,6 +204,13 @@ extension SQLiteDatabase {
         return Int(seconds)
     }
     
+    // Converts from seconds since 1970-01-01 00:00:00 to Date format
+    private func convertToDate(arg1:Int) -> Date {
+        let seconds = Double(arg1)
+        let date = Date(timeIntervalSince1970: seconds)
+        return date
+    }
+    
     /** Converts an array (of ingredients) to a comma separated string */
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
@@ -211,14 +218,55 @@ extension SQLiteDatabase {
         let str = array.joined(separator: ",")
         return str
     }
+    
+    // Splits comma separated string to an array
+    private func splitFoodAtCommas(foodText: String) -> Array<String> {
+        let splitFood: Array<String>
+        splitFood = foodText.components(separatedBy: ",")
+        return splitFood
+    }
+    
+    /** When given a prepared select statement, parses the row's values to return a meal object */
+    private func getMealFromRow(queryStatement: OpaquePointer) -> Meal {
+        var temp: [String] = []
+        var mealField: String
+        
+        // Loop through all columns except id (id is column 0) in one row
+        for index in 1...7 {
+            if index == 2 || index == 3 { // Integer columns are rating (2) and date (3)
+                let mealInt = sqlite3_column_int(queryStatement, Int32(index))
+                mealField = String(mealInt)
+            }
+            else {
+                let resultscol = sqlite3_column_text(queryStatement, Int32(index))
+                mealField = String(cString: resultscol!)
+            }
+            temp.append(mealField)
+        } // Done reading the row
+        
+        // Convert the array of strings, temp, to a meal object
+        let name = temp[0]
+        let rating = Int(temp[1])!
+        let unixDate: Int = Int(temp[2])!
+        let date: Date = convertToDate(arg1: unixDate)
+        let food: Array<String> = splitFoodAtCommas(foodText: temp[3])
+        let type = temp[4]
+        let beforeHunger = temp[5]
+        let afterHunger = temp[6]
+        
+        // Creates the object
+        let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger)
+        return newMeal
+    }
 }
 
-/*
 extension SQLiteDatabase {
-    func meal(id: Int32) -> Meal? {
-        let querySql = "SELECT * FROM Meals WHERE Id = ?;"
+    /** Gets one meal from the database (by id) and returns a meal object */
+    func meal(id: Int32) throws -> Meal {
+        
+        let querySql = "SELECT * FROM Meals WHERE id = ?;"
         guard let queryStatement = try? prepareStatement(sql: querySql) else {
-            return nil
+            throw SQLiteError.Prepare(message: "Error preparing select id statement: \(errorMessage)")
         }
         
         defer {
@@ -226,19 +274,65 @@ extension SQLiteDatabase {
         }
         
         guard sqlite3_bind_int(queryStatement, 1, id) == SQLITE_OK else {
-            return nil
+            throw SQLiteError.Bind(message: "Error binding id: \(errorMessage)")
         }
-        
         guard sqlite3_step(queryStatement) == SQLITE_ROW else {
-            return nil
+            throw SQLiteError.Step(message: "Error running statement: \(errorMessage)")
         }
         
-        let id = sqlite3_column_int(queryStatement, 0)
-        
-        let queryResultCol1 = sqlite3_column_text(queryStatement, 1)
-        let name = String(cString: queryResultCol1!) as NSString
-        
-        return Meal(id: id, name: name)
+        // Uses the prepared statement to get a meal
+        return getMealFromRow(queryStatement: queryStatement!)
     }
 }
-*/
+
+/*extension SQLiteDatabase {
+    /** Returns the total number of rows (meals) in the database
+     - throws: SQLiteError.Step if we couldn't get number of rows */
+    func countRows() throws -> Int {
+        
+        let countSql = "SELECT Count(*) FROM Meals;"
+        let countRowsStatement = try prepareStatement(sql: countSql)
+        
+        defer {
+            sqlite3_finalize(countRowsStatement)
+        }
+        
+        // Run the statement
+        guard sqlite3_step(countRowsStatement) == SQLITE_ROW else {
+            throw SQLiteError.Step(message: "Could not count the rows: \(errorMessage)")
+        }
+        
+        let int32Rows = sqlite3_column_int(countRowsStatement, 0)
+        let rows = Int(int32Rows)
+        return rows
+    }
+}*/
+
+extension SQLiteDatabase {
+    /** Selects all rows in the Meal database and returns an array of Meal objects */
+    func selectAllMeals() throws -> [Meal] {
+        var allMeals = [Meal]()
+        let querySql = "SELECT id, name, rating, date, ingredients, type, before, after FROM Meals"
+        
+        guard let queryStatement = try? prepareStatement(sql: querySql) else {
+            throw SQLiteError.Prepare(message: "Error preparing select:  \(errorMessage)")
+        }
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+
+        // Get rows one at a time
+        while sqlite3_step(queryStatement) == SQLITE_ROW {
+            
+            // Parses the row's values to create a meal object
+            let newMeal = getMealFromRow(queryStatement: queryStatement!)
+            
+            // Append the meal to the array
+            allMeals.append(newMeal)
+            
+            //mealsAsString.append(temp) // Used for exporting data to a file
+        }
+        
+        return allMeals
+    }
+}
