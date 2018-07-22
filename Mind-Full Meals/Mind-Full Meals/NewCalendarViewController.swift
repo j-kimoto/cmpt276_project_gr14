@@ -181,7 +181,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
             //if there are meals for this day
             //makemeals()
             
-            // Empty array of tuples to hold the meals. Tuple is (mealName, mealDate, mealType)
+            // Use empty array of tuples to hold the meals. Tuple is (mealName, mealDate, mealType)
             var mealsInDateRange: [(String, Int32, String)] = []
             do {
                 mealsInDateRange = (try db?.selectDateRange(numSeconds: numSeconds, numEndSeconds: numEndSeconds))!

@@ -7,10 +7,11 @@
 //
 
 /** The SQLiteDatabase class manages the database connection, by wrapping the database pointer.
-
- Use the static SQLiteDatabase.open(path: String) function, which has the file path as a parameter, to return an SQLiteDatabase object.
-
- The class should throw errors and print error statements for you. It also should finalize SQL statements and close the database for you.
+ 
+ You don't have to use this class. You can use the C apis directly.
+ Use the static SQLiteDatabase.open(path: String) function, which has the database's file path as a parameter, to return an SQLiteDatabase object.
+ This class throws errors, so errors must be catched.
+ It also finalizes SQL statements and closes the database.
  */
 
 import Foundation
@@ -28,8 +29,7 @@ extension Meal: SQLTable {
     }
 }
 
-/** Wraps different error types the database can return.
- The error protocol means this can be used for error handling */
+/** Wraps different error types the database can return */
 enum SQLiteError: Error {
     case OpenDatabase(message: String)
     case Prepare(message: String)
@@ -40,9 +40,8 @@ enum SQLiteError: Error {
 class SQLiteDatabase {
     fileprivate let dbPointer: OpaquePointer?
     
-    fileprivate let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
+    //fileprivate let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self) // Unused
     fileprivate let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-    // fileprivate let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Meal Database")
     
     /** Fileprivate initializer and database pointer so you can't access it directly */
     fileprivate init(dbPointer: OpaquePointer?) {
@@ -78,7 +77,7 @@ class SQLiteDatabase {
         var db: OpaquePointer? = nil
 
         if sqlite3_open(path, &db) == SQLITE_OK {
-            print("Connected to database") // Why is this not printed?
+            print("Connected to database")
             print(path) // Print path to SQLite file
             return SQLiteDatabase(dbPointer: db)
         }
@@ -105,10 +104,11 @@ class SQLiteDatabase {
     }
 }
 
+extension SQLiteDatabase {
 /** Prepares the string provided
  - parameter sql: string (SQL) to be prepared
- - returns: an OpaquePointer to the prepared statement */
-extension SQLiteDatabase {
+ - returns: an OpaquePointer to the prepared statement
+*/
     func prepareStatement(sql: String) throws -> OpaquePointer? {
         var statement: OpaquePointer? = nil
         
@@ -122,10 +122,9 @@ extension SQLiteDatabase {
 }
 
 extension SQLiteDatabase {
-    /** Creates the table by first preparing the statement, then running the SQL
-     
-     - parameter table: Accepts anything that conforms to the SQLTable protocol, meaning it has a createStatement variable
-     */
+/** Creates the table by first preparing the statement, then running the SQL
+ - parameter table: Accepts anything that conforms to the SQLTable protocol, meaning it has a createStatement variable
+ */
     func createTable(table: SQLTable.Type) throws {
         let createTableStatement = try prepareStatement(sql: table.createStatement)
         
@@ -142,11 +141,12 @@ extension SQLiteDatabase {
 }
 
 extension SQLiteDatabase {
-    /** Inserts a meal object into the database. Does not set any userdefaults values (can do it yourself)
+    /** Inserts a meal object into the database. Does not set any userdefaults values
      
      - throws: SQLiteError.Prepare if error with creating table.
-     SQLiteError.Bind if binding parameters not ok.
-     SQLiteError.Step if inserting meal not ok. */
+        - SQLiteError.Bind if binding parameters not ok.
+        - SQLiteError.Step if inserting meal not ok.
+     */
     func insertMeal(meal: Meal) throws {
         
         // String to insert the meal into the database
@@ -205,14 +205,18 @@ extension SQLiteDatabase {
 
 extension SQLiteDatabase {
     
-    /** Gets the meals in a time period from the database
-     - parameters:
-        - numSeconds: Int. The time to start selecting meals, in seconds
-        - numEndSeconds: Int. The time in end selecting meals, in seconds
-     - returns: an array of tuples of (meal name, meal date, meal type) */
+/** Gets the meals in a time period from the database, sorted by date.
+ Used by both the monthly and weekly calendar since ordering by date doesn't change the monthly calendar
+ 
+ - parameters:
+     - numSeconds: Int. The time to start selecting meals, in seconds
+     - numEndSeconds: Int. The time to end selecting meals, in seconds
+ - returns: an array of tuples of (meal name, meal date, meal type) */
     func selectDateRange(numSeconds: Int, numEndSeconds: Int) throws -> [(String, Int32, String)] {
         
-        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
+        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ? ORDER BY Date" // Used in weekly calendar
+        //let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?" // Used in monthly calendar
+        
         var mealInfo: [(String, Int32, String)] = []
 
         // Preparing the query for database search
@@ -257,7 +261,7 @@ extension SQLiteDatabase {
         return Int(seconds)
     }
     
-    // Converts from seconds since 1970-01-01 00:00:00 to Date format
+    /** Converts from seconds since 1970-01-01 00:00:00 to Date format */
     private func convertToDate(arg1:Int) -> Date {
         let seconds = Double(arg1)
         let date = Date(timeIntervalSince1970: seconds)
@@ -271,7 +275,7 @@ extension SQLiteDatabase {
         return str
     }
     
-    // Splits comma separated string to an array
+    /** Splits comma separated string to an array */
     private func splitFoodAtCommas(foodText: String) -> Array<String> {
         let splitFood: Array<String>
         splitFood = foodText.components(separatedBy: ",")

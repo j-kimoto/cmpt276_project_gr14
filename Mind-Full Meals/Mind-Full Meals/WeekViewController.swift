@@ -17,7 +17,6 @@
  */
 
 import UIKit
-import SQLite3
 
 class WeekViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
@@ -75,7 +74,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBOutlet weak var MyCollectionView: UICollectionView!
-    var db: OpaquePointer?
+    var db: SQLiteDatabase?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,17 +83,25 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //connecting to database
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent("Meal Database")
-        if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
-            print("Error opening meal database")
-        }
-        else {
+        do {
+            db = try SQLiteDatabase.open(path: fileURL.path)
             print("Connected to database")
+        }
+        catch SQLiteError.OpenDatabase(let message) {
+            print("Unable to open database: \(message)")
+            return
+        }
+        catch {
+            print("Another type of error happened: \(error)")
+            return
         }
         
         // Creating the meal table
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT)", nil, nil, nil) != SQLITE_OK {
-            let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("Error creating meal table: \(errmsg)")
+        do {
+            try db?.createTable(table: Meal.self)
+        }
+        catch {
+            print(db?.getError() ?? "db is nil")
         }
         
         n = 0 // Resets n before loading the calendar
@@ -115,10 +122,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekCell", for: indexPath) as! WeekCollectionViewCell
-        // database variables
-        var stmt: OpaquePointer?
-        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ? ORDER BY Date"
-        
+
         // empty days at the start of the month
         
             let numYear = CurrentYear - 1970
@@ -137,29 +141,23 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //if there are meals for this day
             //makemeals()
              cell.Date.text = month[CurrentMonth] + " " + String(CurrentDay+n)
-            // Preparing the query for database search
-            if sqlite3_prepare_v2(db, queryString, -1, &stmt, nil) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error preparing insert: \(errmsg)")
+
+            // Use empty array of tuples to hold the meals. Tuple is (mealName, mealDate, mealType)
+            var mealsInDateRange: [(String, Int32, String)] = []
+            do {
+                mealsInDateRange = (try db?.selectDateRange(numSeconds: numSeconds, numEndSeconds: numEndSeconds))!
             }
-            
-            // Binding the parameters and throwing error if not ok
-            if sqlite3_bind_int(stmt, 1, Int32(numSeconds)) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error binding start date: \(errmsg)")
+            catch {
+                print(db?.getError() ?? "db is nil")
             }
-            if sqlite3_bind_int(stmt, 2, Int32(numEndSeconds)) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("Error binding end date: \(errmsg)")
-            }
+            print(mealsInDateRange)
+        
             print(CurrentDay + n , CurrentMonth, CurrentYear)
             // Query through meals of day and printing on calendar if hit
-            while (sqlite3_step(stmt) == SQLITE_ROW) {
-                let resultscol0 = sqlite3_column_text(stmt, 0)
-                let mealName = String(cString: resultscol0!)
-                let mealDate = sqlite3_column_int(stmt, 1)
-                let resultscol2 = sqlite3_column_text(stmt,2)
-                let mealType = String(cString: resultscol2!)
+            for meal in mealsInDateRange {
+                let mealName = meal.0
+                let mealDate = meal.1
+                let mealType = meal.2
                 print("loaded")
                 print(mealName, mealDate, mealType)
                 let tempDate = convertToDate(arg1: Int(mealDate))
@@ -170,14 +168,6 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.layer.borderWidth = 0.8
         n += 1
         return cell
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Close the database when switching views
-        sqlite3_close(db)
-        print("Closed the database")
     }
     
     // Converts from Date format to Seconds since 1970-01-01 00:00:00
