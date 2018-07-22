@@ -7,9 +7,9 @@
 //
 
 /** The SQLiteDatabase class manages the database connection, by wrapping the database pointer.
- 
+
  Use the static SQLiteDatabase.open(path: String) function, which has the file path as a parameter, to return an SQLiteDatabase object.
- 
+
  The class should throw errors and print error statements for you. It also should finalize SQL statements and close the database for you.
  */
 
@@ -42,7 +42,7 @@ class SQLiteDatabase {
     
     fileprivate let SQLITE_STATIC = unsafeBitCast(0, to: sqlite3_destructor_type.self)
     fileprivate let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-    fileprivate let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Meal Database")
+    // fileprivate let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("Meal Database")
     
     /** Fileprivate initializer and database pointer so you can't access it directly */
     fileprivate init(dbPointer: OpaquePointer?) {
@@ -56,7 +56,8 @@ class SQLiteDatabase {
         if let errorPointer = sqlite3_errmsg(dbPointer) {
             let errorMessage = String(cString: errorPointer)
             return errorMessage
-        } else {
+        }
+        else {
             return "No error message provided from sqlite."
         }
     }
@@ -77,9 +78,11 @@ class SQLiteDatabase {
         var db: OpaquePointer? = nil
 
         if sqlite3_open(path, &db) == SQLITE_OK {
-            print("111 Connected to database at \(path)") // Why is this not printed?
+            print("Connected to database") // Why is this not printed?
+            print(path) // Print path to SQLite file
             return SQLiteDatabase(dbPointer: db)
-        } else {
+        }
+        else {
             // The defer statement is guaranteed to run after execution leaves the current scope
             // The current scope is the SQLiteDatabase.open() function
             defer {
@@ -90,11 +93,12 @@ class SQLiteDatabase {
             }
             
             // This code is the same as the variable errorMessage's code since a static method
-            // can't access instance variables. We can call open() without an instance of the class.
+            // can't access instance variables. We can call static methods like open() without an instance of the class.
             if let errorPointer = sqlite3_errmsg(db) {
                 let message = String.init(cString: errorPointer)
                 throw SQLiteError.OpenDatabase(message: "Error opening meal database: \(message)")
-            } else {
+            }
+            else {
                 throw SQLiteError.OpenDatabase(message: "No error message provided from sqlite.")
             }
         }
@@ -107,6 +111,7 @@ class SQLiteDatabase {
 extension SQLiteDatabase {
     func prepareStatement(sql: String) throws -> OpaquePointer? {
         var statement: OpaquePointer? = nil
+        
         guard sqlite3_prepare_v2(dbPointer, sql, -1, &statement, nil) == SQLITE_OK else {
             // If a throw is run, the function ends and nothing else is run
             throw SQLiteError.Prepare(message: errorMessage)
@@ -123,14 +128,16 @@ extension SQLiteDatabase {
      */
     func createTable(table: SQLTable.Type) throws {
         let createTableStatement = try prepareStatement(sql: table.createStatement)
+        
         defer {
             // Delete the prepared statement to release its memory (it can't be used anymore)
             sqlite3_finalize(createTableStatement)
         }
+        
         guard sqlite3_step(createTableStatement) == SQLITE_DONE else {
             throw SQLiteError.Step(message: "Error creating \(table) table: \(errorMessage)")
         }
-        print("\(table) table created!")
+        print("\(table) table created or it already exists")
     }
 }
 
@@ -197,6 +204,52 @@ extension SQLiteDatabase {
 }
 
 extension SQLiteDatabase {
+    
+    /** Gets the meals in a time period from the database
+     - parameters:
+        - numSeconds: Int. The time to start selecting meals, in seconds
+        - numEndSeconds: Int. The time in end selecting meals, in seconds
+     - returns: an array of tuples of (meal name, meal date, meal type) */
+    func selectDateRange(numSeconds: Int, numEndSeconds: Int) throws -> [(String, Int32, String)] {
+        
+        let queryString = "SELECT Name, Date, Type from Meals WHERE Date BETWEEN ? AND ?"
+        var mealInfo: [(String, Int32, String)] = []
+
+        // Preparing the query for database search
+        guard let queryStatement = try prepareStatement(sql: queryString) else {
+            throw SQLiteError.Prepare(message: "Error preparing select: \(errorMessage)")
+        }
+        
+        defer {
+            // Release the prepared statement's memory when we leave this function
+            sqlite3_finalize(queryStatement)
+        }
+        
+        // Binding the parameters and throwing error if not ok
+        guard sqlite3_bind_int(queryStatement, 1, Int32(numSeconds)) == SQLITE_OK else {
+            throw SQLiteError.Bind(message: "Error binding start date: \(errorMessage)")
+        }
+        guard sqlite3_bind_int(queryStatement, 2, Int32(numEndSeconds)) == SQLITE_OK else {
+            throw SQLiteError.Bind(message: "Error binding end date: \(errorMessage)")
+        }
+        
+        // Query through meals of day and adding to tuple if hit
+        while (sqlite3_step(queryStatement) == SQLITE_ROW) {
+            let resultscol0 = sqlite3_column_text(queryStatement, 0)
+            let mealName = String(cString: resultscol0!)
+            let mealDate = sqlite3_column_int(queryStatement, 1)
+            let resultscol2 = sqlite3_column_text(queryStatement,2)
+            let mealType = String(cString: resultscol2!)
+            
+            // Append the tuple to the end of the array
+            mealInfo.append((mealName, mealDate, mealType))
+        }
+        
+        return mealInfo
+    }
+}
+
+extension SQLiteDatabase {
     /** Converts from Date format to Seconds since 1970-01-01 00:00:00 */
     private func convertFromDate(arg1:Date) -> Int {
         let date = arg1
@@ -214,7 +267,6 @@ extension SQLiteDatabase {
     /** Converts an array (of ingredients) to a comma separated string */
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
-        //let str =  array.description
         let str = array.joined(separator: ",")
         return str
     }
@@ -233,10 +285,12 @@ extension SQLiteDatabase {
         
         // Loop through all columns except id (id is column 0) in one row
         for index in 1...7 {
-            if index == 2 || index == 3 { // Integer columns are rating (2) and date (3)
+            // Integer format columns are rating (2) and date (3)
+            if index == 2 || index == 3 {
                 let mealInt = sqlite3_column_int(queryStatement, Int32(index))
                 mealField = String(mealInt)
             }
+            // Text format columns are everything else
             else {
                 let resultscol = sqlite3_column_text(queryStatement, Int32(index))
                 mealField = String(cString: resultscol!)
@@ -311,6 +365,7 @@ extension SQLiteDatabase {
 extension SQLiteDatabase {
     /** Selects all rows in the Meal database and returns an array of Meal objects */
     func selectAllMeals() throws -> [Meal] {
+        
         var allMeals = [Meal]()
         let querySql = "SELECT id, name, rating, date, ingredients, type, before, after FROM Meals"
         
@@ -329,8 +384,6 @@ extension SQLiteDatabase {
             
             // Append the meal to the array
             allMeals.append(newMeal)
-            
-            //mealsAsString.append(temp) // Used for exporting data to a file
         }
         
         return allMeals

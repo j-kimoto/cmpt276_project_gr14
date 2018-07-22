@@ -110,11 +110,10 @@ class MealViewController: UIViewController {
         // Open database and catch errors
         do {
             db = try SQLiteDatabase.open(path: fileURL.path)
-            print("Successfully opened connection to meal database!")
+            print("Connected to database")
         }
         catch SQLiteError.OpenDatabase(let message) {
             print("Unable to open database: \(message)")
-            print(message)
             return
         }
         catch {

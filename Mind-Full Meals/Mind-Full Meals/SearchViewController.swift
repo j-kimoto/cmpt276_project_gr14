@@ -45,7 +45,6 @@ class SearchViewController: UIViewController {
         }
         catch SQLiteError.OpenDatabase(let message) {
             print("Unable to open database: \(message)")
-            print(message)
             return
         }
         catch {
