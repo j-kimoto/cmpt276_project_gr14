@@ -1,10 +1,10 @@
 # This file is used by TravisCI to automatically build and test the code every time there is a commit
 # The first xcodebuild command builds the project and tests
-# The second xcodebuild command runs the tests on iPhone 8 Plus, iOS version 11.4
+# The second xcodebuild command runs the tests on iPhone 8 Plus, iOS version 11.2
 
 os: osx
 osx_image: xcode9.2
 language: swift
 xcode_project: Mind-Full\ Meals.xcodeproj
 xcode_scheme: Mind-Full\ Meals
-script: xcodebuild build-for-testing -sdk iphonesimulator -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals && xcodebuild test -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals -destination 'platform=iOS Simulator,name=iPhone 8 Plus,OS=11.4'
+script: xcodebuild build-for-testing -sdk iphonesimulator -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals && xcodebuild test -project Mind-Full\ Meals/Mind-Full\ Meals.xcodeproj -scheme Mind-Full\ Meals -destination 'platform=iOS Simulator,name=iPhone 8 Plus,OS=11.2'
