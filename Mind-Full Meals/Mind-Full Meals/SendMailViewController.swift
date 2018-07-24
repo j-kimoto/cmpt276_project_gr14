@@ -22,7 +22,7 @@ extension UIViewController: MFMailComposeViewControllerDelegate {
         mail.setMessageBody("Please see my meals in the attached file.", isHTML: false)
         
         let data = file.data(using: .utf8)
-        mail.addAttachmentData(data!, mimeType: "text/csv", fileName: "myMeals.csv")
+        mail.addAttachmentData(data!, mimeType: "text/csv", fileName: "myMeals.txt")
         return mail
     }
     
