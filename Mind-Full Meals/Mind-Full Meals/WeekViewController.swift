@@ -20,7 +20,6 @@ import UIKit
 
 class WeekViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
-    var mealsInDateRange: [(String, Int32, String)] = []
     @IBAction func leftButton(_ sender: Any) {/*
         CurrentDay -= 7
         if CurrentDay < 0
@@ -148,10 +147,10 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //check for meals
             //if there are meals for this day
             //makemeals()
+             cell.Date.text = month[CurrentMonth] + " " + String(CurrentDay+n)
 
             // Use empty array of tuples to hold the meals. Tuple is (mealName, mealDate, mealType)
-        // if meals in range is empty  check the next day for meals
-        if mealsInDateRange.isEmpty {
+            var mealsInDateRange: [(String, Int32, String)] = []
             do {
                 mealsInDateRange = (try db?.selectDateRange(numSeconds: numSeconds, numEndSeconds: numEndSeconds))!
             }
@@ -159,22 +158,20 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print(db?.getError() ?? "db is nil")
             }
             print(mealsInDateRange)
-        }
-        else{
-            let mealName = mealsInDateRange[0].0
-            let mealDate = mealsInDateRange[0].1
-            let mealType = mealsInDateRange[0].2
-            print("loaded")
-            print(mealName, mealDate, mealType)
-            let tempDate = convertToDate(arg1: Int(mealDate))
-            cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
-            cell.MealName.text = mealName + "  -  " + mealType
-            cell.MealType.text = mealType
-            n -= 1
-            mealsInDateRange.removeFirst(1)
-        }
+        
             print(CurrentDay + n , CurrentMonth, CurrentYear)
             // Query through meals of day and printing on calendar if hit
+            for meal in mealsInDateRange {
+                let mealName = meal.0
+                let mealDate = meal.1
+                let mealType = meal.2
+                print("loaded")
+                print(mealName, mealDate, mealType)
+                let tempDate = convertToDate(arg1: Int(mealDate))
+                cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
+                cell.MealName.text = mealName
+                cell.MealType.text = mealType
+              }
         cell.layer.borderWidth = 0.8
         n += 1
         return cell
