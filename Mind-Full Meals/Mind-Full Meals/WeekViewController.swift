@@ -20,6 +20,8 @@ import UIKit
 
 class WeekViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource
 {
+
+    var mealsInDateRangeQueue: [(String, Int32, String)] = []
     @IBAction func leftButton(_ sender: Any) {/*
         CurrentDay -= 7
         if CurrentDay < 0
@@ -40,22 +42,21 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         {
             numOfDays[1] = 28
         }
-        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
         CurrentDay = numOfDays[CurrentMonth]
         n = 0
         print("New month Loaded")
         MyCollectionView.reloadData()*/
     }
     @IBAction func rightButton(_ sender: Any) {/*
-        CurrentMonth += 1
-        if CurrentMonth > 11
+        CurrentDay += 7
+        if CurrentDay > numOfDays[CurrentMonth]
         {
             CurrentMonth += 1
             if CurrentMonth > 11{
-                CurrentYear += 1
-                CurrentMonth = 0
+                CurrentYear -= 1
+                CurrentMonth = 11
             }
-            CurrentDay = CurrentDay-numOfDays[CurrentMonth]
+            CurrentDay = numOfDays[CurrentMonth]+CurrentDay%(numOfDays[CurrentMonth-1])
         }
         //i hate leap years
         if CurrentMonth == 1 && CurrentYear % 4 == 0
@@ -66,10 +67,10 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         {
             numOfDays[1] = 28
         }
-        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+numOfDays[(CurrentMonth+11)%12] + 1)%7
-        CurrentDay = 1
+        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
+        CurrentDay = numOfDays[CurrentMonth]
         n = 0
-        print("New week Loaded")
+        print("New month Loaded")
         MyCollectionView.reloadData()*/
     }
     
@@ -78,6 +79,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        n = 0
         // Do any additional setup after loading the view, typically from a nib.
 
         //connecting to database
@@ -120,22 +122,24 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         // Close the database when switching views
         db?.closeDatabase()
+        n = 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return 7
+        return 25
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekCell", for: indexPath) as! WeekCollectionViewCell
 
         // empty days at the start of the month
-        
+        print("Checking if queue is empty")
+        while mealsInDateRangeQueue.isEmpty {
+            print("queue is empty")
             let numYear = CurrentYear - 1970
             var leapYearsDays = Int(round(Double(numYear/4)))
-            for index in 0...CurrentMonth
-            {
+            for index in 0...CurrentMonth{
                 leapYearsDays += numOfDays[index]
             }
             let numDays = numYear * 365 + leapYearsDays + CurrentDay + n - 32
@@ -157,9 +161,20 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             catch {
                 print(db?.getError() ?? "db is nil")
             }
-            print(mealsInDateRange)
+            print("MealsInDateRange",mealsInDateRange)
         
             print(CurrentDay + n , CurrentMonth, CurrentYear)
+            mealsInDateRangeQueue.append(contentsOf: mealsInDateRange)
+            n += 1
+            if n > 7{
+                cell.layer.borderWidth = 0
+                cell.Date.text = " "
+                cell.MealName.text = " "
+                cell.MealType.text = " "
+                return cell
+            }
+        }
+        /*
             // Query through meals of day and printing on calendar if hit
             for meal in mealsInDateRange {
                 let mealName = meal.0
@@ -171,9 +186,17 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
                 cell.MealName.text = mealName
                 cell.MealType.text = mealType
-              }
-        cell.layer.borderWidth = 0.8
-        n += 1
+              }*/
+        cell.layer.borderWidth = 0.5
+        let mealName = mealsInDateRangeQueue[0].0
+        let mealDate = mealsInDateRangeQueue[0].1
+        let mealType = mealsInDateRangeQueue[0].2
+        mealsInDateRangeQueue.removeFirst(1)
+        let tempDate = convertToDate(arg1: Int(mealDate))
+        cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
+        cell.MealName.text = mealName
+        cell.MealType.text = mealType
+        print("N = ",n)
         return cell
     }
     

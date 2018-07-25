@@ -12,5 +12,4 @@ class WeekCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var MealName: UILabel!
     @IBOutlet weak var Date: UILabel!
     @IBOutlet weak var MealType: UILabel!
-    
 }

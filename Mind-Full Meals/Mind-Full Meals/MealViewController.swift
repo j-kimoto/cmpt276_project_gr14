@@ -11,7 +11,6 @@ import UIKit
 class MealViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var foodImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
     
@@ -102,14 +101,6 @@ class MealViewController: UIViewController {
         afterFullness.text = String(fullnessInt)
     }
     
-    @IBAction func addPicture(_ sender: Any) {
-        CameraHandler.shared.showActionSheet(vc: self)
-        CameraHandler.shared.imagePickedBlock = { (image) in
-            self.foodImage.image = image
-            self.foodImage.contentMode = UIViewContentMode.scaleAspectFit
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -160,9 +151,6 @@ class MealViewController: UIViewController {
             setLabels(oldMeal: meal!)
             editMeal = false
         }
-        
-        foodImage.layer.borderWidth = 1
-        foodImage.layer.masksToBounds = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
