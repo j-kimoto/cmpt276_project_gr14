@@ -26,20 +26,20 @@ class AddMealViewController: UIViewController {
     
     @IBAction func lunchButton(_ sender: Any) {
         UserDefaults.standard.set(1, forKey:"udtype") // Int
-        let lTime = UserDefaults.standard.object(forKey: "DBT") as? Date ?? Date()
+        let lTime = UserDefaults.standard.object(forKey: "DLT") as? Date ?? Date()
         if saved {
             print("LUNCH TIME:", lTime)
             UserDefaults.standard.set(lTime, forKey:"uddate") // Date is stored as Any object
         }
         else {
             print("UNSAVED TIME")
-            UserDefaults.standard.set(setDateTime(hour: 13, min: 0), forKey:"uddate") // Date is stored as Any object
+            UserDefaults.standard.set(setDateTime(hour: 12, min: 30), forKey:"uddate") // Date is stored as Any object
         }
     }
     
     @IBAction func dinnerButton(_ sender: Any) {
         UserDefaults.standard.set(2, forKey:"udtype") // Int
-        let dTime = UserDefaults.standard.object(forKey: "DBT") as? Date ?? Date()
+        let dTime = UserDefaults.standard.object(forKey: "DDT") as? Date ?? Date()
         if saved {
             print("DINNER TIME:", dTime)
             UserDefaults.standard.set(dTime, forKey:"uddate") // Date is stored as Any object

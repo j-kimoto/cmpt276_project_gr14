@@ -15,6 +15,7 @@ class Meal {
     var Meal_Type : String
     var Before_Full : String
     var After_Full : String
+    var Image : String
     
     init(Meal_Name: String, Date: Date)
     {
@@ -25,8 +26,9 @@ class Meal {
         self.Meal_Type = " "
         self.Before_Full = " "
         self.After_Full = " "
+        self.Image = " "
     }
-    init(Meal_Name: String, Rating: NSInteger, Ingredients: Array<String>, Date: Date, Meal_Type: String, Before: String, After: String)
+    init(Meal_Name: String, Rating: NSInteger, Ingredients: Array<String>, Date: Date, Meal_Type: String, Before: String, After: String, Image: String)
     {
         self.Meal_Name = Meal_Name
         self.Rating = Rating
@@ -35,6 +37,7 @@ class Meal {
         self.Meal_Type = Meal_Type
         self.Before_Full = Before
         self.After_Full = After
+        self.Image = Image
     }
     func SetMealName(arg1:String)
     {
@@ -92,6 +95,14 @@ class Meal {
     {
         return self.After_Full
     }
+    func SetImage(arg1:String)
+    {
+        self.Image = arg1
+    }
+    func GetImage() -> String
+    {
+        return self.Image
+    }
 }
 
 // Lets you print meal objects with print(object)
@@ -105,6 +116,7 @@ extension Meal: CustomStringConvertible {
                 Meal_Type: \(Meal_Type)
                 Before: \(Before_Full)
                 After: \(After_Full)
+                Image: \(Image)
                 """
     }
 }
