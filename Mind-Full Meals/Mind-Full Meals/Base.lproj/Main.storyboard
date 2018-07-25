@@ -922,7 +922,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="FaM-QE-fsu"/>
+                                    <segue destination="BYZ-38-t0r" kind="modal" id="s3N-Hq-Qhy"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1354,13 +1354,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gGN-0B-igx"/>
         <segue reference="loD-Qt-BFa"/>
-        <segue reference="xYF-Yw-kvb"/>
-        <segue reference="SgD-Ui-Y1l"/>
-        <segue reference="DWt-o7-UCB"/>
+        <segue reference="DWw-wO-5cz"/>
+        <segue reference="J8q-RZ-5lg"/>
+        <segue reference="dMe-QH-7SZ"/>
         <segue reference="fsX-ci-iNz"/>
-        <segue reference="4gf-dw-xFU"/>
-        <segue reference="bWx-34-Jtb"/>
+        <segue reference="S4w-Dc-Pr7"/>
+        <segue reference="s3N-Hq-Qhy"/>
     </inferredMetricsTieBreakers>
 </document>
