@@ -15,6 +15,7 @@
 
 import Foundation
 import SQLite3
+import UIKit
 
 /** Classes, structs, and enums which conform to this protocol
  can be created in the database with createStatement */
@@ -25,7 +26,7 @@ protocol SQLTable {
 /** String to create the meal table */
 extension Meal: SQLTable {
     static var createStatement: String {
-        return "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT);"
+        return "CREATE TABLE IF NOT EXISTS Meals (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, rating INT, date INT, ingredients TEXT, type TEXT, before TEXT, after TEXT, image TEXT);"
     }
 }
 
@@ -159,7 +160,7 @@ extension SQLiteDatabase {
     func insertMeal(meal: Meal) throws {
         
         // String to insert the meal into the database
-        let insertSql = "Insert into Meals (name, rating, date, ingredients, type, before, after) VALUES (?, ?, ?, ?, ?, ?, ?);"
+        let insertSql = "Insert into Meals (name, rating, date, ingredients, type, before, after, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
         
         // The prepareStatement's throw is passed up the chain
         let insertStatement = try prepareStatement(sql: insertSql)
@@ -183,6 +184,7 @@ extension SQLiteDatabase {
         let type = meal.GetMeal_Type()
         let beforeHunger = meal.GetBefore()
         let afterHunger = meal.GetAfter()
+        let image =  meal.GetImage()
     
         
         // Use separate booleans to check if bind succeeded
@@ -193,9 +195,10 @@ extension SQLiteDatabase {
         let bindType = sqlite3_bind_text(insertStatement, 5, type, -1, SQLITE_TRANSIENT) == SQLITE_OK
         let bindBeforeHunger = sqlite3_bind_text(insertStatement, 6, beforeHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
         let bindAfterHunger = sqlite3_bind_text(insertStatement, 7, afterHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindImage = sqlite3_bind_text(insertStatement, 8, image, -1, SQLITE_TRANSIENT) == SQLITE_OK
         
         // Binding the parameters and throwing error if not ok
-        guard bindName && bindRating && bindDate && bindIngredients && bindType && bindBeforeHunger && bindAfterHunger else {
+        guard bindName && bindRating && bindDate && bindIngredients && bindType && bindBeforeHunger && bindAfterHunger && bindImage else {
             throw SQLiteError.Bind(message: "Error binding a parameter: \(errorMessage)")
         }
         
@@ -315,7 +318,7 @@ extension SQLiteDatabase {
     func selectAllMeals() throws -> [Meal] {
         
         var allMeals = [Meal]()
-        let querySql = "SELECT id, name, rating, date, ingredients, type, before, after FROM Meals"
+        let querySql = "SELECT * FROM Meals"
         
         guard let queryStatement = try? prepareStatement(sql: querySql) else {
             throw SQLiteError.Prepare(message: "Error preparing select:  \(errorMessage)")
@@ -354,6 +357,21 @@ extension SQLiteDatabase {
         return date
     }
     
+    /** Converts from image to String to store in Database */
+    private func imageToString(arg1: String) -> String {
+        let image = UIImage(named:arg1)!
+        let imageData:Data = UIImagePNGRepresentation(image)!
+        let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+        return strBase64
+    }
+    
+    /** Converts from string back to image to display on screen */
+    private func stringToImage(arg1: String) -> UIImage {
+        let decodedData = Data(base64Encoded: arg1, options: .ignoreUnknownCharacters)
+        let decodedImage = UIImage(data: decodedData!)
+        return decodedImage!
+    }
+    
     /** Converts an array (of ingredients) to a comma separated string */
     private func convertIngredients(arg1:Array<String>) -> String {
         let array = arg1
@@ -374,7 +392,7 @@ extension SQLiteDatabase {
         var mealField: String
         
         // Loop through all columns except id (id is column 0) in one row
-        for index in 1...7 {
+        for index in 1...8 {
             // Integer format columns are rating (2) and date (3)
             if index == 2 || index == 3 {
                 let mealInt = sqlite3_column_int(queryStatement, Int32(index))
@@ -397,9 +415,10 @@ extension SQLiteDatabase {
         let type = temp[4]
         let beforeHunger = temp[5]
         let afterHunger = temp[6]
+        let image = temp[7]
         
         // Creates the object
-        let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger)
+        let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger, Image: image)
         return newMeal
     }
 }

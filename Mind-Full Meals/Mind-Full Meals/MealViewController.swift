@@ -11,7 +11,6 @@ import UIKit
 class MealViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var foodImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mealRating: RatingControl!
     
@@ -26,6 +25,9 @@ class MealViewController: UIViewController {
     @IBOutlet weak var afterFullness: UILabel!
     @IBOutlet weak var fullnessSlider: UISlider!
     @IBOutlet weak var afterfullSlider: UISlider!
+    
+    @IBOutlet weak var foodImage: UIImageView!
+    
     let mealTypes = [MealType.Breakfast.rawValue, MealType.Lunch.rawValue, MealType.Dinner.rawValue, MealType.Snacks.rawValue]
     
     var meal: Meal?
@@ -101,7 +103,7 @@ class MealViewController: UIViewController {
         let fullnessInt = Int(round(sender.value))
         afterFullness.text = String(fullnessInt)
     }
-    
+     
     @IBAction func addPicture(_ sender: Any) {
         CameraHandler.shared.showActionSheet(vc: self)
         CameraHandler.shared.imagePickedBlock = { (image) in
@@ -197,6 +199,7 @@ class MealViewController: UIViewController {
         print("Store: Selected row is \(typePicker.selectedRow(inComponent: 0)) which is \(mealTypes[typePicker.selectedRow(inComponent: 0)] )")
         UserDefaults.standard.set(currentFullness.text, forKey:"udbeforefull") // String
         UserDefaults.standard.set(afterFullness.text, forKey:"udafterfull") // String
+        UserDefaults.standard.set(afterFullness.text, forKey:"udafterfull") // String
     }
     
     // On first run, the values may be nil
@@ -208,8 +211,6 @@ class MealViewController: UIViewController {
         print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )      
         typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udbeforefull") ?? "", fullnessSlider, currentFullness)
-        setFullness(UserDefaults.standard.string(forKey:"udafterfull") ?? "", afterfullSlider, afterFullness)
-        
     }
     
     func clearUserDefault() {
@@ -232,8 +233,9 @@ class MealViewController: UIViewController {
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         let beforefull = currentFullness.text ?? ""
         let afterfull = afterFullness.text ?? ""
+        let image = ""
         
-        return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull)
+        return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull, Image: image)
     }
     
     // Setting labels to edit the meal. Meal type and food are not restored
@@ -296,6 +298,21 @@ class MealViewController: UIViewController {
         return ret
     }
     */
+    
+    // Converts from image to String to store in Database
+    private func imageToString(arg1: String) -> String {
+        let image = UIImage(named:arg1)!
+        let imageData:Data = UIImagePNGRepresentation(image)!
+        let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+        return strBase64
+    }
+    
+    // Converts from string back to image to display on screen
+    private func stringToImage(arg1: String) -> UIImage {
+        let decodedData = Data(base64Encoded: arg1, options: .ignoreUnknownCharacters)
+        let decodedImage = UIImage(data: decodedData!)
+        return decodedImage!
+    }
     
     // Converts an array (of ingredients) to a comma separated string
     private func convertIngredients(arg1:Array<String>) -> String {
