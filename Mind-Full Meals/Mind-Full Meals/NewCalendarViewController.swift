@@ -180,9 +180,17 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
                 leapYearsDays += numOfDays[index]
             }
             let numDays = numYear * 365 + leapYearsDays + n - skip - 45
-            let numHours = numDays * 24
+            let numHours = numDays * 24+7
             let numSeconds = numHours * 3600
             let numEndSeconds = numSeconds + 86399
+            
+            let startDate = convertToDate(arg1: numSeconds)
+            print("start date")
+            print(Calendar.current.component(.year, from: startDate), month[Calendar.current.component(.month, from: startDate)-1], Calendar.current.component(.day, from: startDate), Calendar.current.component(.hour, from: startDate), Calendar.current.component(.second, from: startDate))
+
+            let endDate = convertToDate(arg1: numEndSeconds)
+            print("end date")
+            print(Calendar.current.component(.year, from: endDate), month[Calendar.current.component(.month, from: endDate)-1], Calendar.current.component(.day, from: endDate), Calendar.current.component(.hour, from: endDate), Calendar.current.component(.second, from: endDate))
             cell.date.text = String(n-13-skip)
             //check for meals
             //if there are meals for this day
@@ -245,12 +253,11 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         return Int(seconds)
         
     }
-    /*
     // Converts from seconds since 1970-01-01 00:00:00 to Date format
     private func convertToDate(arg1:Int) -> Date {
         let seconds = Double(arg1)
         let date = Date(timeIntervalSince1970: seconds)
         return date
-    }*/
+    }
 }
 
