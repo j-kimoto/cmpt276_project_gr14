@@ -5,6 +5,7 @@
 //  Created by jbengco on 7/24/18.
 //  Copyright © 2018 CMPT 267. All rights reserved.
 //
+// Source for CameraHandler https://hackernoon.com/swift-access-ios-camera-and-photo-library-dc1dbe0cdd76
 
 import Foundation
 import UIKit
