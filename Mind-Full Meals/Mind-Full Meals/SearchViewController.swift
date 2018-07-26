@@ -75,7 +75,6 @@ class SearchViewController: UIViewController {
         tableView.dataSource = dataSource                       // Set the data source of the table view to this class's property
         filteredBigMealArray = bigMealArray                     // filteredBigMealArray used for searching
         
-        tableView.delegate = self                               // Allow deleting meals from database
         // Display an edit button on the navigation bar (used to delete meals)
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
@@ -232,16 +231,5 @@ extension SearchViewController: UISearchBarDelegate {
         dataSource = MealsTableDataSource(meals: filteredBigMealArray)
         tableView.dataSource = dataSource
         tableView.reloadData()
-    }
-}
-
-extension SearchViewController: UITableViewDelegate {
-    /** Delete a meal from the database. Bug: the delete button doesn't show minus icons on each row */
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            self.bigMealArray.remove(at: indexPath.row) // Just remove from the bigMealArray for now
-            // Also should delete meal from database
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
     }
 }
