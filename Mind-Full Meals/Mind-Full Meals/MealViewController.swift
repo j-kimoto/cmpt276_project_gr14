@@ -78,16 +78,6 @@ class MealViewController: UIViewController {
         catch {
             print(db?.getError() ?? "db is nil")
         }
-        
-        // Get the first meal in the db
-        do {
-            let first = try db?.meal(id: 1)
-            print("====== Printing first meal in database:")
-            print(first ?? "no meal with id=1")
-        }
-        catch {
-            print(error)
-        }
 
         clearUserDefault()
     }
@@ -171,7 +161,7 @@ class MealViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         // Close the database when switching views
-        db?.closeDatabase()
+        //db?.closeDatabase()
     }
     
     override func didReceiveMemoryWarning() {
@@ -194,12 +184,18 @@ class MealViewController: UIViewController {
     func storeUserDefault() {
         UserDefaults.standard.set(nameTextField.text, forKey:"udname") // String
         UserDefaults.standard.set(mealRating.rating, forKey:"udrating") // Int
-        UserDefaults.standard.set(datePicker.date, forKey:"uddate") // Date is stored as Any object
+        UserDefaults.standard.set(datePicker.date, forKey:"uddate") // Date is stored as Date object
         UserDefaults.standard.set(typePicker.selectedRow(inComponent: 0), forKey:"udtype") // Int
         print("Store: Selected row is \(typePicker.selectedRow(inComponent: 0)) which is \(mealTypes[typePicker.selectedRow(inComponent: 0)] )")
         UserDefaults.standard.set(currentFullness.text, forKey:"udbeforefull") // String
         UserDefaults.standard.set(afterFullness.text, forKey:"udafterfull") // String
         UserDefaults.standard.set(afterFullness.text, forKey:"udafterfull") // String
+        
+        var base64Image = "" // If no image is added, save an empty string by default
+        if let image = foodImage.image {        // Check if image is not nil
+            base64Image = imageToString(arg1: image)
+        }
+        UserDefaults.standard.set(base64Image, forKey:"udimage") // String
     }
     
     // On first run, the values may be nil
@@ -211,6 +207,12 @@ class MealViewController: UIViewController {
         print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )      
         typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udbeforefull") ?? "", fullnessSlider, currentFullness)
+        
+        // Check if there is no image. Use an empty string to represent no image
+        let base64Image = UserDefaults.standard.string(forKey:"udimage") ?? ""
+        if !base64Image.isEmpty {
+            foodImage.image = stringToImage(arg1: base64Image)
+        }
     }
     
     func clearUserDefault() {
@@ -220,6 +222,7 @@ class MealViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "udtype")
         UserDefaults.standard.removeObject(forKey: "udbeforefull")
         UserDefaults.standard.removeObject(forKey: "udafterfull")
+        UserDefaults.standard.removeObject(forKey: "udimage")
     }
     
     // MARK: Private methods
@@ -233,9 +236,14 @@ class MealViewController: UIViewController {
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         let beforefull = currentFullness.text ?? ""
         let afterfull = afterFullness.text ?? ""
-        let image = ""
+
+        // If image is nil, save an empty image to the database
+        var base64Image = ""
+        if let image = foodImage.image { // Check if image is not nil
+            base64Image = imageToString(arg1: image)
+        }
         
-        return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull, Image: image)
+        return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull, Image: base64Image)
     }
     
     // Setting labels to edit the meal. Meal type and food are not restored
@@ -248,6 +256,11 @@ class MealViewController: UIViewController {
         //typePicker.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
         setFullness((meal?.GetBefore())!, fullnessSlider, currentFullness)
         setFullness((meal?.GetAfter())!, afterfullSlider, afterFullness)
+        
+        let base64Image = meal?.GetImage() ?? ""
+        if !base64Image.isEmpty { // Empty string means there is no image, so don't restore anything
+            foodImage.image = stringToImage(arg1: base64Image)
+        }
     }
     
     // Sets the fullness label and slider
@@ -300,9 +313,9 @@ class MealViewController: UIViewController {
     */
     
     // Converts from image to String to store in Database
-    private func imageToString(arg1: String) -> String {
-        let image = UIImage(named:arg1)!
-        let imageData:Data = UIImagePNGRepresentation(image)!
+    private func imageToString(arg1: UIImage) -> String {
+        //let image = UIImage(named:arg1)!
+        let imageData:Data = UIImagePNGRepresentation(arg1)!
         let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
         return strBase64
     }

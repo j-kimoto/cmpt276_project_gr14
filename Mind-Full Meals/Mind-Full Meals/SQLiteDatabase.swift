@@ -86,8 +86,7 @@ class SQLiteDatabase {
         var db: OpaquePointer? = nil
 
         if sqlite3_open(path, &db) == SQLITE_OK {
-            print("Connected to database")
-            print(path)
+            print("Connected to database at: \(path)")
             return SQLiteDatabase(dbPointer: db)
         }
         else {
