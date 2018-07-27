@@ -104,7 +104,7 @@ class SearchViewController: UIViewController {
             
             mealViewController.meal = filteredBigMealArray[(path?.row)!] // Gets meal from the filtered array
             mealViewController.editMeal = true // Currently editing meal
-            print(mealViewController.meal ?? "meal is nil")
+            //print(mealViewController.meal ?? "meal is nil")
         }
     }
     

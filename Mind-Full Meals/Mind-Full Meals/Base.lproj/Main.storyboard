@@ -693,17 +693,19 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FAI-eo-URP">
                                                     <rect key="frame" x="15" y="11" width="345" height="163"/>
                                                     <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HHg-ZQ-gNZ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="100"/>
+                                                        </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EeR-1f-S3R">
-                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="100" width="345" height="0.0"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal name: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldM-Pm-obK">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Meal name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nd-f9-p33">
-                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="20.5"/>
+                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -711,16 +713,15 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRt-tW-2um">
-                                                            <rect key="frame" x="0.0" y="20.5" width="345" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="100" width="345" height="0.0"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSL-7S-NJa">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5f-0H-TjE">
-                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="20.5"/>
+                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -728,16 +729,15 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aUN-wF-7Ou">
-                                                            <rect key="frame" x="0.0" y="41" width="345" height="40"/>
+                                                            <rect key="frame" x="0.0" y="100" width="345" height="0.0"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tog-ir-aCk">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-sY-blK">
-                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="40"/>
+                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -745,16 +745,16 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N68-OT-nLC">
-                                                            <rect key="frame" x="0.0" y="81" width="345" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="100" width="345" height="1.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ont-Pt-Rg8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="1.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ap-2i-8nG">
-                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="20.5"/>
+                                                                    <rect key="frame" x="-15" y="0.0" width="0.0" height="1.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -828,6 +828,7 @@
                                             <outlet property="afterHunger" destination="dxy-CO-dBj" id="0Zh-6m-Vmx"/>
                                             <outlet property="beforeHunger" destination="Wh6-GB-vaL" id="QhC-FZ-tNy"/>
                                             <outlet property="dateLabel" destination="4Ap-2i-8nG" id="q3i-zt-FEe"/>
+                                            <outlet property="foodImage" destination="HHg-ZQ-gNZ" id="wvE-gH-Jav"/>
                                             <outlet property="ingredientsLabel" destination="tJZ-sY-blK" id="UIg-Lh-VUe"/>
                                             <outlet property="nameLabel" destination="7nd-f9-p33" id="WF4-uR-rq1"/>
                                             <outlet property="ratingLabel" destination="I5f-0H-TjE" id="ApK-dm-tJO"/>
@@ -1372,7 +1373,7 @@
         <segue reference="SgD-Ui-Y1l"/>
         <segue reference="DWt-o7-UCB"/>
         <segue reference="fsX-ci-iNz"/>
-        <segue reference="oMt-4Q-69x"/>
-        <segue reference="a4u-ct-gpw"/>
+        <segue reference="PvA-eS-qfn"/>
+        <segue reference="J2k-DK-3KG"/>
     </inferredMetricsTieBreakers>
 </document>
