@@ -74,6 +74,9 @@ class SearchViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension     // Set the row height automatically
         tableView.dataSource = dataSource                       // Set the data source of the table view to this class's property
         filteredBigMealArray = bigMealArray                     // filteredBigMealArray used for searching
+        
+        // Display an edit button on the navigation bar (used to delete meals)
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -101,7 +104,7 @@ class SearchViewController: UIViewController {
             
             mealViewController.meal = filteredBigMealArray[(path?.row)!] // Gets meal from the filtered array
             mealViewController.editMeal = true // Currently editing meal
-            print(mealViewController.meal ?? "meal is nil")
+            //print(mealViewController.meal ?? "meal is nil")
         }
     }
     

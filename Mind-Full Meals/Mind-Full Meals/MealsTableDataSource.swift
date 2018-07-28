@@ -11,7 +11,7 @@
 import UIKit
 
 class MealsTableDataSource: NSObject {
-    let meals: [Meal]
+    var meals: [Meal]
     
     init(meals: [Meal]) {
         self.meals = meals
@@ -34,5 +34,19 @@ extension MealsTableDataSource: UITableViewDataSource {
         cell.setMeal(meal: item)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    /** Delete a meal from the database. Bug: the delete button doesn't show minus icons on each row */
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("test!!!")
+            meals.remove(at: indexPath.row) // Just remove from the bigMealArray for now
+            // Also should delete meal from database
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
