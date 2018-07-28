@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 var saved = false
 class SettingViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var dinner: UIDatePicker!
     @IBOutlet weak var age: UISegmentedControl!
     @IBOutlet weak var gender: UISegmentedControl!
+    @IBOutlet weak var notifications: UISwitch!
     
     //Save and data the user has enterend to be loaded later
     @IBAction func Saved(_ sender: Any) {
@@ -27,6 +29,11 @@ class SettingViewController: UIViewController {
         print("saved")
         saved = true
         
+        // Check if the switch is on
+        if notifications.isOn {
+            // Turn on notifications
+            enableNotifications()
+        }
     }
     
     override func viewDidLoad() {
@@ -51,6 +58,62 @@ class SettingViewController: UIViewController {
         print("loaded")
     }
     
+    func enableNotifications(){
+        // Sources: https://developer.apple.com/documentation/usernotifications/scheduling_a_notification_locally_from_your_app and https://medium.com/@dkw5877/local-notifications-in-ios-156a03b81ceb
+        print("ENABLING NOTIFICATIONS")
+        
+        // Get the notification center
+        let center =  UNUserNotificationCenter.current()
+        
+        // Request permission to display alerts, play sounds, and change app badge
+        center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
+            // Enable or disable features based on authorization
+            //self.isGrantedNotificationAccess = true
+        })
+        
+        // Don't schedule notifications if not authorized
+        center.getNotificationSettings(completionHandler: { (settings) in
+            guard settings.authorizationStatus == .authorized else { return }
+            
+            if settings.alertSetting == .enabled {
+                // Schedule an alert-only notification
+            }
+            else {
+                // Schedule a notification with a badge and sound
+            }
+        })
+        
+        /*
+        // Create the notification content
+        let content = UNMutableNotificationContent()
+        content.title = " Test title"
+        content.subtitle = "Lunch"
+        content.body = "It's time to cook lunch"
+        //content.categoryIdentifier = "message"
+        content.sound = UNNotificationSound.default()
+        
+        /*// Trigger notification to show every Friday at 9:30pm
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        
+        dateComponents.weekday = 5 // Friday
+        dateComponents.hour = 2130*/
+        
+        // Create the trigger as a repeating event
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        // Create the request
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: "LunchNotification", content: content, trigger: trigger)
+        
+        // Add request to notification center
+        center.add(request) { (error) in
+            if error != nil {
+                // Handle any errors
+            }
+        }
+        */
+    }
     
     
 }

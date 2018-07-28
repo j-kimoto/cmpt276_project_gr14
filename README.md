@@ -18,3 +18,14 @@ Coding Standard:
       else {
         code
       }
+
+Todo
+A4 requirements document: https://docs.google.com/document/d/1Ko0KqKXuyh6q-OqOfrEDZ6lkBZNBhgQ4kULmJhIgii8/edit#
+- 8.2 Portion Recommendation ("As a user, I want the advice for mindful eating will focus on eating at regular scheduled times, eating until I am full, and trying to eat healthy.")
+- 5.3 Negative effects diary
+- 6.1 Meal timers
+- 6.2, 7.1, 7.2, 7.3 Notifications
+- 4.1.2 Camera
+- 9.2 Improved Profile
+- 8.1 UI update
+- 1.4 Statistical records

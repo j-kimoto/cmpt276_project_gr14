@@ -1208,6 +1208,17 @@
                                     <action selector="Saved:" destination="NYI-qe-Euj" eventType="touchUpInside" id="wfb-yW-oXs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RW9-vN-Rzb">
+                                <rect key="frame" x="16" y="503" width="97" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hTo-3f-xVO">
+                                <rect key="frame" x="253" y="503" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="fYH-0I-hVU"/>
@@ -1218,6 +1229,7 @@
                         <outlet property="dinner" destination="FZM-4l-d1F" id="f2Q-6T-W0x"/>
                         <outlet property="gender" destination="SoG-dF-LLi" id="oH4-Qm-AHB"/>
                         <outlet property="lunch" destination="SmE-dT-cWY" id="914-Xh-7fI"/>
+                        <outlet property="notifications" destination="hTo-3f-xVO" id="ZHO-cC-Szy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8g-uQ-m5I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1368,12 +1380,13 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="loD-Qt-BFa"/>
-        <segue reference="xYF-Yw-kvb"/>
-        <segue reference="SgD-Ui-Y1l"/>
+        <segue reference="Gtc-7p-qI3"/>
+        <segue reference="dMH-G7-hQ1"/>
+        <segue reference="DWw-wO-5cz"/>
+        <segue reference="J8q-RZ-5lg"/>
         <segue reference="DWt-o7-UCB"/>
         <segue reference="fsX-ci-iNz"/>
         <segue reference="PvA-eS-qfn"/>
-        <segue reference="J2k-DK-3KG"/>
+        <segue reference="4hW-gE-le4"/>
     </inferredMetricsTieBreakers>
 </document>
