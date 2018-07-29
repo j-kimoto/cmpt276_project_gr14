@@ -837,9 +837,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="delegate" destination="zIm-MV-KPF" id="EHL-t0-dFP"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -858,11 +855,6 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Gcz-39-er4"/>
-                        <barButtonItem title="Delete" id="dt2-Hx-2QG">
-                            <connections>
-                                <action selector="deleteMeal:" destination="zIm-MV-KPF" id="H31-na-P5O"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem systemItem="edit" id="5T5-Mz-Jdy">
                             <connections>
                                 <action selector="editMealInfo:" destination="zIm-MV-KPF" id="EUq-6t-md4"/>
@@ -879,7 +871,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="deleteButton" destination="dt2-Hx-2QG" id="3Fu-iU-CSg"/>
                         <outlet property="searchBar" destination="4s2-nX-zkQ" id="gPC-IN-8Rh"/>
                         <outlet property="tableView" destination="igo-yY-2e2" id="73O-vW-KRb"/>
                     </connections>

@@ -11,10 +11,12 @@
 import UIKit
 
 class MealsTableDataSource: NSObject {
-    var meals: [Meal]
+    private var meals: [Meal]
+    private var database: SQLiteDatabase
     
-    init(meals: [Meal]) {
+    init(meals: [Meal], database: SQLiteDatabase) {
         self.meals = meals
+        self.database = database
     }
 }
 
@@ -38,13 +40,34 @@ extension MealsTableDataSource: UITableViewDataSource {
     
     // Override to support editing the table view.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let mealIndex = indexPath.row
+        
         if editingStyle == .delete {
-            print("DELETE meal at \(indexPath.row)")
             // Remove the meal from the array
-            meals.remove(at: indexPath.row)
+            let poppedMeal = meals.remove(at: mealIndex)
             
             // Update the table view
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // Get the row id of the meal to delete from the database
+            var poppedRowId: Int32
+            do {
+                poppedRowId = try database.getId(meal: poppedMeal)
+            }
+            catch {
+                print("Error getting id of the meal to delete")
+                return          // Must return here since poppedRowId would not be initialized
+            }
+            
+            // Delete the meal from the database
+            do {
+                try database.deleteMeal(id: poppedRowId)
+            }
+            catch {
+                print("Error deleting meal with id \(poppedRowId)")
+            }
+            
+            print("DELETED meal at array index \(mealIndex), database id \(poppedRowId)")
         }
     }
 }

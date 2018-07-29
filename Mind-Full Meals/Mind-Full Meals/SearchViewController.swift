@@ -32,25 +32,6 @@ class SearchViewController: UIViewController {
         sendEmail(file: emailText)
     }
     
-    // Delete a meal from the table and database
-    @IBAction func deleteMeal(_ sender: UIBarButtonItem) {
-        // If you're currently in editing mode
-        if isEditing {
-            // Change text of button to inform user of state
-            deleteButton.title = "Delete"
-            
-            // Turn off editing mode
-            setEditing(false, animated: true)
-        }
-        else {
-            // Change text of button to inform user of state
-            deleteButton.title = "Done"
-            
-            // Enter editing mode
-            setEditing(true, animated: true)
-        }
-    }
-    
     // Edit the selected meal's info in the database
     @IBAction func editMealInfo(_ sender: UIBarButtonItem) {
     }
@@ -90,8 +71,8 @@ class SearchViewController: UIViewController {
         // Loads data to bigMealArray
         bigMealArray = loadData()
         
-        // Create an instance of the data source so the table loads our meals
-        dataSource = MealsTableDataSource(meals: bigMealArray)
+        // Create an instance of the data source so the table loads our meals and has access to the database
+        dataSource = MealsTableDataSource(meals: bigMealArray, database: db!)
         
         tableView.estimatedRowHeight = 185                      // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension     // Set the row height automatically
@@ -248,7 +229,7 @@ extension SearchViewController: UISearchBarDelegate {
         filteredBigMealArray = filterMealsForSearchText(searchText: searchText, scope: selectedIndex)
         
         // Set the table view's data source to the filtered list of meals
-        dataSource = MealsTableDataSource(meals: filteredBigMealArray)
+        dataSource = MealsTableDataSource(meals: filteredBigMealArray, database: db!)
         tableView.dataSource = dataSource
         tableView.reloadData()
     }
