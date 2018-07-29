@@ -26,6 +26,7 @@ class SettingViewController: UIViewController {
         UserDefaults.standard.set(dinner.date, forKey: "DDT")
         UserDefaults.standard.set(age.selectedSegmentIndex, forKey: "AGE")
         UserDefaults.standard.set(gender.selectedSegmentIndex, forKey: "GENDER")
+        UserDefaults.standard.set(notifications.isOn, forKey: "NOTIFY")
         print("saved")
         saved = true
         
@@ -55,12 +56,14 @@ class SettingViewController: UIViewController {
         dinner.date = UserDefaults.standard.object(forKey: "DDT") as! Date
         age.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "AGE")
         gender.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "GENDER")
+        
+        let notify = UserDefaults.standard.bool(forKey: "NOTIFY")
+        notifications.setOn(notify, animated: false)
         print("loaded")
     }
     
     func enableNotifications(){
         // Sources: https://developer.apple.com/documentation/usernotifications/scheduling_a_notification_locally_from_your_app and https://medium.com/@dkw5877/local-notifications-in-ios-156a03b81ceb
-        print("ENABLING NOTIFICATIONS")
         
         // Get the notification center
         let center =  UNUserNotificationCenter.current()
@@ -68,8 +71,14 @@ class SettingViewController: UIViewController {
         // Request permission to display alerts, play sounds, and change app badge
         center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
             // Enable or disable features based on authorization
-            //self.isGrantedNotificationAccess = true
+            if error != nil {
+                print("Notifications not enabled")
+            }
+            else {
+                print("Enabling notifications")
+            }
         })
+
         
         // Don't schedule notifications if not authorized
         center.getNotificationSettings(completionHandler: { (settings) in
@@ -83,7 +92,6 @@ class SettingViewController: UIViewController {
             }
         })
         
-        /*
         // Create the notification content
         let content = UNMutableNotificationContent()
         content.title = " Test title"
@@ -97,14 +105,18 @@ class SettingViewController: UIViewController {
         dateComponents.calendar = Calendar.current
         
         dateComponents.weekday = 5 // Friday
-        dateComponents.hour = 2130*/
+        dateComponents.hour = 21
+        dateComponents.minute = 30 */
         
         // Create the trigger as a repeating event
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        //let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        // Should show notification in 2 seconds
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
         
         // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: "LunchNotification", content: content, trigger: trigger)
+        let identifier = "LunchNotification"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         // Add request to notification center
         center.add(request) { (error) in
@@ -112,8 +124,10 @@ class SettingViewController: UIViewController {
                 // Handle any errors
             }
         }
-        */
     }
     
+    func scheduleNotifications() {
+        
+    }
     
 }

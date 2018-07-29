@@ -8,6 +8,8 @@
 
 import UIKit
 
+// Bug: How do I update bigMealArray with the deleted meals from MealsTableDataSource?
+
 class SearchViewController: UIViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
@@ -154,8 +156,8 @@ class SearchViewController: UIViewController {
     
     // Searches bigMealArray for searchText, returning the filtered array
     private func filterMealsForSearchText(searchText: String, scope: Int) -> [Meal] {
-        // Uses lowercase to search
-        // range finds the first occurence of searchText in its calle. Returns nil if not found/empty
+        
+        // Uses lowercase to search. range() finds the first occurence of searchText in fieldToSearch. Returns nil if not found/empty
         if searchText.isEmpty {
             return bigMealArray
         }

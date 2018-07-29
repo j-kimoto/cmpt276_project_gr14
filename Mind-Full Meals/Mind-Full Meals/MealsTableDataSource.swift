@@ -38,7 +38,7 @@ extension MealsTableDataSource: UITableViewDataSource {
         return cell
     }
     
-    // Override to support editing the table view.
+    // Deletes a meal when swiping left
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let mealIndex = indexPath.row
         
