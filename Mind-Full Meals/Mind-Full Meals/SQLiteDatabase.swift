@@ -159,7 +159,7 @@ extension SQLiteDatabase {
     func insertMeal(meal: Meal) throws {
         
         // String to insert the meal into the database
-        let insertSql = "Insert into Meals (name, rating, date, ingredients, type, before, after, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        let insertSql = "INSERT INTO Meals (name, rating, date, ingredients, type, before, after, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
         
         // The prepareStatement's throw is passed up the chain
         let insertStatement = try prepareStatement(sql: insertSql)
@@ -168,38 +168,8 @@ extension SQLiteDatabase {
             sqlite3_finalize(insertStatement)
         }
         
-        // Setting the parameters to insert into the database
-        let name = meal.GetMealName()
-        
-        let rating = meal.GetRating()
-        let int32Rating: Int32 = Int32(rating)
-        
-        let unixDate = convertFromDate(arg1: meal.GetDate())
-        let int32UnixDate = Int32(unixDate)
-
-        let ingredients = meal.GetIngredients()
-        let commaSeparatedIngredients = convertIngredients(arg1: ingredients)
-        
-        let type = meal.GetMeal_Type()
-        let beforeHunger = meal.GetBefore()
-        let afterHunger = meal.GetAfter()
-        let image =  meal.GetImage()
-    
-        
-        // Use separate booleans to check if bind succeeded
-        let bindName = sqlite3_bind_text(insertStatement, 1, name, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindRating = sqlite3_bind_int(insertStatement, 2, int32Rating) == SQLITE_OK
-        let bindDate = sqlite3_bind_int(insertStatement, 3, int32UnixDate) == SQLITE_OK
-        let bindIngredients = sqlite3_bind_text(insertStatement, 4, commaSeparatedIngredients, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindType = sqlite3_bind_text(insertStatement, 5, type, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindBeforeHunger = sqlite3_bind_text(insertStatement, 6, beforeHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindAfterHunger = sqlite3_bind_text(insertStatement, 7, afterHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        let bindImage = sqlite3_bind_text(insertStatement, 8, image, -1, SQLITE_TRANSIENT) == SQLITE_OK
-        
-        // Binding the parameters and throwing error if not ok
-        guard bindName && bindRating && bindDate && bindIngredients && bindType && bindBeforeHunger && bindAfterHunger && bindImage else {
-            throw SQLiteError.Bind(message: "Error binding a parameter: \(errorMessage)")
-        }
+        // Bind all the meal object parameters and throw SQLiteError.Bind if not ok
+        try bindAllMealParameters(meal: meal, queryStatement: insertStatement!)
         
         /*print("Data before insert:")
         print(meal)
@@ -286,6 +256,40 @@ extension SQLiteDatabase {
         
         // Uses the prepared statement to get a meal
         return getMealFromRow(queryStatement: queryStatement!)
+    }
+}
+
+
+extension SQLiteDatabase {
+    /** - returns: the id of a meal given all the other fields */
+    func getId(meal: Meal) throws -> Int32 {
+        
+        // String to select the id
+        let querySql = "SELECT id from Meals WHERE name = ? AND rating = ? AND date = ? AND ingredients = ? AND type = ? AND before = ? AND after = ? AND image = ?;" // 8 parameters
+        
+        let queryStatement = try prepareStatement(sql: querySql)
+        defer {
+            // Delete the prepared statement to release its memory when scope exists insertMeal function
+            sqlite3_finalize(queryStatement)
+        }
+        
+        // Bind all the meal object parameters and throw SQLiteError.Bind if not ok
+        try bindAllMealParameters(meal: meal, queryStatement: queryStatement!)
+        
+        /*print("Data before query:")
+         print(meal)
+         print("------------\n")*/
+        
+        // Run the select query
+        guard sqlite3_step(queryStatement) == SQLITE_ROW else {
+            throw SQLiteError.Step(message: "Error selecting meal id: \(errorMessage)")
+        }
+        
+        // If there is more than 1 row returned since there are identical meals, the function returns the smaller id
+        let int32Id = sqlite3_column_int(queryStatement, 0)
+        
+        //print("Meal id is \(int32Id)")
+        return int32Id
     }
 }
 
@@ -419,5 +423,68 @@ extension SQLiteDatabase {
         // Creates the object
         let newMeal = Meal(Meal_Name: name, Rating: rating, Ingredients: food, Date: date, Meal_Type: type, Before: beforeHunger, After: afterHunger, Image: image)
         return newMeal
+    }
+    
+    /** This function binds all the parameters except for id. Used in the insertMeal() and getId() functions.
+     It doesn't prepare or finalize the queryStatement. */
+    private func bindAllMealParameters(meal: Meal, queryStatement: OpaquePointer) throws {
+        // Setting the parameters to insert into the database
+        let name = meal.GetMealName() // 1
+        
+        let rating = meal.GetRating()
+        let int32Rating: Int32 = Int32(rating) // 2
+        
+        let unixDate = convertFromDate(arg1: meal.GetDate())
+        let int32UnixDate = Int32(unixDate) // 3
+        
+        let ingredients = meal.GetIngredients()
+        let commaSeparatedIngredients = convertIngredients(arg1: ingredients) // 4
+        
+        let type = meal.GetMeal_Type() // 5
+        let beforeHunger = meal.GetBefore() // 6
+        let afterHunger = meal.GetAfter() // 7
+        let image =  meal.GetImage() // 8
+        
+        
+        // Use separate booleans to check if bind succeeded
+        let bindName = sqlite3_bind_text(queryStatement, 1, name, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindRating = sqlite3_bind_int(queryStatement, 2, int32Rating) == SQLITE_OK
+        let bindDate = sqlite3_bind_int(queryStatement, 3, int32UnixDate) == SQLITE_OK
+        let bindIngredients = sqlite3_bind_text(queryStatement, 4, commaSeparatedIngredients, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindType = sqlite3_bind_text(queryStatement, 5, type, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindBeforeHunger = sqlite3_bind_text(queryStatement, 6, beforeHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindAfterHunger = sqlite3_bind_text(queryStatement, 7, afterHunger, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        let bindImage = sqlite3_bind_text(queryStatement, 8, image, -1, SQLITE_TRANSIENT) == SQLITE_OK
+        
+        // Binding the parameters and throwing error if not ok
+        guard bindName && bindRating && bindDate && bindIngredients && bindType && bindBeforeHunger && bindAfterHunger && bindImage else {
+            throw SQLiteError.Bind(message: "Error binding a parameter: \(errorMessage)")
+        }
+    }
+}
+
+extension SQLiteDatabase {
+    /** Deletes a meal from the database given the meal's id (starting from 1) */
+    func deleteMeal(id: Int32) throws {
+        
+        let querySql = "Delete FROM Meals WHERE id = ?;"
+        
+        guard let queryStatement = try? prepareStatement(sql: querySql) else {
+            throw SQLiteError.Prepare(message: "Error preparing delete statement: \(errorMessage)")
+        }
+        defer {
+            sqlite3_finalize(queryStatement)
+        }
+        
+        guard sqlite3_bind_int(queryStatement, 1, id) == SQLITE_OK else {
+            throw SQLiteError.Bind(message: "Error binding id: \(errorMessage)")
+        }
+        
+        // Uses the prepared statement to delete a meal
+        guard sqlite3_step(queryStatement) == SQLITE_DONE else {
+            throw SQLiteError.Step(message: "Error running delete meal statement: \(errorMessage)")
+        }
+        
+        //print("Successfully deleted meal with id \(id) if it existed")
     }
 }

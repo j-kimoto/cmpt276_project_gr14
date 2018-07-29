@@ -8,12 +8,14 @@
 
 import UIKit
 
+// Bug: How do I update bigMealArray with the deleted meals from MealsTableDataSource?
+
 class SearchViewController: UIViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var searchBar: UISearchBar!
-    @IBOutlet fileprivate weak var exportButton: UIBarButtonItem!
-
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    
     private var db: SQLiteDatabase?
     fileprivate var dataSource: MealsTableDataSource!
     
@@ -30,6 +32,10 @@ class SearchViewController: UIViewController {
         
         // Now email your meals to someone
         sendEmail(file: emailText)
+    }
+    
+    // Edit the selected meal's info in the database
+    @IBAction func editMealInfo(_ sender: UIBarButtonItem) {
     }
     
     override func viewDidLoad() {
@@ -67,16 +73,13 @@ class SearchViewController: UIViewController {
         // Loads data to bigMealArray
         bigMealArray = loadData()
         
-        // Create an instance of the data source so the table loads our meals
-        dataSource = MealsTableDataSource(meals: bigMealArray)
+        // Create an instance of the data source so the table loads our meals and has access to the database
+        dataSource = MealsTableDataSource(meals: bigMealArray, database: db!)
         
         tableView.estimatedRowHeight = 185                      // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension     // Set the row height automatically
         tableView.dataSource = dataSource                       // Set the data source of the table view to this class's property
         filteredBigMealArray = bigMealArray                     // filteredBigMealArray used for searching
-        
-        // Display an edit button on the navigation bar (used to delete meals)
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -153,8 +156,8 @@ class SearchViewController: UIViewController {
     
     // Searches bigMealArray for searchText, returning the filtered array
     private func filterMealsForSearchText(searchText: String, scope: Int) -> [Meal] {
-        // Uses lowercase to search
-        // range finds the first occurence of searchText in its calle. Returns nil if not found/empty
+        
+        // Uses lowercase to search. range() finds the first occurence of searchText in fieldToSearch. Returns nil if not found/empty
         if searchText.isEmpty {
             return bigMealArray
         }
@@ -228,7 +231,7 @@ extension SearchViewController: UISearchBarDelegate {
         filteredBigMealArray = filterMealsForSearchText(searchText: searchText, scope: selectedIndex)
         
         // Set the table view's data source to the filtered list of meals
-        dataSource = MealsTableDataSource(meals: filteredBigMealArray)
+        dataSource = MealsTableDataSource(meals: filteredBigMealArray, database: db!)
         tableView.dataSource = dataSource
         tableView.reloadData()
     }

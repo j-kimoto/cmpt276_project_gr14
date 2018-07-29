@@ -161,7 +161,7 @@ class MealViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         // Close the database when switching views
-        //db?.closeDatabase()
+        db?.closeDatabase()
     }
     
     override func didReceiveMemoryWarning() {
