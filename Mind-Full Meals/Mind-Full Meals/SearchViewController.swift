@@ -12,8 +12,8 @@ class SearchViewController: UIViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var searchBar: UISearchBar!
-    @IBOutlet fileprivate weak var exportButton: UIBarButtonItem!
-
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    
     private var db: SQLiteDatabase?
     fileprivate var dataSource: MealsTableDataSource!
     
@@ -30,6 +30,29 @@ class SearchViewController: UIViewController {
         
         // Now email your meals to someone
         sendEmail(file: emailText)
+    }
+    
+    // Delete a meal from the table and database
+    @IBAction func deleteMeal(_ sender: UIBarButtonItem) {
+        // If you're currently in editing mode
+        if isEditing {
+            // Change text of button to inform user of state
+            deleteButton.title = "Delete"
+            
+            // Turn off editing mode
+            setEditing(false, animated: true)
+        }
+        else {
+            // Change text of button to inform user of state
+            deleteButton.title = "Done"
+            
+            // Enter editing mode
+            setEditing(true, animated: true)
+        }
+    }
+    
+    // Edit the selected meal's info in the database
+    @IBAction func editMealInfo(_ sender: UIBarButtonItem) {
     }
     
     override func viewDidLoad() {
@@ -74,9 +97,6 @@ class SearchViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension     // Set the row height automatically
         tableView.dataSource = dataSource                       // Set the data source of the table view to this class's property
         filteredBigMealArray = bigMealArray                     // filteredBigMealArray used for searching
-        
-        // Display an edit button on the navigation bar (used to delete meals)
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {

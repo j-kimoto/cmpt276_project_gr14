@@ -36,17 +36,15 @@ extension MealsTableDataSource: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    /** Delete a meal from the database. Bug: the delete button doesn't show minus icons on each row */
+    // Override to support editing the table view.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("test!!!")
-            meals.remove(at: indexPath.row) // Just remove from the bigMealArray for now
-            // Also should delete meal from database
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            print("DELETE meal at \(indexPath.row)")
+            // Remove the meal from the array
+            meals.remove(at: indexPath.row)
+            
+            // Update the table view
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 }

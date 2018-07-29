@@ -666,7 +666,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="igo-yY-2e2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" text="" showsScopeBar="YES" id="4s2-nX-zkQ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
@@ -837,6 +837,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="delegate" destination="zIm-MV-KPF" id="EHL-t0-dFP"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -848,21 +851,35 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZaA-Lf-T4s"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Search Meals" id="2oV-Dh-HIt">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="RGd-sU-DOM"/>
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="x9u-a4-JCX">
+                    <toolbarItems>
+                        <barButtonItem title="Export meals" id="Hnw-F8-bfp">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="presentation" id="J2k-DK-3KG"/>
+                                <action selector="exportMeals:" destination="zIm-MV-KPF" id="yjS-CI-jnA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Export meals" id="Adc-04-h5y">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Gcz-39-er4"/>
+                        <barButtonItem title="Delete" id="dt2-Hx-2QG">
                             <connections>
-                                <action selector="exportMeals:" destination="zIm-MV-KPF" id="Q6P-mb-Bw9"/>
+                                <action selector="deleteMeal:" destination="zIm-MV-KPF" id="H31-na-P5O"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="edit" id="5T5-Mz-Jdy">
+                            <connections>
+                                <action selector="editMealInfo:" destination="zIm-MV-KPF" id="EUq-6t-md4"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Search Meals" id="dFK-gG-F9S">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Nsr-tm-erd"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="zy6-ot-zFN">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="presentation" id="wG9-hw-iY4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="exportButton" destination="Adc-04-h5y" id="3id-gX-eCj"/>
+                        <outlet property="deleteButton" destination="dt2-Hx-2QG" id="3Fu-iU-CSg"/>
                         <outlet property="searchBar" destination="4s2-nX-zkQ" id="gPC-IN-8Rh"/>
                         <outlet property="tableView" destination="igo-yY-2e2" id="73O-vW-KRb"/>
                     </connections>
@@ -1363,13 +1380,17 @@
         <!--Navigation Controller-->
         <scene sceneID="aiT-IX-FNM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yRM-6O-Xdy" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="yRM-6O-Xdy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VqD-qa-J1W">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iR3-Q9-aMP">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="zIm-MV-KPF" kind="relationship" relationship="rootViewController" id="1oe-yF-EV0"/>
                     </connections>
@@ -1380,13 +1401,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Gtc-7p-qI3"/>
-        <segue reference="dMH-G7-hQ1"/>
-        <segue reference="DWw-wO-5cz"/>
-        <segue reference="J8q-RZ-5lg"/>
+        <segue reference="loD-Qt-BFa"/>
+        <segue reference="xYF-Yw-kvb"/>
+        <segue reference="SgD-Ui-Y1l"/>
         <segue reference="DWt-o7-UCB"/>
         <segue reference="fsX-ci-iNz"/>
         <segue reference="PvA-eS-qfn"/>
-        <segue reference="4hW-gE-le4"/>
+        <segue reference="wG9-hw-iY4"/>
     </inferredMetricsTieBreakers>
 </document>
