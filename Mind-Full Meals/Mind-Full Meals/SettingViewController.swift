@@ -58,12 +58,13 @@ class SettingViewController: UIViewController {
         gender.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "GENDER")
         
         let notify = UserDefaults.standard.bool(forKey: "NOTIFY")
+        print("notifications state: ", notify)
         notifications.setOn(notify, animated: false)
         print("loaded")
     }
     
     func enableNotifications(){
-        // Sources: https://developer.apple.com/documentation/usernotifications/scheduling_a_notification_locally_from_your_app and https://medium.com/@dkw5877/local-notifications-in-ios-156a03b81ceb
+        // Sources: https://developer.apple.com/documentation/usernotifications/scheduling_a_notification_locally_from_your_app and https://www.appcoda.com/ios10-user-notifications-guide/
         
         // Get the notification center
         let center =  UNUserNotificationCenter.current()
@@ -71,63 +72,57 @@ class SettingViewController: UIViewController {
         // Request permission to display alerts, play sounds, and change app badge
         center.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
             // Enable or disable features based on authorization
-            if error != nil {
+            if !granted {
                 print("Notifications not enabled")
             }
             else {
                 print("Enabling notifications")
             }
         })
-
         
-        // Don't schedule notifications if not authorized
-        center.getNotificationSettings(completionHandler: { (settings) in
-            guard settings.authorizationStatus == .authorized else { return }
-            
-            if settings.alertSetting == .enabled {
-                // Schedule an alert-only notification
-            }
-            else {
-                // Schedule a notification with a badge and sound
-            }
-        })
+        scheduleNotifications()
+    }
+    
+    //func scheduleNotifications(at date: Date) {
+    func scheduleNotifications() {
+        let center =  UNUserNotificationCenter.current()
+        /*
+        // Use gregorian calendar to separate date into components
+        let calendar = Calendar(identifier: .gregorian)
+        
+        // Saves components of date
+        let components = calendar.dateComponents(in: .current, from: date)
+        
+        // UNCalendarNotificationTrigger needs an instance of DateComponents
+        let newComponents = DateComponents(calendar: calendar, timeZone: .current, era: components.month, month: components.month, day: components.day, hour: components.hour, minute: components.minute)
+        
+        // Triggers the notification at the given day and time once
+        let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
+        */
+        
+        // Triggers notification 2 seconds later
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
         
         // Create the notification content
         let content = UNMutableNotificationContent()
-        content.title = " Test title"
-        content.subtitle = "Lunch"
-        content.body = "It's time to cook lunch"
-        //content.categoryIdentifier = "message"
+        content.title = "Lunch"
+        content.body = "It's time to cook/eat/buy? lunch"
         content.sound = UNNotificationSound.default()
-        
-        /*// Trigger notification to show every Friday at 9:30pm
-        var dateComponents = DateComponents()
-        dateComponents.calendar = Calendar.current
-        
-        dateComponents.weekday = 5 // Friday
-        dateComponents.hour = 21
-        dateComponents.minute = 30 */
-        
-        // Create the trigger as a repeating event
-        //let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
-        // Should show notification in 2 seconds
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
         
         // Create the request
         let identifier = "LunchNotification"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
+        // Remove any old notifications
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        
         // Add request to notification center
         center.add(request) { (error) in
             if error != nil {
                 // Handle any errors
+                print("We have an error: \(String(describing: error))")
             }
         }
-    }
-    
-    func scheduleNotifications() {
-        
     }
     
 }
