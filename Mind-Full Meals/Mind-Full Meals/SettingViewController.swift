@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 var saved = false
+
 class SettingViewController: UIViewController {
 
     //all the info that can be saved
@@ -18,6 +19,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var age: UISegmentedControl!
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var notifications: UISwitch!
+    @IBOutlet weak var whenToNotify: UIDatePicker!
     
     //Save and data the user has enterend to be loaded later
     @IBAction func Saved(_ sender: Any) {
@@ -26,30 +28,29 @@ class SettingViewController: UIViewController {
         UserDefaults.standard.set(dinner.date, forKey: "DDT")
         UserDefaults.standard.set(age.selectedSegmentIndex, forKey: "AGE")
         UserDefaults.standard.set(gender.selectedSegmentIndex, forKey: "GENDER")
+        
         UserDefaults.standard.set(notifications.isOn, forKey: "NOTIFY")
+        UserDefaults.standard.set(whenToNotify.countDownDuration, forKey: "SECONDS_BEFORE")
         print("saved")
         saved = true
         
-        // Check if the switch is on
         if notifications.isOn {
             // Turn on notifications
             enableNotifications()
         }
+        else {
+            // Turn off notifications
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if saved {
             loadProfile()
         }
-        // Do any additional setup after loading the view.
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     func loadProfile(){
         breakfast.date = UserDefaults.standard.object(forKey: "DBT") as! Date
         lunch.date = UserDefaults.standard.object(forKey: "DLT") as! Date
@@ -58,8 +59,8 @@ class SettingViewController: UIViewController {
         gender.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "GENDER")
         
         let notify = UserDefaults.standard.bool(forKey: "NOTIFY")
-        print("notifications state: ", notify)
         notifications.setOn(notify, animated: false)
+        whenToNotify.countDownDuration = UserDefaults.standard.double(forKey: "SECONDS_BEFORE")
         print("loaded")
     }
     
@@ -80,47 +81,44 @@ class SettingViewController: UIViewController {
             }
         })
         
-        scheduleNotifications()
+        // Schedule breakfast, lunch, dinner, and snacks
+        // saved is true so dates shouldn't be nil
+        let bTime = UserDefaults.standard.object(forKey: "DBT") as! Date // breakfast
+        let lTime = UserDefaults.standard.object(forKey: "DLT") as! Date // lunch
+        let dTime = UserDefaults.standard.object(forKey: "DDT") as! Date // dinner
+        let timeBefore = whenToNotify.countDownDuration        // time before meal to notify you
+        
+        print("Time before: \(timeBefore), Breakfast time: \(bTime), lunch time: \(lTime), dinner time: \(dTime), notify lunch at \(lTime.addingTimeInterval(-timeBefore))")
+        
+        // The negative of the time interval subtracts that time from the date
+        scheduleNotifications(at: bTime.addingTimeInterval(-timeBefore), title: "Breakfast", body: "It's time to cook/eat/buy breakfast")
+        scheduleNotifications(at: lTime.addingTimeInterval(-timeBefore), title: "Lunch", body: "It's time to cook/eat/buy lunch")
+        scheduleNotifications(at: dTime.addingTimeInterval(-timeBefore), title: "Dinner", body: "It's time to cook/eat/buy dinner")
     }
     
-    //func scheduleNotifications(at date: Date) {
-    func scheduleNotifications() {
+    func scheduleNotifications(at date: Date, title: String, body: String) {
         let center =  UNUserNotificationCenter.current()
-        /*
-        // Use gregorian calendar to separate date into components
-        let calendar = Calendar(identifier: .gregorian)
+
+        // Saves components of date to trigger it daily at that hour and minute
+        let components = Calendar.current.dateComponents([.hour, .minute], from: date)
         
-        // Saves components of date
-        let components = calendar.dateComponents(in: .current, from: date)
-        
-        // UNCalendarNotificationTrigger needs an instance of DateComponents
-        let newComponents = DateComponents(calendar: calendar, timeZone: .current, era: components.month, month: components.month, day: components.day, hour: components.hour, minute: components.minute)
-        
-        // Triggers the notification at the given day and time once
-        let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
-        */
-        
-        // Triggers notification 2 seconds later
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2.0, repeats: false)
-        
+        // Triggers the notification at the given hour and minute every day
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+
         // Create the notification content
         let content = UNMutableNotificationContent()
-        content.title = "Lunch"
-        content.body = "It's time to cook/eat/buy? lunch"
+        content.title = title
+        content.body = body
         content.sound = UNNotificationSound.default()
         
         // Create the request
-        let identifier = "LunchNotification"
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        
-        // Remove any old notifications
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        let request = UNNotificationRequest(identifier: title, content: content, trigger: trigger)
         
         // Add request to notification center
         center.add(request) { (error) in
-            if error != nil {
+            if let error = error {
                 // Handle any errors
-                print("We have an error: \(String(describing: error))")
+                print("We have an error: \(error)")
             }
         }
     }
