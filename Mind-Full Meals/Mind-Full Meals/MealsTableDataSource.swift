@@ -56,7 +56,8 @@ extension MealsTableDataSource: UITableViewDataSource {
             }
             catch {
                 print("Error getting id of the meal to delete")
-                return          // Must return here since poppedRowId would not be initialized
+                // Must return here since poppedRowId would not be initialized
+                return
             }
             
             // Delete the meal from the database

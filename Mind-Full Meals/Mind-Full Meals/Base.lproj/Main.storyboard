@@ -191,7 +191,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MM/DD/YY HH:MM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5t-mU-JoE">
-                                <rect key="frame" x="193" y="107" width="160" height="21"/>
+                                <rect key="frame" x="193" y="107" width="160" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1413,6 +1413,6 @@
         <segue reference="DWt-o7-UCB"/>
         <segue reference="fsX-ci-iNz"/>
         <segue reference="PvA-eS-qfn"/>
-        <segue reference="4hW-gE-le4"/>
+        <segue reference="a4u-ct-gpw"/>
     </inferredMetricsTieBreakers>
 </document>
