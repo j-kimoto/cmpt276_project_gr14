@@ -207,6 +207,7 @@ class MealViewController: UIViewController {
         print("Retrieve: Selected row is \(UserDefaults.standard.integer(forKey:"udtype")) which is \(mealTypes[UserDefaults.standard.integer(forKey:"udtype")])" )      
         typePicker.selectRow(UserDefaults.standard.integer(forKey:"udtype"), inComponent: 0, animated: true)
         setFullness(UserDefaults.standard.string(forKey:"udbeforefull") ?? "", fullnessSlider, currentFullness)
+        setFullness(UserDefaults.standard.string(forKey:"udafterfull") ?? "", afterfullSlider, afterFullness)
         
         // Check if there is no image. Use an empty string to represent no image
         let base64Image = UserDefaults.standard.string(forKey:"udimage") ?? ""

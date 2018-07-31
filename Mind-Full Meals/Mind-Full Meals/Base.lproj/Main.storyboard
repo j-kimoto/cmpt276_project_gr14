@@ -191,7 +191,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MM/DD/YY HH:MM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5t-mU-JoE">
-                                <rect key="frame" x="193" y="107" width="160" height="21"/>
+                                <rect key="frame" x="193" y="107" width="160" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1121,8 +1121,8 @@
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="FZM-4l-d1F">
                                 <rect key="frame" x="16" y="307" width="230" height="79"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <date key="date" timeIntervalSinceReferenceDate="552272400.54442704">
-                                    <!--2018-07-03 01:00:00 +0000-->
+                                <date key="date" timeIntervalSinceReferenceDate="554691600.54442704">
+                                    <!--2018-07-31 01:00:00 +0000-->
                                 </date>
                                 <date key="minimumDate" timeIntervalSinceReferenceDate="-978267600">
                                     <!--1970-01-01 11:00:00 +0000-->
@@ -1224,9 +1224,23 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hTo-3f-xVO">
-                                <rect key="frame" x="253" y="503" width="49" height="31"/>
+                                <rect key="frame" x="145" y="498" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time to notify before meal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AK1-Vj-q98">
+                                <rect key="frame" x="16" y="540" width="201" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xc5-rc-c9p">
+                                <rect key="frame" x="208" y="517" width="167" height="67"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="554673816.74739504">
+                                    <!--2018-07-30 20:03:36 +0000-->
+                                </date>
+                            </datePicker>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="fYH-0I-hVU"/>
@@ -1238,6 +1252,7 @@
                         <outlet property="gender" destination="SoG-dF-LLi" id="oH4-Qm-AHB"/>
                         <outlet property="lunch" destination="SmE-dT-cWY" id="914-Xh-7fI"/>
                         <outlet property="notifications" destination="hTo-3f-xVO" id="ZHO-cC-Szy"/>
+                        <outlet property="whenToNotify" destination="xc5-rc-c9p" id="qKR-jq-UvZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8g-uQ-m5I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1398,6 +1413,6 @@
         <segue reference="DWt-o7-UCB"/>
         <segue reference="fsX-ci-iNz"/>
         <segue reference="PvA-eS-qfn"/>
-        <segue reference="wG9-hw-iY4"/>
+        <segue reference="a4u-ct-gpw"/>
     </inferredMetricsTieBreakers>
 </document>
