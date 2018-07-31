@@ -13,10 +13,12 @@ import UIKit
 class MealsTableDataSource: NSObject {
     private var meals: [Meal]
     private var database: SQLiteDatabase
+    private var table: UITableView
     
-    init(meals: [Meal], database: SQLiteDatabase) {
+    init(meals: [Meal], database: SQLiteDatabase, table: UITableView) {
         self.meals = meals
         self.database = database
+        self.table = table
     }
 }
 
@@ -69,6 +71,10 @@ extension MealsTableDataSource: UITableViewDataSource {
             }
             
             print("DELETED meal at array index \(mealIndex), database id \(poppedRowId)")
+            
+            // Reload the table view's data source with meals array
+            tableView.dataSource = MealsTableDataSource(meals: meals, database: database, table: tableView)
+            tableView.reloadData()
         }
     }
 }
