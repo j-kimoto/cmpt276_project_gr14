@@ -33,8 +33,8 @@ class MealViewController: UIViewController {
     var meal: Meal?
     var db: SQLiteDatabase?
 
-    var foods = [Food]() // Passed from FoodTableViewController in backToAddMeal segue
-    var editMeal = false // Are we currently editing a meal?
+    var foods = [String]() // Passed from FoodTableViewController in backToAddMeal segue
+    var addOldMeal = false // Are we currently adding an old meal?
     
     // MARK: Actions
     @IBAction func datePickerChanged(_ sender: Any) {
@@ -147,10 +147,10 @@ class MealViewController: UIViewController {
         updateAddMealButtonState() // Enable the add meal button only if the meal text field is not empty
         setDateLabel() // Set the date label after loading the stored date
         
-        // Set the labels so you can edit the meal info
-        if (editMeal) {
+        // Set the labels so you can add a new meal with the old meal's information
+        if (addOldMeal) {
             setLabels(oldMeal: meal!)
-            editMeal = false
+            addOldMeal = false
         }
         
         foodImage.layer.borderWidth = 1
@@ -232,7 +232,7 @@ class MealViewController: UIViewController {
     private func createMeal() -> Meal {
         let name = nameTextField.text ?? ""
         let rating = mealRating.rating // 0 if not changed
-        let ingredients = convertToStringArray(array: foods)
+        let ingredients = foods
         let date = datePicker.date
         let type = mealTypes[typePicker.selectedRow(inComponent: 0)] // Index -> String
         let beforefull = currentFullness.text ?? ""
@@ -247,20 +247,38 @@ class MealViewController: UIViewController {
         return Meal(Meal_Name: name, Rating: rating, Ingredients: ingredients, Date: date, Meal_Type: type, Before: beforefull, After: afterfull, Image: base64Image)
     }
     
-    // Setting labels to edit the meal. Meal type and food are not restored
+    // Setting labels to add an old meal
     private func setLabels(oldMeal: Meal) {
         nameTextField.text = meal?.GetMealName()
         mealRating.rating = (meal?.GetRating())!
-        //foods = meal?.GetIngredients()
+        foods = (meal?.GetIngredients())! // Restore food
+        
         datePicker.date = (meal?.GetDate())!
         setDateLabel()
-        //typePicker.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
+        
+        // Get the meal type (shouldn't be nil)
+        let mealType = (meal?.GetMeal_Type())!
+        // Select the row in the picker according to the string's array index
+        typePicker.selectRow(convertMealTypeToIndex(mealType: mealType), inComponent: 0, animated: true)
+
+        // Restore fullness
         setFullness((meal?.GetBefore())!, fullnessSlider, currentFullness)
         setFullness((meal?.GetAfter())!, afterfullSlider, afterFullness)
         
+        // Restore image
         let base64Image = meal?.GetImage() ?? ""
         if !base64Image.isEmpty { // Empty string means there is no image, so don't restore anything
             foodImage.image = stringToImage(arg1: base64Image)
+        }
+    }
+    
+    // Input: Meal type (String). Output: Index in mealTypes array
+    private func convertMealTypeToIndex(mealType: String) -> Int {
+        if let index = mealTypes.index(of: mealType) {
+            return index
+        }
+        else {
+            return 0 // The default meal type is breakfast if mealType isn't in the array
         }
     }
     
@@ -334,15 +352,6 @@ class MealViewController: UIViewController {
         //let str =  array.description
         let str = array.joined(separator: ",")
         return str
-    }
-    
-    // Converts from Food array to String array
-    private func convertToStringArray(array: [Food]) -> [String] {
-        var strArray = [String]()
-        for item in array {
-            strArray.append(item.description)
-        }
-        return strArray
     }
     
     // Enable the Add Meal button if the text field isn't empty

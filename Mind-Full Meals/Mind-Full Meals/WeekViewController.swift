@@ -22,56 +22,74 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
 {
     
     var mealsInDateRangeQueue: [(String, Int32, String)] = []
-    @IBAction func leftButton(_ sender: Any) {/*
-         CurrentDay -= 7
-         if CurrentDay < 0
-         {
-         CurrentMonth -= 1
-         if CurrentMonth < 0{
-         CurrentYear -= 1
-         CurrentMonth = 11
-         }
-         CurrentDay = numOfDays[CurrentMonth]-CurrentDay
-         }
-         //i hate leap years
-         if CurrentMonth == 1 && CurrentYear % 4 == 0
-         {
-         numOfDays[1] = 29
-         }
-         else
-         {
-         numOfDays[1] = 28
-         }
-         CurrentDay = numOfDays[CurrentMonth]
-         n = 0
-         print("New month Loaded")
-         MyCollectionView.reloadData()*/
+    @IBAction func leftButton(_ sender: Any) {
+        CurrentDay -= 7
+        print("CURR DAY:", CurrentDay)
+        if CurrentDay < 0
+        {
+            CurrentMonth -= 1 // go back 1 month
+            if CurrentMonth < 0{ // go back to December of last year
+                CurrentYear -= 1
+                CurrentMonth = 11
+            }
+            CurrentDay = numOfDays[CurrentMonth]+CurrentDay // CurrentDay is negative
+        }
+       
+        //i hate leap years
+        if CurrentMonth == 1 && CurrentYear % 4 == 0
+        {
+           numOfDays[1] = 29
+        }
+        else
+        {
+           numOfDays[1] = 28
+        }
+       
+        //CurrentDay = numOfDays[CurrentMonth]
+        //print("CURR DAY:", CurrentDay)
+        //print("DAY: ", CurrentDay, "N=", n, "MONTH:", CurrentMonth, "YEAR:", CurrentYear, "WEEK:", dayOfWeek)
+
+        n = 0
+        print("New week Loaded")
+        MyCollectionView.reloadData()
     }
-    @IBAction func rightButton(_ sender: Any) {/*
-         CurrentDay += 7
-         if CurrentDay > numOfDays[CurrentMonth]
-         {
-         CurrentMonth += 1
-         if CurrentMonth > 11{
-         CurrentYear -= 1
-         CurrentMonth = 11
-         }
-         CurrentDay = numOfDays[CurrentMonth]+CurrentDay%(numOfDays[CurrentMonth-1])
-         }
-         //i hate leap years
-         if CurrentMonth == 1 && CurrentYear % 4 == 0
-         {
-         numOfDays[1] = 29
-         }
-         else
-         {
-         numOfDays[1] = 28
-         }
-         dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
-         CurrentDay = numOfDays[CurrentMonth]
-         n = 0
-         print("New month Loaded")
-         MyCollectionView.reloadData()*/
+    @IBAction func rightButton(_ sender: Any) {
+        CurrentDay += 7
+        print("CURR DAY:", CurrentDay)
+
+        if CurrentDay > numOfDays[CurrentMonth]
+        {
+            CurrentMonth += 1 // Eg December 35 -> Jan 4?
+            if CurrentMonth > 11{ // CurrentMonth = 12
+                CurrentYear += 1 // Go 1 year forward
+                CurrentMonth = 0 // January
+                CurrentDay = CurrentDay%(numOfDays[11]) // Avoid index out of range for CurrentMonth = 0  or 12
+                // CurrentDay = numOfDays[CurrentMonth] + CurrentDay%(numOfDays[11])
+            }
+            else { // Eg November 37 -> Dec 7
+                //CurrentDay = numOfDays[CurrentMonth]+CurrentDay%(numOfDays[CurrentMonth-1]) // Dec has 31 days + 37%(num of days in nov) = 31 + 37%30=31+7=38
+                CurrentDay = CurrentDay%(numOfDays[CurrentMonth-1])
+            }
+        }
+        
+        //i hate leap years
+        if CurrentMonth == 1 && CurrentYear % 4 == 0
+        {
+           numOfDays[1] = 29
+        }
+        else
+        {
+           numOfDays[1] = 28
+        }
+        
+        dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
+        //CurrentDay = numOfDays[CurrentMonth]
+        //print("CURR DAY:", CurrentDay)
+        //print("DAY: ", CurrentDay, "N=", n, "MONTH:", CurrentMonth, "YEAR:", CurrentYear, "WEEK:", dayOfWeek)
+
+        n = 0
+        print("New week Loaded")
+        MyCollectionView.reloadData()
     }
     
     @IBOutlet weak var MyCollectionView: UICollectionView!
@@ -106,7 +124,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         n = 0 // Resets n before loading the calendar
-        print("view is loading")
+        //print("view is loading")
         self.MyCollectionView.delegate = self
         self.MyCollectionView.dataSource = self
     }
@@ -133,9 +151,9 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekCell", for: indexPath) as! WeekCollectionViewCell
         
         // empty days at the start of the month
-        print("Checking if queue is empty")
+        //print("Checking if queue is empty")
         while mealsInDateRangeQueue.isEmpty {
-            print("queue is empty")
+            //print("queue is empty")
             let numYear = CurrentYear - 1970
             var leapYearsDays = Int(round(Double(numYear/4)))
             for index in 0...CurrentMonth{
@@ -159,9 +177,11 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             catch {
                 print(db?.getError() ?? "db is nil")
             }
-            print("MealsInDateRange",mealsInDateRange)
+            //print("MealsInDateRange",mealsInDateRange)
             
-            print(CurrentDay + n , CurrentMonth, CurrentYear)
+            //print(CurrentDay + n , CurrentMonth, CurrentYear)
+            //print(cell.Date.text ?? "" + "\n")
+            //print("Current day is", CurrentDay)
             mealsInDateRangeQueue.append(contentsOf: mealsInDateRange)
             n += 1
             if n > 7{
@@ -194,7 +214,8 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
         cell.MealName.text = mealName
         cell.MealType.text = mealType
-        print("N = ",n)
+        print("DATE:", cell.Date.text ?? "", " NAME:", cell.MealName.text ?? "", " TYPE:", cell.MealType.text ?? "")
+        //print("N = ",n)
         return cell
     }
     

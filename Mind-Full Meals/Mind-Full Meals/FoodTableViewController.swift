@@ -11,24 +11,18 @@ import UIKit
 class FoodTableViewController: UITableViewController {
 
     //MARK: Properties
-    var foods = [Food]()
-    var stringFoods = [String]()
+    var foods = [String]()
     
     // Called after the edit screen's save button was pressed
     @IBAction func saveToFoodTableViewController(segue: UIStoryboardSegue) {
         let editFoodController = segue.source as! EditFoodTableViewController
         let index = editFoodController.index
         let foodString = editFoodController.editedFoodName
-        let amount = editFoodController.editedFoodAmount
-        let foodType = editFoodController.foodTypes[editFoodController.editedFoodTypeIndex!]
         
         // If an item was added in EditFoodTableViewController, reload the food array. For editing items it doesn't do anything
         foods = editFoodController.foods
+        foods[index!] = foodString!
 
-        foods[index!].setName(name: foodString!)
-        foods[index!].setAmount(amount: amount!)
-        foods[index!].setType(type: foodType)
-        
         // Add food
         if (editFoodController.addMode) {
             let indexPath:IndexPath = IndexPath(row:(index)!, section:0)
@@ -46,9 +40,6 @@ class FoodTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -75,8 +66,7 @@ class FoodTableViewController: UITableViewController {
         // Fetches the appropriate food for the data source layout
         let food = foods[indexPath.row]
         
-        cell.foodNameLabel.text = food.getName()
-        cell.foodAmountLabel.text = String(food.getAmount()) // Converts the Int to a String
+        cell.foodNameLabel.text = food
 
         return cell
     }

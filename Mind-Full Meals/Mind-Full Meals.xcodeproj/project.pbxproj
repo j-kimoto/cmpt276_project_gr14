@@ -25,7 +25,6 @@
 		5609187020FBE4FC003C7822 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */; };
 		5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187120FBE509003C7822 /* MealsTableDataSource.swift */; };
 		5609187420FBE521003C7822 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187320FBE521003C7822 /* SearchViewController.swift */; };
-		560C054620EAEC8500B69DCE /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054420EAEC7B00B69DCE /* Food.swift */; };
 		560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */; };
 		560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */; };
 		58172EB921080EF200982E2D /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58172EB821080EF200982E2D /* CameraHandler.swift */; };
@@ -81,7 +80,6 @@
 		5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		5609187120FBE509003C7822 /* MealsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableDataSource.swift; sourceTree = "<group>"; };
 		5609187320FBE521003C7822 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		560C054420EAEC7B00B69DCE /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewController.swift; sourceTree = "<group>"; };
 		58172EB821080EF200982E2D /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */,
 				7081683620E70BA9005659C2 /* RatingControl.swift */,
 				2B61482420E87F5300CAC106 /* MealClass.swift */,
-				560C054420EAEC7B00B69DCE /* Food.swift */,
 				58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */,
 				5609187120FBE509003C7822 /* MealsTableDataSource.swift */,
 				5609187320FBE521003C7822 /* SearchViewController.swift */,
@@ -341,7 +338,6 @@
 				2B1DDF8C20E58E41001A1304 /* AppDelegate.swift in Sources */,
 				2B289ADD20FFF2310092CBCE /* WeekCollectionViewCell.swift in Sources */,
 				2B34B91D20FEE388002AA11E /* WeekViewController.swift in Sources */,
-				560C054620EAEC8500B69DCE /* Food.swift in Sources */,
 				70E0CE4B20F9858F009D3ABD /* SQLiteDatabase.swift in Sources */,
 				7081683520E70B50005659C2 /* MealViewController.swift in Sources */,
 				58172EB921080EF200982E2D /* CameraHandler.swift in Sources */,

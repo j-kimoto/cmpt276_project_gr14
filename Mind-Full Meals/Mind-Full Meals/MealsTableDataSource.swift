@@ -13,10 +13,12 @@ import UIKit
 class MealsTableDataSource: NSObject {
     private var meals: [Meal]
     private var database: SQLiteDatabase
+    private var table: UITableView
     
-    init(meals: [Meal], database: SQLiteDatabase) {
+    init(meals: [Meal], database: SQLiteDatabase, table: UITableView) {
         self.meals = meals
         self.database = database
+        self.table = table
     }
 }
 

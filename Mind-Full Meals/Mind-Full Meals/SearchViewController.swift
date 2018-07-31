@@ -74,7 +74,7 @@ class SearchViewController: UIViewController {
         bigMealArray = loadData()
         
         // Create an instance of the data source so the table loads our meals and has access to the database
-        dataSource = MealsTableDataSource(meals: bigMealArray, database: db!)
+        dataSource = MealsTableDataSource(meals: bigMealArray, database: db!, table: tableView)
         
         tableView.estimatedRowHeight = 185                      // Preset height from interface builder
         tableView.rowHeight = UITableViewAutomaticDimension     // Set the row height automatically
@@ -100,13 +100,13 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        if segue.identifier == "editMealInfo" {
-            // Want to edit the selected meal
+        if segue.identifier == "addOldMeal" {
+            // Want to add an old meal
             var path = tableView.indexPathForSelectedRow
             let mealViewController = segue.destination as! MealViewController
             
             mealViewController.meal = filteredBigMealArray[(path?.row)!] // Gets meal from the filtered array
-            mealViewController.editMeal = true // Currently editing meal
+            mealViewController.addOldMeal = true // Currently editing meal
             //print(mealViewController.meal ?? "meal is nil")
         }
     }
@@ -231,7 +231,7 @@ extension SearchViewController: UISearchBarDelegate {
         filteredBigMealArray = filterMealsForSearchText(searchText: searchText, scope: selectedIndex)
         
         // Set the table view's data source to the filtered list of meals
-        dataSource = MealsTableDataSource(meals: filteredBigMealArray, database: db!)
+        dataSource = MealsTableDataSource(meals: filteredBigMealArray, database: db!, table: tableView)
         tableView.dataSource = dataSource
         tableView.reloadData()
     }
