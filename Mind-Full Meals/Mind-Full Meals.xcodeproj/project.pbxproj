@@ -28,6 +28,7 @@
 		560C054920EAEF9000B69DCE /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */; };
 		560C054B20EAF22A00B69DCE /* FoodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */; };
 		58172EB921080EF200982E2D /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58172EB821080EF200982E2D /* CameraHandler.swift */; };
+		5839CE03211113D100F31FCE /* MindfulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5839CE02211113D100F31FCE /* MindfulViewController.swift */; };
 		58AEF96321028323008F0861 /* AddMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEF96221028323008F0861 /* AddMealViewController.swift */; };
 		58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */; };
 		7081683520E70B50005659C2 /* MealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7081683420E70B50005659C2 /* MealViewController.swift */; };
@@ -83,6 +84,7 @@
 		560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		560C054A20EAF22A00B69DCE /* FoodTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewController.swift; sourceTree = "<group>"; };
 		58172EB821080EF200982E2D /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
+		5839CE02211113D100F31FCE /* MindfulViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindfulViewController.swift; sourceTree = "<group>"; };
 		58AEF96221028323008F0861 /* AddMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealViewController.swift; sourceTree = "<group>"; };
 		58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullnessInfoViewController.swift; sourceTree = "<group>"; };
 		7081683420E70B50005659C2 /* MealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewController.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -158,6 +160,7 @@
 				560C054720EAEF8500B69DCE /* FoodTableViewCell.swift */,
 				7097CD5D20EC27C600FEDC47 /* EditFoodTableViewController.swift */,
 				7081683620E70BA9005659C2 /* RatingControl.swift */,
+				5839CE02211113D100F31FCE /* MindfulViewController.swift */,
 				2B61482420E87F5300CAC106 /* MealClass.swift */,
 				58C43C8B20F8524400120075 /* FullnessInfoViewController.swift */,
 				5609187120FBE509003C7822 /* MealsTableDataSource.swift */,
@@ -329,6 +332,7 @@
 				5609187020FBE4FC003C7822 /* MealTableViewCell.swift in Sources */,
 				2B6AF35E20EC5E9900D81464 /* MonthCollectionViewCell.swift in Sources */,
 				2B61482520E87F5300CAC106 /* MealClass.swift in Sources */,
+				5839CE03211113D100F31FCE /* MindfulViewController.swift in Sources */,
 				58C43C8C20F8524400120075 /* FullnessInfoViewController.swift in Sources */,
 				2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */,
 				70BC94F120FEF2C70077672F /* SendMailViewController.swift in Sources */,
