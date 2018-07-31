@@ -22,56 +22,60 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
 {
     
     var mealsInDateRangeQueue: [(String, Int32, String)] = []
-    @IBAction func leftButton(_ sender: Any) {/*
+    @IBAction func leftButton(_ sender: Any) {
          CurrentDay -= 7
          if CurrentDay < 0
          {
-         CurrentMonth -= 1
-         if CurrentMonth < 0{
-         CurrentYear -= 1
-         CurrentMonth = 11
+             CurrentMonth -= 1
+             if CurrentMonth < 0{
+                 CurrentYear -= 1
+                 CurrentMonth = 11
+             }
+             CurrentDay = numOfDays[CurrentMonth]-CurrentDay
          }
-         CurrentDay = numOfDays[CurrentMonth]-CurrentDay
-         }
+        
          //i hate leap years
          if CurrentMonth == 1 && CurrentYear % 4 == 0
          {
-         numOfDays[1] = 29
+            numOfDays[1] = 29
          }
          else
          {
-         numOfDays[1] = 28
+            numOfDays[1] = 28
          }
+        
          CurrentDay = numOfDays[CurrentMonth]
          n = 0
-         print("New month Loaded")
-         MyCollectionView.reloadData()*/
+         print("New week Loaded")
+         MyCollectionView.reloadData()
     }
-    @IBAction func rightButton(_ sender: Any) {/*
+    @IBAction func rightButton(_ sender: Any) {
          CurrentDay += 7
          if CurrentDay > numOfDays[CurrentMonth]
          {
-         CurrentMonth += 1
-         if CurrentMonth > 11{
-         CurrentYear -= 1
-         CurrentMonth = 11
+             CurrentMonth += 1
+             if CurrentMonth > 11{
+                 CurrentYear -= 1
+                 CurrentMonth = 11
+             }
+             CurrentDay = numOfDays[CurrentMonth]+CurrentDay%(numOfDays[CurrentMonth-1])
          }
-         CurrentDay = numOfDays[CurrentMonth]+CurrentDay%(numOfDays[CurrentMonth-1])
-         }
+        
          //i hate leap years
          if CurrentMonth == 1 && CurrentYear % 4 == 0
          {
-         numOfDays[1] = 29
+            numOfDays[1] = 29
          }
          else
          {
-         numOfDays[1] = 28
+            numOfDays[1] = 28
          }
+        
          dayOfWeek = ((dayOfWeek - (CurrentDay % 7))+14)%7
          CurrentDay = numOfDays[CurrentMonth]
          n = 0
-         print("New month Loaded")
-         MyCollectionView.reloadData()*/
+         print("New week Loaded")
+         MyCollectionView.reloadData()
     }
     
     @IBOutlet weak var MyCollectionView: UICollectionView!
@@ -162,6 +166,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("MealsInDateRange",mealsInDateRange)
             
             print(CurrentDay + n , CurrentMonth, CurrentYear)
+            print("\n")
             mealsInDateRangeQueue.append(contentsOf: mealsInDateRange)
             n += 1
             if n > 7{

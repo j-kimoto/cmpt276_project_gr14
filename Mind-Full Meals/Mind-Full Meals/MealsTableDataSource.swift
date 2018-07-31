@@ -71,10 +71,6 @@ extension MealsTableDataSource: UITableViewDataSource {
             }
             
             print("DELETED meal at array index \(mealIndex), database id \(poppedRowId)")
-            
-            // Reload the table view's data source with meals array
-            tableView.dataSource = MealsTableDataSource(meals: meals, database: database, table: tableView)
-            tableView.reloadData()
         }
     }
 }
