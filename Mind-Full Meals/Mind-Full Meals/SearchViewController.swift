@@ -100,13 +100,13 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        if segue.identifier == "editMealInfo" {
-            // Want to edit the selected meal
+        if segue.identifier == "addOldMeal" {
+            // Want to add an old meal
             var path = tableView.indexPathForSelectedRow
             let mealViewController = segue.destination as! MealViewController
             
             mealViewController.meal = filteredBigMealArray[(path?.row)!] // Gets meal from the filtered array
-            mealViewController.editMeal = true // Currently editing meal
+            mealViewController.addOldMeal = true // Currently editing meal
             //print(mealViewController.meal ?? "meal is nil")
         }
     }

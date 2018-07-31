@@ -179,8 +179,9 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             //print("MealsInDateRange",mealsInDateRange)
             
-            print(CurrentDay + n , CurrentMonth, CurrentYear)
-            print("\n")
+            //print(CurrentDay + n , CurrentMonth, CurrentYear)
+            //print(cell.Date.text ?? "" + "\n")
+            //print("Current day is", CurrentDay)
             mealsInDateRangeQueue.append(contentsOf: mealsInDateRange)
             n += 1
             if n > 7{
