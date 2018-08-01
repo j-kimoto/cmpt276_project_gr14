@@ -2,15 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/mwa96/Desktop/cmpt276_project_gr14/Mind-Full Meals/Mind-Full Meals/MealsTableDataSource.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/mwa96/Desktop/cmpt276_project_gr14/Mind-Full Meals/Mind-Full Meals/MealTableViewCell.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/mwa96/Desktop/cmpt276_project_gr14/Mind-Full Meals/Mind-Full Meals/SearchViewController.swift">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
