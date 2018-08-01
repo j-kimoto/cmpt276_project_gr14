@@ -232,6 +232,33 @@ extension SQLiteDatabase {
         
         return mealInfo
     }
+    
+    func getHungers() throws -> [(Int32, Int32)] {
+        
+        let queryString = "SELECT Before, After from Meals WHERE Type <> 'Snacks'" // Used on settings page to get levels
+        
+        var hungerInfo: [(Int32, Int32)] = []
+        
+        // Preparing the query for database search
+        guard let queryStatement = try prepareStatement(sql: queryString) else {
+            throw SQLiteError.Prepare(message: "Error preparing select: \(errorMessage)")
+        }
+        
+        defer {
+            // Release the prepared statement's memory when we leave this function
+            sqlite3_finalize(queryStatement)
+        }
+        
+        // Query through meals of day and adding to tuple if hit
+        while (sqlite3_step(queryStatement) == SQLITE_ROW) {
+            let before = sqlite3_column_int(queryStatement, 0)
+            let after = sqlite3_column_int(queryStatement, 1)
+            
+            // Append to the end of the array
+            hungerInfo.append((before, after))
+        }
+        return hungerInfo
+    }
 }
 
 extension SQLiteDatabase {
