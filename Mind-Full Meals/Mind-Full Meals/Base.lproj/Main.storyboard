@@ -23,6 +23,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bf-3x-L9c">
                                 <rect key="frame" x="144" y="280" width="86" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="View Meals"/>
                                 <connections>
                                     <segue destination="GRt-dX-QLp" kind="modal" id="xYF-Yw-kvb"/>
@@ -31,6 +32,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UiU-sq-Z48">
                                 <rect key="frame" x="144" y="535" width="86" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Settings"/>
                                 <connections>
                                     <segue destination="NYI-qe-Euj" kind="modal" id="loD-Qt-BFa"/>
@@ -39,21 +41,16 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52k-sN-dl3">
                                 <rect key="frame" x="144" y="210" width="86" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Add Meal"/>
                                 <connections>
                                     <segue destination="Ap7-7Q-lZx" kind="show" id="SgD-Ui-Y1l"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mind-Full Meals" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eS-FR-RZF">
-                                <rect key="frame" x="16" y="64" width="343" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="45"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CR-EL-YGP">
                                 <rect key="frame" x="132" y="350" width="110" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Search Meals"/>
                                 <connections>
                                     <segue destination="yRM-6O-Xdy" kind="show" id="X5Y-Xr-8HY"/>
@@ -62,13 +59,21 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FzI-TD-UU3">
                                 <rect key="frame" x="123" y="420" width="129" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Mindful Eating"/>
                                 <connections>
                                     <segue destination="rEX-DE-HWj" kind="show" id="3Vp-EO-Dcz"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mind-Full Meals" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eS-FR-RZF">
+                                <rect key="frame" x="16" y="45" width="343" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
+                                <color key="textColor" red="0.45099983808290156" green="0.0" blue="0.12168882334349759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.88351409338726983" green="0.95472393134715028" blue="0.92836024687723695" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -1470,7 +1475,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNf-iz-NcS">
                                 <rect key="frame" x="16" y="485" width="343" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <mutableString key="text">The portions are based off Health Canada’s food guides.  Food groups are broken to “Fruits and Vegetables”, “Grain Products”, “Milk and Alternatives”, and “Meat and Alternatives”.  Fruits and vegetables should be between ½ to 1 cup. Grain products should be ½ to 1 slice or cups.  Dairy should be between ½ to 1 cup. Meat and meat alternatives vary much greater depending on the type of food.</mutableString>
+                                <string key="text">The portions are based off Health Canada’s food guides.  Food groups are broken to “Fruits and Vegetables”, “Grain Products”, “Milk and Alternatives”, and “Meat and Alternatives”.  Fruits and vegetables should be between ½ to 1 cup. Grain products should be ½ to 1 slice or cups.  Dairy should be between ½ to 1 cup. Meat and meat alternatives vary much greater depending on the type of food.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1547,8 +1552,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Gtc-7p-qI3"/>
-        <segue reference="dMH-G7-hQ1"/>
+        <segue reference="loD-Qt-BFa"/>
         <segue reference="xYF-Yw-kvb"/>
         <segue reference="SgD-Ui-Y1l"/>
         <segue reference="dMe-QH-7SZ"/>
