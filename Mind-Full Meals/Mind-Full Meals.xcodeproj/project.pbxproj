@@ -22,6 +22,10 @@
 		2B6AF36020EC60E800D81464 /* NewCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */; };
 		2B6D21E120F7FCDF00254EB3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */; };
 		2BF9AC1920FEC9B400F85E8D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */; };
+		4907A53B211154E100D82FD0 /* icons8-restaurant-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 4907A53A211154E100D82FD0 /* icons8-restaurant-100.png */; };
+		49162E8921115038008EECC0 /* icons8-ingredients-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 49162E8821115038008EECC0 /* icons8-ingredients-96.png */; };
+		49162E8A21115038008EECC0 /* icons8-ingredients-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 49162E8821115038008EECC0 /* icons8-ingredients-96.png */; };
+		49162E8B21115038008EECC0 /* icons8-ingredients-96.png in Resources */ = {isa = PBXBuildFile; fileRef = 49162E8821115038008EECC0 /* icons8-ingredients-96.png */; };
 		5609187020FBE4FC003C7822 /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */; };
 		5609187220FBE509003C7822 /* MealsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187120FBE509003C7822 /* MealsTableDataSource.swift */; };
 		5609187420FBE521003C7822 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5609187320FBE521003C7822 /* SearchViewController.swift */; };
@@ -78,6 +82,8 @@
 		2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCalendarViewController.swift; sourceTree = "<group>"; };
 		2B6D21E020F7FCDF00254EB3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		2BF9AC1820FEC9B400F85E8D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		4907A53A211154E100D82FD0 /* icons8-restaurant-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-restaurant-100.png"; sourceTree = "<group>"; };
+		49162E8821115038008EECC0 /* icons8-ingredients-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-ingredients-96.png"; sourceTree = "<group>"; };
 		5609186F20FBE4FC003C7822 /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
 		5609187120FBE509003C7822 /* MealsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealsTableDataSource.swift; sourceTree = "<group>"; };
 		5609187320FBE521003C7822 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +159,8 @@
 				2B6AF35F20EC60E800D81464 /* NewCalendarViewController.swift */,
 				2B6AF35D20EC5E9900D81464 /* MonthCollectionViewCell.swift */,
 				2B1DDF9420E58E41001A1304 /* LaunchScreen.storyboard */,
+				4907A53A211154E100D82FD0 /* icons8-restaurant-100.png */,
+				49162E8821115038008EECC0 /* icons8-ingredients-96.png */,
 				2B1DDF8B20E58E41001A1304 /* AppDelegate.swift */,
 				2B1DDF8D20E58E41001A1304 /* ViewController.swift */,
 				7081683420E70B50005659C2 /* MealViewController.swift */,
@@ -302,6 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1DDF9620E58E41001A1304 /* LaunchScreen.storyboard in Resources */,
+				4907A53B211154E100D82FD0 /* icons8-restaurant-100.png in Resources */,
+				49162E8921115038008EECC0 /* icons8-ingredients-96.png in Resources */,
 				2B1DDF9320E58E41001A1304 /* Assets.xcassets in Resources */,
 				2B1DDF9120E58E41001A1304 /* Main.storyboard in Resources */,
 			);
@@ -311,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49162E8A21115038008EECC0 /* icons8-ingredients-96.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49162E8B21115038008EECC0 /* icons8-ingredients-96.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
