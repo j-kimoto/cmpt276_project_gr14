@@ -140,7 +140,7 @@ class NewCalendarViewController: UIViewController, UICollectionViewDelegate, UIC
         {
             skip = (skip+14)%7
         }
-        
+        cell.date.textAlignment = .right
         //i hate leap years
         if CurrentMonth == 1 && CurrentYear % 4 == 0
         {
