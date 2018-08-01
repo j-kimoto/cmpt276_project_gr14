@@ -50,7 +50,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //print("DAY: ", CurrentDay, "N=", n, "MONTH:", CurrentMonth, "YEAR:", CurrentYear, "WEEK:", dayOfWeek)
 
         n = 0
-        print("New week Loaded")
+        print("New week Loaded", CurrentMonth, CurrentDay)
         MyCollectionView.reloadData()
     }
     @IBAction func rightButton(_ sender: Any) {
@@ -88,7 +88,7 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //print("DAY: ", CurrentDay, "N=", n, "MONTH:", CurrentMonth, "YEAR:", CurrentYear, "WEEK:", dayOfWeek)
 
         n = 0
-        print("New week Loaded")
+        print("New week Loaded", CurrentMonth, CurrentDay)
         MyCollectionView.reloadData()
     }
     
@@ -149,27 +149,35 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeekCell", for: indexPath) as! WeekCollectionViewCell
-        
-        // empty days at the start of the month
-        //print("Checking if queue is empty")
-        while mealsInDateRangeQueue.isEmpty {
-            //print("queue is empty")
-            let numYear = CurrentYear - 1970
-            var leapYearsDays = Int(round(Double(numYear/4)))
-            for index in 0...CurrentMonth{
-                leapYearsDays += numOfDays[index]
+        //it has been more than a week
+        if n > 6{
+            cell.layer.borderWidth = 0
+            cell.Date.text = " "
+            cell.MealName.text = " "
+            cell.MealType.text = " "
+            return cell
+        }
+        //set up to get the date
+        let numYear = CurrentYear - 1970
+        var leapYearsDays = Int(round(Double(numYear/4)))
+        for index in 0...CurrentMonth{
+            leapYearsDays += numOfDays[index]
+        }
+        let numDays = numYear * 365 + leapYearsDays + CurrentDay + n - 32
+        let numHours = numDays * 24
+        let numSeconds = numHours * 3600
+        let numEndSeconds = numSeconds + 86399
+        var tempMonth = CurrentMonth
+        var tempDay = CurrentDay + n
+        if tempDay > numOfDays[tempMonth]{
+            tempDay = tempDay % numOfDays[tempMonth]
+            tempMonth += 1
+            if tempMonth > 11{
+                tempMonth = 0
             }
-            let numDays = numYear * 365 + leapYearsDays + CurrentDay + n - 32
-            let numHours = numDays * 24
-            let numSeconds = numHours * 3600
-            let numEndSeconds = numSeconds + 86399
-            // var tempdate = date(era: 0, year: CurrentYear, month: CurrentMonth, day: CurrentDay, hour: 0, minute: 0, second: 0, nanosecond:0)
-            //check for meals
-            //if there are meals for this day
-            //makemeals()
-            cell.Date.text = month[CurrentMonth] + " " + String(CurrentDay+n)
-            
-            // Use empty array of tuples to hold the meals. Tuple is (mealName, mealDate, mealType)
+        }
+        //get the meals for the day
+        if mealsInDateRangeQueue.isEmpty{
             var mealsInDateRange: [(String, Int32, String)] = []
             do {
                 mealsInDateRange = (try db?.selectDateRange(numSeconds: numSeconds, numEndSeconds: numEndSeconds))!
@@ -177,46 +185,49 @@ class WeekViewController: UIViewController, UICollectionViewDelegate, UICollecti
             catch {
                 print(db?.getError() ?? "db is nil")
             }
-            //print("MealsInDateRange",mealsInDateRange)
-            
-            //print(CurrentDay + n , CurrentMonth, CurrentYear)
-            //print(cell.Date.text ?? "" + "\n")
-            //print("Current day is", CurrentDay)
             mealsInDateRangeQueue.append(contentsOf: mealsInDateRange)
-            n += 1
-            if n > 7{
-                cell.layer.borderWidth = 0
-                cell.Date.text = " "
-                cell.MealName.text = " "
-                cell.MealType.text = " "
-                return cell
-            }
         }
-        /*
-         // Query through meals of day and printing on calendar if hit
-         for meal in mealsInDateRange {
-         let mealName = meal.0
-         let mealDate = meal.1
-         let mealType = meal.2
-         print("loaded")
-         print(mealName, mealDate, mealType)
-         let tempDate = convertToDate(arg1: Int(mealDate))
-         cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
-         cell.MealName.text = mealName
-         cell.MealType.text = mealType
-         }*/
+        
+        cell.Date.text = month[tempMonth] + " " + String(tempDay)
         cell.layer.borderWidth = 0.5
-        let mealName = mealsInDateRangeQueue[0].0
-        let mealDate = mealsInDateRangeQueue[0].1
-        let mealType = mealsInDateRangeQueue[0].2
-        mealsInDateRangeQueue.removeFirst(1)
-        let tempDate = convertToDate(arg1: Int(mealDate))
-        cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
-        cell.MealName.text = mealName
-        cell.MealType.text = mealType
-        print("DATE:", cell.Date.text ?? "", " NAME:", cell.MealName.text ?? "", " TYPE:", cell.MealType.text ?? "")
+        
+        //there are no meals for the day return an empty cell
+        if mealsInDateRangeQueue.isEmpty{
+            print("there are no meals for ", month[tempMonth] + " " + String(tempDay))
+            cell.MealName.text = " "
+            cell.MealType.text = " "
+            //go to next day
+            n += 1
+            return cell
+        }
+        
+        //there are meals for the day fill the cell
+        else{
+            //save data from array
+            let mealName = mealsInDateRangeQueue[0].0
+            let mealDate = mealsInDateRangeQueue[0].1
+            let mealType = mealsInDateRangeQueue[0].2
+            
+            //remove the item from the array
+            mealsInDateRangeQueue.removeFirst(1)
+            
+            //fill the cell
+            let tempDate = convertToDate(arg1: Int(mealDate))
+            cell.Date.text = month[Calendar.current.component(.month, from: tempDate)-1] + " " + String(Calendar.current.component(.day, from: tempDate))
+            cell.MealName.text = mealName
+            cell.MealType.text = mealType
+            print("DATE:", cell.Date.text ?? "", " NAME:", cell.MealName.text ?? "", " TYPE:", cell.MealType.text ?? "")
+            if mealsInDateRangeQueue.isEmpty{
+                //go to next day
+                print("there are  more meals for ", month[tempMonth] + " " + String(tempDay))
+                n += 1
+            }
+            else{
+                print("there are no more meals for ", month[tempMonth] + " " + String(tempDay))
+            }
+            return cell
         //print("N = ",n)
-        return cell
+        }
     }
     
     // Converts from Date format to Seconds since 1970-01-01 00:00:00
