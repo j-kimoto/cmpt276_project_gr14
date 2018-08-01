@@ -15,7 +15,6 @@
 
 import Foundation
 import SQLite3
-import UIKit
 
 /** Classes, structs, and enums which conform to this protocol
  can be created in the database with createStatement */
@@ -385,21 +384,6 @@ extension SQLiteDatabase {
         let seconds = Double(arg1)
         let date = Date(timeIntervalSince1970: seconds)
         return date
-    }
-    
-    /** Converts from image to String to store in Database */
-    private func imageToString(arg1: String) -> String {
-        let image = UIImage(named:arg1)!
-        let imageData:Data = UIImagePNGRepresentation(image)!
-        let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
-        return strBase64
-    }
-    
-    /** Converts from string back to image to display on screen */
-    private func stringToImage(arg1: String) -> UIImage {
-        let decodedData = Data(base64Encoded: arg1, options: .ignoreUnknownCharacters)
-        let decodedImage = UIImage(data: decodedData!)
-        return decodedImage!
     }
     
     /** Converts an array (of ingredients) to a comma separated string */
