@@ -116,7 +116,6 @@ extension Meal: CustomStringConvertible {
                 Meal_Type: \(Meal_Type)
                 Before: \(Before_Full)
                 After: \(After_Full)
-                Image: \(Image)
                 """
     }
 }
